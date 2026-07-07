@@ -1,12 +1,22 @@
 import { useState } from 'react'
 
 import './App.css'
-import DashBoard from './components/DashBoard'
+import AccountRoadmap from './components/AccountRoadmap'
+import BillingEligibilityGuide from './components/BillingEligibilityGuide'
+import DashBoard from './components/DashBoard.jsx'
 import FlashCardGrid from './components/FlashCardGrid'
 import Plans from './components/Plans'
 import Quiz from './components/Quiz'
 import Search from './components/Search'
-import { quizQuestions, sources, studyNotes, terms } from './data/studyGuide'
+import {
+  accountRoadmap,
+  billingEligibilityGuide,
+  billingEligibilityQuiz,
+  quizQuestions,
+  sources,
+  studyNotes,
+  terms,
+} from './data/studyGuide'
 
 function matchesSearch(item, query) {
   return JSON.stringify(item).toLowerCase().includes(query.toLowerCase())
@@ -59,6 +69,30 @@ function App() {
           <h2>Plan and activation notes</h2>
         </div>
         <Plans plans={filteredPlans} />
+      </section>
+
+      <section className="study-section" id="billing-eligibility">
+        <div className="section-heading">
+          <p className="eyebrow">Deep Dive</p>
+          <h2>Billing, Eligibility, and Plan Details</h2>
+        </div>
+        <BillingEligibilityGuide guide={billingEligibilityGuide} />
+      </section>
+
+      <section className="study-section" id="billing-eligibility-quiz">
+        <div className="section-heading">
+          <p className="eyebrow">Practice</p>
+          <h2>Billing and Eligibility Quiz</h2>
+        </div>
+        <Quiz questions={billingEligibilityQuiz} />
+      </section>
+
+      <section className="study-section" id="account-roadmap">
+        <div className="section-heading">
+          <p className="eyebrow">Roadmap</p>
+          <h2>Subscriber Paid vs. Agency Paid Accounts</h2>
+        </div>
+        <AccountRoadmap roadmap={accountRoadmap} />
       </section>
 
       <section className="study-section" id="flashcards">

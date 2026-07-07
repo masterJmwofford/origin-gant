@@ -605,4 +605,471 @@ export const sources = [
     label: 'FirstNet Apps',
     url: 'https://www.firstnet.com/apps.html',
   },
+  {
+    label: 'FirstNet Bill Pay Help',
+    url: 'https://www.firstnet.com/help/account-help/pay-bill-online.html',
+  },
+  {
+    label: 'FirstNet and Family Plans',
+    url: 'https://www.firstnet.com/firstnet-and-family-plans.html',
+  },
 ]
+
+export const billingEligibilityGuide = {
+  sourceNote:
+    'Plan names, pricing, discounts, billing rules, and eligibility notes below are summarized from official FirstNet pages. Prices and eligibility rules can change, so verify in FirstNet Central or with a FirstNet specialist before quoting to a customer.',
+  individualPlans: [
+    {
+      name: 'FirstNet Value 2.0',
+      oneLinePrice: '$45/mo. per line',
+      multiLinePricing: [
+        '2 lines: $40.50/mo. per line',
+        '3 lines: $31.50/mo. per line',
+        '4+ lines: $27/mo. per line',
+      ],
+      headline: 'Unlimited talk, text and high-speed data.',
+      features: [
+        'First Priority with always-on priority and preemption across AT&T 5G, AT&T 4G commercial spectrum, and public safety Band 14.',
+        'Dedicated connectivity with unlimited talk, text and high-speed data that cannot slow down based on how much the user uses.',
+        '5G access requires a compatible device and is not available everywhere.',
+        'AT&T ActiveArmor is included where compatible; app download is required for some features.',
+        'Unlimited talk and text in and between the U.S., Canada, Mexico, Puerto Rico, U.S. Virgin Islands, and Pacific Territories.',
+        'Mobile hotspot is included.',
+      ],
+    },
+    {
+      name: 'FirstNet Extra 2.0',
+      oneLinePrice: '$59.50/mo. per line',
+      multiLinePricing: [
+        '2 lines: $51/mo. per line',
+        '3 lines: $42.50/mo. per line',
+        '4+ lines: $34/mo. per line',
+      ],
+      headline: 'Unlimited talk, text, high-speed data and mobile hotspot.',
+      features: [
+        'Includes First Priority across AT&T 5G, AT&T 4G commercial spectrum, and Band 14.',
+        'Dedicated connectivity with unlimited talk, text and high-speed data that cannot slow down based on usage.',
+        '5G access requires a compatible device and is not available everywhere.',
+        'AT&T ActiveArmor is included where compatible; some mobile security features are unavailable while roaming internationally.',
+        'Unlimited talk and text in and between the U.S., Canada, Mexico, Puerto Rico, U.S. Virgin Islands, and Pacific Territories.',
+        'Unlimited mobile hotspot is included.',
+      ],
+    },
+    {
+      name: 'FirstNet Premium 2.0',
+      oneLinePrice: '$72/mo. per line',
+      multiLinePricing: [
+        '2 lines: $64/mo. per line',
+        '3 lines: $52/mo. per line',
+        '4+ lines: $40/mo. per line',
+      ],
+      headline: 'Unlimited talk, text, high-speed data and mobile hotspot.',
+      features: [
+        'Includes First Priority across AT&T 5G, AT&T 4G commercial spectrum, and Band 14.',
+        'Dedicated connectivity with unlimited talk, text and high-speed data that cannot slow down based on usage.',
+        'Unlimited talk, text and high-speed data in 20 Latin American countries at no extra cost; coverage and data speeds vary.',
+        'Unlimited talk and text in and between the U.S., Canada, Mexico, Puerto Rico, U.S. Virgin Islands, and Pacific Territories.',
+        'Unlimited mobile hotspot is included.',
+        'Includes 50% off the monthly plan price of one tablet or wearable per Premium 2.0 phone line.',
+      ],
+    },
+    {
+      name: 'FirstNet Elite 2.0',
+      oneLinePrice: '$100/mo. per line',
+      multiLinePricing: [
+        '2 lines: $90/mo. per line',
+        '3 lines: $75/mo. per line',
+        '4+ lines: $65/mo. per line',
+      ],
+      headline: 'Unlimited talk, text, high-speed data and mobile hotspot.',
+      features: [
+        'Includes First Priority across AT&T 5G, AT&T 4G commercial spectrum, and Band 14.',
+        'Dedicated connectivity with unlimited talk, text and high-speed data that cannot slow down based on usage.',
+        'Unlimited talk, text and high-speed data in 20 Latin American countries at no extra cost; coverage and data speeds vary.',
+        'Includes 20GB of international data per month for over 210 destinations; after 20GB, international data speeds may be reduced to a maximum of 512 Kbps.',
+        'Unlimited mobile hotspot is included.',
+        'Monthly access for one smartwatch and one tablet per line is included at no extra cost.',
+      ],
+    },
+  ],
+  billingRules: [
+    {
+      title: 'Device and SIM requirement',
+      details: [
+        'FirstNet plans require a FirstNet Capable device.',
+        'The device must be provisioned with a FirstNet Trio SIM or eSIM card.',
+      ],
+    },
+    {
+      title: 'Published price assumptions',
+      details: [
+        'FirstNet individual plan prices shown on the official plan page are after eligible AutoPay and paperless billing discount.',
+        'Those discounts start within two bills.',
+        'Taxes and fees are extra.',
+        'Additional charges, usage, speed, and other restrictions may apply.',
+      ],
+    },
+    {
+      title: 'Online bill payment path',
+      details: [
+        'Customers must log in to FirstNet Central to pay a bill online.',
+        'From FirstNet Central, they navigate to Manage Services & Billing.',
+        'They are redirected to an AT&T account overview where the bill linked to the FirstNet account can be viewed.',
+        'FirstNet states bill payment without logging in is not available at this time.',
+      ],
+    },
+    {
+      title: 'Bill help and service support',
+      details: [
+        'FirstNet Central includes Quick Help & Tutorials with a video explanation to help users understand their bill.',
+        'A Spanish bill view is not available at this time, but FirstNet says users can find a Spanish sample through FirstNet Central FAQ, Billing, and sample-bill options.',
+        'Customers can sign in to FirstNet Central to chat with an expert or call 800.574.7000.',
+      ],
+    },
+  ],
+  eligibility: [
+    {
+      group: 'Individual first responders',
+      details: [
+        'FirstNet describes individual first responders as responders who pay for their own service.',
+        'The official eligibility page gives examples such as volunteer firefighters, ER doctors, and nurses.',
+        'The page states individuals can be eligible for FirstNet individual services when they are first responders or support first responders.',
+      ],
+    },
+    {
+      group: 'Public safety agencies',
+      details: [
+        'FirstNet says public safety agencies are part of the eligible ecosystem.',
+        'The page frames public safety broadly, including law enforcement and emergency management.',
+        'Agency service should be handled through agency sign-up or FirstNet specialist workflows rather than guessed from job title alone.',
+      ],
+    },
+    {
+      group: 'Essential services',
+      details: [
+        'FirstNet includes entities that are vital to public safety response.',
+        'The official eligibility page lists utilities, transportation, and healthcare as examples of essential services.',
+        'The key standard is supporting first responders or public safety response.',
+      ],
+    },
+    {
+      group: 'Featured eligible roles',
+      details: [
+        'EMS and 9-1-1 dispatch roles include trauma care professionals such as EMTs and paramedics.',
+        'Healthcare examples include doctors, nurses, and healthcare workers.',
+        'National Guard examples include crisis and disaster response teams.',
+        'Utilities examples include electric, water, and gas workers.',
+      ],
+    },
+  ],
+  familyPlans: [
+    {
+      title: 'Who can use FirstNet and Family',
+      details: [
+        'FirstNet and Family is available only to verified FirstNet Subscriber Paid Users.',
+        'A customer must have a FirstNet plan to add a family line.',
+        'Family members do not get access to the FirstNet network; FirstNet is exclusive to public safety.',
+        'Family members receive AT&T commercial network service with discounted pricing on eligible AT&T plans.',
+      ],
+    },
+    {
+      title: 'Account and line rules',
+      details: [
+        'FirstNet and Family can mix FirstNet and AT&T services up to 20 lines per account.',
+        'The official FAQ says a FirstNet user can be on the same account as other first responders in the household.',
+        'Each FirstNet user on the account is limited to one phone, watch, tablet, and hotspot.',
+        'FirstNet voice service counts as a line toward multi-line pricing on eligible plans.',
+      ],
+    },
+    {
+      title: 'Discounts and billing',
+      details: [
+        'Families can save up to 20% on AT&T plans.',
+        'The official page lists 20% off AT&T Premium 2.0, 15% off AT&T Extra 2.0, and 10% off AT&T Value 2.0 plan lines of service.',
+        'Credits start within three bills.',
+        'FirstNet and Family offers one bill, one central point of purchase, and dedicated U.S.-based service and support.',
+      ],
+    },
+    {
+      title: 'Adding family lines',
+      details: [
+        'To add family, the public safety user must have an active FirstNet account.',
+        'The customer can log in and add a line online.',
+        'If the family members are already on a separate AT&T account, the official FAQ says the customer must visit a store to combine accounts.',
+      ],
+    },
+  ],
+  familyPlanOptions: [
+    {
+      name: 'AT&T Premium 2.0',
+      pricing: '1 line: $64/mo.; 2 lines: $52/mo.; 3+ lines: $40/mo. per line',
+      details: [
+        'Unlimited talk, text and high-speed data that cannot slow down based on usage.',
+        '100GB hotspot data per line per month.',
+        'After 100GB, hotspot speeds are slowed to a maximum of 128 Kbps.',
+        'Includes unlimited talk, text and high-speed data in 20 Latin American countries at no extra cost; coverage and data speeds vary.',
+        'Includes 50% off one tablet or wearable per Premium 2.0 phone line.',
+      ],
+    },
+    {
+      name: 'AT&T Extra 2.0',
+      pricing: '1 line: $51/mo.; 2 lines: $42.50/mo.; 3+ lines: $34/mo. per line',
+      details: [
+        'Unlimited talk, text and data plus 100GB of high-speed data.',
+        'After 100GB, AT&T may temporarily slow data speeds if the network is busy.',
+        '50GB hotspot data per line per month.',
+        'After 50GB, hotspot speeds are slowed to a maximum of 128 Kbps.',
+        'Includes unlimited talk, text and data between the U.S., Canada, and Mexico; 2G off-net data speeds may apply.',
+      ],
+    },
+    {
+      name: 'AT&T Value 2.0',
+      pricing: '1 line: $40.50/mo.; 2 lines: $31.50/mo.; 3+ lines: $27/mo. per line',
+      details: [
+        'Unlimited talk, text and data.',
+        'After 5GB, AT&T may temporarily slow data speeds if the network is busy.',
+        '3GB hotspot data per line per month.',
+        'After 3GB, hotspot speeds are slowed to a maximum of 128 Kbps.',
+        'Includes unlimited talk, text and data between the U.S., Canada, and Mexico; 2G off-net data speeds may apply.',
+      ],
+    },
+  ],
+}
+
+export const billingEligibilityQuiz = [
+  {
+    prompt: 'What must a customer use to pay a FirstNet bill online?',
+    options: [
+      'A logged-in FirstNet Central account',
+      'A guest payment page with no login',
+      'Only a physical retail store',
+      'Only a mailed check',
+    ],
+    answer: 'A logged-in FirstNet Central account',
+  },
+  {
+    prompt: 'Where does FirstNet Central send users to view the bill linked to their FirstNet account?',
+    options: [
+      'AT&T account overview',
+      'A device trade-in page',
+      'The FirstNet App Catalog',
+      'A public coverage map only',
+    ],
+    answer: 'AT&T account overview',
+  },
+  {
+    prompt: 'Which plan lists 20GB of international data per month for over 210 destinations?',
+    options: ['FirstNet Elite 2.0', 'FirstNet Value 2.0', 'AT&T Value 2.0', 'Responder 100MB'],
+    answer: 'FirstNet Elite 2.0',
+  },
+  {
+    prompt: 'What is required for FirstNet plans according to the official plan page?',
+    options: [
+      'A FirstNet Capable device provisioned with a FirstNet Trio SIM or eSIM',
+      'Any unlocked phone with any consumer SIM',
+      'A family line before a FirstNet line',
+      'A Spanish-language bill view',
+    ],
+    answer: 'A FirstNet Capable device provisioned with a FirstNet Trio SIM or eSIM',
+  },
+  {
+    prompt: 'When do eligible AutoPay and paperless billing discounts start on FirstNet individual plans?',
+    options: ['Within two bills', 'Immediately before activation', 'After one year', 'Only after 20 lines'],
+    answer: 'Within two bills',
+  },
+  {
+    prompt: 'Which FirstNet individual plan has a one-line published price of $59.50/mo.?',
+    options: ['FirstNet Extra 2.0', 'FirstNet Value 2.0', 'FirstNet Premium 2.0', 'FirstNet Elite 2.0'],
+    answer: 'FirstNet Extra 2.0',
+  },
+  {
+    prompt: 'Who is FirstNet and Family available to?',
+    options: [
+      'Verified FirstNet Subscriber Paid Users',
+      'Any AT&T consumer customer',
+      'Only family members without a FirstNet user',
+      'Only non-public-safety users',
+    ],
+    answer: 'Verified FirstNet Subscriber Paid Users',
+  },
+  {
+    prompt: 'Do family members on FirstNet and Family get access to the FirstNet network?',
+    options: [
+      'No, family members use AT&T commercial network service',
+      'Yes, every family line becomes a FirstNet line',
+      'Only if they use a tablet',
+      'Only after three bills',
+    ],
+    answer: 'No, family members use AT&T commercial network service',
+  },
+  {
+    prompt: 'What is the maximum number of mixed FirstNet and AT&T services listed for one FirstNet and Family account?',
+    options: ['20 lines', '4 lines', '8 lines', '100 lines'],
+    answer: '20 lines',
+  },
+  {
+    prompt: 'Which FirstNet and Family discount is listed for AT&T Extra 2.0?',
+    options: ['15% off', '20% off', '10% off', '50% off'],
+    answer: '15% off',
+  },
+  {
+    prompt: 'What must happen if family members are already on a separate AT&T account and want to combine with FirstNet and Family?',
+    options: [
+      'Visit a store to combine accounts',
+      'Delete the FirstNet account',
+      'Wait for automatic migration',
+      'Use bill pay without logging in',
+    ],
+    answer: 'Visit a store to combine accounts',
+  },
+  {
+    prompt: 'Which eligibility category includes utilities, transportation, and healthcare examples?',
+    options: ['Essential services', 'Consumer-only users', 'Family-only lines', 'Roaming-only accounts'],
+    answer: 'Essential services',
+  },
+]
+
+export const accountRoadmap = {
+  sourceNote:
+    'This activity compares FirstNet individual Subscriber Paid use cases with FirstNet agency plan use cases using official FirstNet plan, eligibility, and FirstNet and Family pages. Treat it as a learning roadmap, not a substitute for eligibility verification or account setup guidance from FirstNet.',
+  buckets: {
+    subscriber: {
+      title: 'Subscriber Paid Account',
+      subtitle: 'Individual public safety professional pays for their own service',
+      summary:
+        'Use this path when the learner is thinking about an individual first responder or eligible support person who personally manages and pays for FirstNet service.',
+      facts: [
+        'FirstNet individual plans are described for public safety professionals who pay for their own service.',
+        'Examples from the eligibility page include volunteer firefighters, ER doctors, and nurses.',
+        'Subscriber Paid Users can qualify for FirstNet and Family when verified and on eligible plans.',
+        'FirstNet and Family requires an active FirstNet account before adding family lines.',
+        'Family members on FirstNet and Family use AT&T commercial network service, not the FirstNet network.',
+        'FirstNet and Family can mix FirstNet and AT&T services up to 20 lines per account.',
+      ],
+      plans: [
+        'FirstNet Value 2.0',
+        'FirstNet Extra 2.0',
+        'FirstNet Premium 2.0',
+        'FirstNet Elite 2.0',
+      ],
+    },
+    shared: {
+      title: 'Both Paths Share',
+      subtitle: 'Core FirstNet public safety network concepts',
+      summary:
+        'Both paths are part of the FirstNet public safety ecosystem and keep the focus on eligible first responders, public safety, and those who support them.',
+      facts: [
+        'Both paths center on FirstNet service for public safety or people and organizations supporting public safety.',
+        'First Priority provides always-on priority and preemption across AT&T 5G, AT&T 4G commercial spectrum, and public safety Band 14 where supported.',
+        'FirstNet individual and agency plan pages both highlight Band 14 dedicated spectrum.',
+        'Both paths can involve compatible devices and FirstNet SIM or eSIM provisioning.',
+        'Taxes and fees are extra on plan pricing shown by FirstNet.',
+        'Eligibility should be checked through official FirstNet workflows instead of guessed from a role name alone.',
+      ],
+      plans: ['First Priority', 'Band 14', 'FirstNet Capable devices', 'FirstNet SIM or eSIM'],
+    },
+    agency: {
+      title: 'Agency Paid Account',
+      subtitle: 'Public safety organization provides service to employees/personnel',
+      summary:
+        'Use this path when the learner is thinking about an agency, department, utility, healthcare organization, or other eligible organization managing service for its team.',
+      facts: [
+        'FirstNet agency plans are described for public safety organizations that provide service to employees and personnel.',
+        'The agency page presents plans for public safety agencies and organizations.',
+        'Agency plan categories include unlimited data plans, pooled data plans, and Wireless Broadband data plans.',
+        'Unlimited agency options include Unlimited Enhanced, Unlimited Standard, and Data Only.',
+        'Pooled agency options include 2GB, 5GB, 50GB, 100GB, 500GB, and 1000GB plan groupings.',
+        'Wireless Broadband agency options include Laptop, Core, Pro, and Ultra speed tiers.',
+        'Wireless Broadband plans include 175GB of data per billing cycle and predictable bills month to month.',
+        'If Wireless Broadband usage exceeds 175GB for three consecutive billing periods, AT&T will convert the billing account to a FirstNet Mobile Pooled rate plan for data-only devices.',
+      ],
+      plans: [
+        'Unlimited Enhanced',
+        'Unlimited Standard',
+        'Data Only',
+        'Pooled data plans',
+        'Wireless Broadband Laptop/Core/Pro/Ultra',
+      ],
+    },
+  },
+  decisionSteps: [
+    {
+      question: 'Who is responsible for the service?',
+      subscriber:
+        'The individual public safety professional or eligible support person is personally signing up and paying.',
+      agency:
+        'A public safety agency or organization is providing service to employees or personnel.',
+    },
+    {
+      question: 'What kind of plan set is being compared?',
+      subscriber:
+        'Individual FirstNet Value, Extra, Premium, or Elite plan options.',
+      agency:
+        'Agency unlimited, pooled data, or Wireless Broadband plan categories.',
+    },
+    {
+      question: 'Is FirstNet and Family part of the conversation?',
+      subscriber:
+        'Yes, but only for verified Subscriber Paid Users on eligible plans, and family lines use AT&T commercial network service.',
+      agency:
+        'No. FirstNet and Family is presented as a Subscriber Paid User offer, not as an agency-plan feature.',
+    },
+    {
+      question: 'Is the use case data-only backup or critical connectivity for an organization?',
+      subscriber:
+        'Individual plans can include mobile hotspot depending on plan, but the agency Wireless Broadband page is the direct source for organizational failover/connectivity use cases.',
+      agency:
+        'Agency Wireless Broadband is positioned for critical applications, failover, diverse backup, quick deployment, and offsite connectivity.',
+    },
+  ],
+  sortingCards: [
+    {
+      text: 'A volunteer firefighter pays for their own FirstNet service.',
+      bucket: 'subscriber',
+      explanation:
+        'The eligibility page identifies individual responders who pay for their own service, including volunteer firefighters, as eligible examples.',
+    },
+    {
+      text: 'A public safety organization provides service to its personnel.',
+      bucket: 'agency',
+      explanation:
+        'The agency plans page describes plans for organizations that provide service to employees and personnel.',
+    },
+    {
+      text: 'Family lines receive discounted AT&T commercial network service.',
+      bucket: 'subscriber',
+      explanation:
+        'FirstNet and Family is available only to verified Subscriber Paid Users, and family members do not receive FirstNet network access.',
+    },
+    {
+      text: 'A department wants pooled 50GB or 100GB data options.',
+      bucket: 'agency',
+      explanation:
+        'The agency plans page lists 50GB and 100GB pooled data plans for smartphones and data-only devices.',
+    },
+    {
+      text: 'First Priority and Band 14 are important account concepts.',
+      bucket: 'shared',
+      explanation:
+        'Both individual and agency plan pages highlight First Priority and Band 14.',
+    },
+    {
+      text: 'Wireless Broadband Core offers up to 25Mbps and 175GB per billing cycle.',
+      bucket: 'agency',
+      explanation:
+        'This is listed under FirstNet Wireless Broadband agency data plans.',
+    },
+    {
+      text: 'The customer asks whether FirstNet and AT&T lines can be on one bill.',
+      bucket: 'subscriber',
+      explanation:
+        'FirstNet and Family describes one bill, one point of purchase, and mixing FirstNet and AT&T services up to 20 lines per account.',
+    },
+    {
+      text: 'The role should be verified through official FirstNet eligibility workflows.',
+      bucket: 'shared',
+      explanation:
+        'Eligibility is shared due diligence. The guide should not infer eligibility from role names alone.',
+    },
+  ],
+}

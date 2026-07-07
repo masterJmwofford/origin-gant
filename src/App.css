@@ -133,6 +133,373 @@ button {
   font-size: 28px;
 }
 
+.section-heading.compact {
+  margin-bottom: 12px;
+}
+
+.section-heading.compact h3 {
+  margin: 4px 0 0;
+  color: #172033;
+  font-size: 22px;
+}
+
+.billing-guide {
+  display: grid;
+  gap: 18px;
+}
+
+.billing-guide-intro,
+.billing-panel {
+  border: 1px solid #e1e6ef;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgba(23, 32, 51, 0.05);
+}
+
+.billing-guide-intro {
+  padding: 18px 20px;
+  color: #566174;
+}
+
+.billing-panel {
+  padding: 22px;
+}
+
+.plan-table {
+  display: grid;
+  gap: 14px;
+}
+
+.plan-row {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.75fr) minmax(180px, 0.6fr) minmax(280px, 1.3fr);
+  gap: 18px;
+  padding: 18px;
+  border: 1px solid #e1e6ef;
+  border-radius: 8px;
+  background: #f8fafc;
+}
+
+.plan-row h4,
+.plan-row h5,
+.fact-block h4,
+.family-plan-card h4 {
+  margin: 0 0 8px;
+  color: #172033;
+}
+
+.plan-row h4 {
+  font-size: 20px;
+}
+
+.plan-row h5 {
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.plan-row strong {
+  display: block;
+  margin-bottom: 8px;
+  color: #0b5ed7;
+  font-size: 18px;
+}
+
+.plan-row p,
+.fact-block p,
+.family-plan-card p {
+  color: #566174;
+}
+
+.billing-guide ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.billing-guide li {
+  margin-bottom: 8px;
+  color: #566174;
+}
+
+.billing-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.stacked-facts,
+.family-rules,
+.family-plan-options {
+  display: grid;
+  gap: 12px;
+}
+
+.family-rules {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-bottom: 18px;
+}
+
+.fact-block,
+.family-plan-card {
+  padding: 16px;
+  border: 1px solid #e1e6ef;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.family-plan-options {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.family-plan-card {
+  background: #f8fafc;
+}
+
+.account-roadmap {
+  display: grid;
+  gap: 18px;
+}
+
+.roadmap-venn-panel {
+  display: grid;
+  grid-template-columns: minmax(360px, 0.95fr) minmax(0, 1.05fr);
+  gap: 18px;
+  align-items: stretch;
+  padding: 22px;
+  border: 1px solid #e1e6ef;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgba(23, 32, 51, 0.05);
+}
+
+.roadmap-venn {
+  position: relative;
+  min-height: 360px;
+  border-radius: 8px;
+  background: #f8fafc;
+  overflow: hidden;
+}
+
+.venn-circle,
+.venn-overlap {
+  position: absolute;
+  border: 2px solid transparent;
+  color: #172033;
+  font-weight: 900;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.venn-circle {
+  top: 48px;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  opacity: 0.82;
+}
+
+.venn-circle span {
+  position: relative;
+  z-index: 1;
+}
+
+.venn-subscriber {
+  left: calc(50% - 242px);
+  background: rgba(0, 116, 255, 0.28);
+}
+
+.venn-agency {
+  right: calc(50% - 242px);
+  background: rgba(48, 176, 125, 0.28);
+}
+
+.venn-overlap {
+  top: 136px;
+  left: 50%;
+  width: 120px;
+  min-height: 82px;
+  transform: translateX(-50%);
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 10px 28px rgba(23, 32, 51, 0.16);
+}
+
+.venn-circle:hover,
+.venn-circle.active,
+.venn-overlap:hover,
+.venn-overlap.active {
+  border-color: #172033;
+  box-shadow: 0 10px 30px rgba(23, 32, 51, 0.18);
+}
+
+.venn-circle:hover,
+.venn-circle.active {
+  transform: scale(1.03);
+}
+
+.venn-overlap:hover,
+.venn-overlap.active {
+  transform: translateX(-50%) scale(1.03);
+}
+
+.roadmap-detail {
+  padding: 20px;
+  border: 1px solid #e1e6ef;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.roadmap-detail h3,
+.sort-activity h3 {
+  margin: 6px 0 6px;
+  color: #172033;
+  font-size: 24px;
+}
+
+.roadmap-detail p,
+.decision-card p,
+.sort-activity p {
+  color: #566174;
+}
+
+.roadmap-subtitle {
+  font-weight: 800;
+}
+
+.roadmap-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 14px 0;
+}
+
+.roadmap-chip {
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: #eef5ff;
+  color: #0b5ed7;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.roadmap-detail ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.roadmap-detail li {
+  margin-bottom: 8px;
+  color: #566174;
+}
+
+.roadmap-decision-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.decision-card,
+.sort-activity {
+  padding: 20px;
+  border: 1px solid #e1e6ef;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgba(23, 32, 51, 0.05);
+}
+
+.decision-card h4 {
+  margin: 0 0 14px;
+  color: #172033;
+}
+
+.decision-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.decision-columns div {
+  padding: 14px;
+  border-radius: 8px;
+  background: #f8fafc;
+}
+
+.decision-columns strong {
+  display: block;
+  margin-bottom: 8px;
+  color: #172033;
+}
+
+.sort-activity {
+  display: grid;
+  gap: 16px;
+}
+
+.sort-progress {
+  font-weight: 800;
+}
+
+.scenario-card {
+  padding: 20px;
+  border: 1px solid #cfd7e6;
+  border-radius: 8px;
+  background: #f8fafc;
+}
+
+.scenario-card p {
+  color: #172033;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.sort-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.sort-button {
+  min-height: 48px;
+  padding: 10px 14px;
+  border: 1px solid #cfd7e6;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #172033;
+  font-weight: 900;
+}
+
+.sort-button:hover,
+.sort-button.selected {
+  border-color: #0b5ed7;
+  background: #eef5ff;
+}
+
+.sort-feedback {
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.sort-feedback.correct {
+  border: 1px solid #30b07d;
+  background: #e5f8ef;
+}
+
+.sort-feedback.incorrect {
+  border: 1px solid #d94343;
+  background: #fde9e9;
+}
+
+.sort-feedback strong {
+  display: block;
+  margin-bottom: 6px;
+  color: #172033;
+}
+
+.sort-feedback .primary {
+  margin-top: 12px;
+}
+
 .accordion-list {
   display: grid;
   gap: 12px;
@@ -393,5 +760,38 @@ button {
 
   .dashboard {
     grid-template-columns: 1fr;
+  }
+
+  .plan-row,
+  .billing-grid,
+  .family-rules,
+  .family-plan-options,
+  .roadmap-venn-panel,
+  .roadmap-decision-grid,
+  .decision-columns,
+  .sort-buttons {
+    grid-template-columns: 1fr;
+  }
+
+  .roadmap-venn {
+    min-height: 300px;
+  }
+
+  .venn-circle {
+    top: 42px;
+    width: 210px;
+    height: 210px;
+  }
+
+  .venn-subscriber {
+    left: calc(50% - 190px);
+  }
+
+  .venn-agency {
+    right: calc(50% - 190px);
+  }
+
+  .venn-overlap {
+    top: 118px;
   }
 }

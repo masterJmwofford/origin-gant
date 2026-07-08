@@ -25,6 +25,12 @@ const routingRules = [
     reply:
       'I opened SSO Options. Match each customer scenario to the best FirstNet self-service path.',
   },
+  {
+    tab: 'mesa-breaker',
+    keywords: ['mesa', 'breaker', 'brick', 'core', 'laser', 'game'],
+    reply:
+      'I opened MESA Breaker. Pilot the owl and fire CORE shots to clear every MESA brick.',
+  },
 ]
 
 function findRoute(message) {
@@ -38,7 +44,7 @@ function findRoute(message) {
 export default function OwlAssistant({ activeTab, navItems, onNavigate }) {
   const [message, setMessage] = useState('')
   const [assistantReply, setAssistantReply] = useState(
-    'Ask me where to study next. I can open Billing, Eligibility, Index Cards, or SSO Options.',
+    'Ask me where to study next. I can open Billing, Eligibility, Index Cards, SSO Options, or MESA Breaker.',
   )
 
   function submitMessage(event) {
@@ -52,7 +58,7 @@ export default function OwlAssistant({ activeTab, navItems, onNavigate }) {
 
     if (!route) {
       setAssistantReply(
-        'I can route you to Billing, Eligibility, Index Cards, or SSO Options. Try asking for one of those sections.',
+        'I can route you to Billing, Eligibility, Index Cards, SSO Options, or MESA Breaker. Try asking for one of those sections.',
       )
       setMessage('')
       return
@@ -72,16 +78,16 @@ export default function OwlAssistant({ activeTab, navItems, onNavigate }) {
         <p>{assistantReply}</p>
       </div>
 
-      {/* <form className="owl-form" onSubmit={submitMessage}>
+      <form className="owl-form" onSubmit={submitMessage}>
         <input
           type="text"
           value={message}
           onChange={(event) => setMessage(event.target.value)}
-          placeholder="Try: show me billing, SSO help, index cards..."
+          placeholder="Try: show me billing, SSO help, MESA breaker..."
           aria-label="Ask the owl guide where to navigate"
         />
         <button type="submit">Go</button>
-      </form> */}
+      </form>
 
       <div className="owl-shortcuts">
         {navItems.map((item) => (

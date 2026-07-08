@@ -47,6 +47,14 @@ body {
   --theme-ring: rgba(117, 84, 199, 0.24);
 }
 
+.page.theme-green {
+  --theme: #13a538;
+  --theme-dark: #08772b;
+  --theme-soft: #e9f8ed;
+  --theme-tint: rgba(19, 165, 56, 0.16);
+  --theme-ring: rgba(19, 165, 56, 0.28);
+}
+
 button,
 input {
   font: inherit;
@@ -153,7 +161,7 @@ button {
   top: 0;
   z-index: 5;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 10px;
   margin: 24px 0;
   padding: 10px;
@@ -194,6 +202,11 @@ button {
 .nav-violet {
   --nav-theme: #7554c7;
   --nav-soft: #f2edff;
+}
+
+.nav-green {
+  --nav-theme: #13a538;
+  --nav-soft: #e9f8ed;
 }
 
 .nav-tab::before {
@@ -897,6 +910,190 @@ button {
   line-height: 1.35;
 }
 
+.mesa-breaker {
+  display: grid;
+  gap: 18px;
+}
+
+.mesa-info {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: center;
+  padding: 22px;
+  border: 1px solid #d5e8dc;
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(19, 165, 56, 0.13), rgba(8, 119, 43, 0.06)),
+    #ffffff;
+  box-shadow: 0 8px 24px rgba(23, 32, 51, 0.05);
+}
+
+.mesa-info h2 {
+  margin: 6px 0 8px;
+  color: #172033;
+  font-size: 30px;
+}
+
+.mesa-info p:not(.eyebrow) {
+  color: #566174;
+}
+
+.mesa-stats {
+  display: grid;
+  grid-template-columns: repeat(3, max-content);
+  gap: 10px;
+}
+
+.mesa-stats span {
+  padding: 10px 12px;
+  border: 1px solid #bfe5c9;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #08772b;
+  font-weight: 900;
+}
+
+.mesa-stage-wrap {
+  overflow-x: auto;
+  padding: 8px 0 2px;
+}
+
+.mesa-stage {
+  position: relative;
+  width: var(--game-width);
+  height: var(--game-height);
+  margin: 0 auto;
+  overflow: hidden;
+  border: 1px solid #10361e;
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(57, 255, 116, 0.16), transparent 22%),
+    radial-gradient(circle at 82% 28%, rgba(76, 181, 255, 0.16), transparent 26%),
+    linear-gradient(180deg, #0a1b17, #0f1f2d 55%, #081112);
+  box-shadow: 0 18px 48px rgba(8, 17, 18, 0.28);
+}
+
+.mesa-stars {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.58) 1px, transparent 1px),
+    radial-gradient(circle, rgba(57, 255, 116, 0.42) 1px, transparent 1px);
+  background-position:
+    12px 18px,
+    44px 61px;
+  background-size:
+    92px 86px,
+    140px 120px;
+  opacity: 0.75;
+}
+
+.mesa-brick {
+  position: absolute;
+  width: 18px;
+  height: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.52);
+  border-radius: 3px;
+  box-shadow:
+    inset 0 -2px 0 rgba(0, 0, 0, 0.18),
+    0 0 12px rgba(255, 255, 255, 0.12);
+}
+
+.brick-m {
+  background: #33a8ff;
+}
+
+.brick-e {
+  background: #39ff74;
+}
+
+.brick-s {
+  background: #ffd45a;
+}
+
+.brick-a {
+  background: #ff6f8f;
+}
+
+.core-laser {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 12px;
+  height: 34px;
+  border-radius: 999px;
+  background: #39ff74;
+  color: #05270f;
+  font-size: 8px;
+  font-weight: 1000;
+  line-height: 1;
+  text-orientation: mixed;
+  writing-mode: vertical-rl;
+  box-shadow:
+    0 0 10px #39ff74,
+    0 0 22px rgba(57, 255, 116, 0.75);
+}
+
+.mesa-owl {
+  position: absolute;
+  bottom: 18px;
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #39ff74;
+  background: #ffffff;
+  box-shadow:
+    0 0 0 6px rgba(57, 255, 116, 0.14),
+    0 0 24px rgba(57, 255, 116, 0.55);
+  user-select: none;
+}
+
+.mesa-win {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(5, 14, 13, 0.78);
+  color: #ffffff;
+  text-align: center;
+}
+
+.mesa-win strong {
+  color: #39ff74;
+  font-size: 32px;
+}
+
+.mesa-controls {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.mesa-controls button {
+  min-height: 48px;
+  border: 1px solid #bfe5c9;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #08772b;
+  font-weight: 900;
+}
+
+.mesa-controls button:hover,
+.mesa-controls .core-button {
+  border-color: #13a538;
+  background: #e9f8ed;
+}
+
+.mesa-controls .core-button {
+  box-shadow: inset 0 0 0 1px rgba(19, 165, 56, 0.18);
+}
+
 .accordion-list {
   display: grid;
   gap: 12px;
@@ -1216,5 +1413,15 @@ button {
 
   .venn-overlap {
     top: 118px;
+  }
+
+  .mesa-info,
+  .mesa-stats,
+  .mesa-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .mesa-stage {
+    margin-left: 0;
   }
 }

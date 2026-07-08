@@ -5,6 +5,7 @@ import AccountRoadmap from './components/AccountRoadmap'
 import BillingEligibilityGuide from './components/BillingEligibilityGuide'
 import DashBoard from './components/DashBoard.jsx'
 import FlashCardGrid from './components/FlashCardGrid'
+import MesaBreaker from './components/MesaBreaker'
 import OwlAssistant from './components/OwlAssistant'
 import Plans from './components/Plans'
 import Quiz from './components/Quiz'
@@ -46,6 +47,12 @@ const navItems = [
     label: 'SSO Options',
     theme: 'violet',
     description: 'Self-service scenario matching game',
+  },
+  {
+    id: 'mesa-breaker',
+    label: 'MESA Breaker',
+    theme: 'green',
+    description: 'Owl CORE laser brick-breaker game',
   },
 ]
 
@@ -191,6 +198,14 @@ function App() {
                 <h2>SSO Options Matching Game</h2>
               </div>
               <SelfServiceGame game={selfServiceGame} />
+            </section>
+          </div>
+        )}
+
+        {activeTab === 'mesa-breaker' && (
+          <div className="tab-panel">
+            <section className="study-section" id="mesa-breaker">
+              <MesaBreaker />
             </section>
           </div>
         )}

@@ -65,7 +65,7 @@ export default function OwlAssistant({ activeTab, navItems, onNavigate }) {
 
   return (
     <aside className="owl-assistant">
-    <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/bf5c3b5c-e63a-4b60-a332-3e658400fce7/dgp1otz-9852feb5-f4c6-4f08-9fc3-96e125d6e29f.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiIvZi9iZjVjM2I1Yy1lNjNhLTRiNjAtYTMzMi0zZTY1ODQwMGZjZTcvZGdwMW90ei05ODUyZmViNS1mNGM2LTRmMDgtOWZjMy05NmUxMjVkNmUyOWYuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.YOMR_oY2ZnDgD2gLlTJ2fTZGcuz9qH9rn8AwIWVJing" alt="" className="owlAvi" />
+    <img src="https://i.pinimg.com/originals/a2/7c/76/a27c768c469972cec4cd4b1500a13c23.gif" alt="" className="owlAvi" />
       <div className="owl-assistant-copy">
         <p className="eyebrow">Owl AI Guide</p>
         <h2>Where should we fly next?</h2>

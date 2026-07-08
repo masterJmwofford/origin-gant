@@ -5,18 +5,49 @@ import AccountRoadmap from './components/AccountRoadmap'
 import BillingEligibilityGuide from './components/BillingEligibilityGuide'
 import DashBoard from './components/DashBoard.jsx'
 import FlashCardGrid from './components/FlashCardGrid'
+import OwlAssistant from './components/OwlAssistant'
 import Plans from './components/Plans'
 import Quiz from './components/Quiz'
 import Search from './components/Search'
+import SelfServiceGame from './components/SelfServiceGame'
+import owlHero from './assets/owl-facts-hero.png'
 import {
   accountRoadmap,
   billingEligibilityGuide,
   billingEligibilityQuiz,
   quizQuestions,
+  selfServiceGame,
   sources,
   studyNotes,
   terms,
 } from './data/studyGuide'
+
+const navItems = [
+  {
+    id: 'billing',
+    label: 'Billing',
+    theme: 'aqua',
+    description: 'Plans, bill pay, pricing rules, and billing quiz',
+  },
+  {
+    id: 'eligibility',
+    label: 'Eligibility',
+    theme: 'emerald',
+    description: 'Eligibility notes, account roadmap, and scenarios',
+  },
+  {
+    id: 'index-cards',
+    label: 'Index Cards',
+    theme: 'amber',
+    description: 'Searchable flashcards and knowledge checks',
+  },
+  {
+    id: 'sso',
+    label: 'SSO Options',
+    theme: 'violet',
+    description: 'Self-service scenario matching game',
+  },
+]
 
 function matchesSearch(item, query) {
   return JSON.stringify(item).toLowerCase().includes(query.toLowerCase())
@@ -24,6 +55,8 @@ function matchesSearch(item, query) {
 
 function App() {
   const [query, setQuery] = useState('')
+  const [activeTab, setActiveTab] = useState('billing')
+  const activeNavItem = navItems.find((item) => item.id === activeTab)
 
   const filteredTerms = terms.filter((term) => matchesSearch(term, query))
   const filteredPlans = studyNotes.filter((plan) => matchesSearch(plan, query))
@@ -48,70 +81,118 @@ function App() {
   ]
 
   return (
-    <main className="page">
+    <main className={`page theme-${activeNavItem.theme}`}>
       <section className="hero">
         <div>
-          <p className="eyebrow">FirstNet study guide</p>
-          <h1>Review FirstNet terms, network features, eligibility, and tools.</h1>
+          <p className="eyebrow">FirstNet learning guide</p>
+          <h1>The Owl Facts App</h1>
           <p>
-            Search the guide, open quick notes, flip flashcards, then test recall with
-            a short quiz.
+            A guided FirstNet study workspace for billing, eligibility, index cards,
+            self-service options, scenarios, and quizzes.
           </p>
         </div>
-        <Search query={query} onQueryChange={setQuery} />
+        <div className="hero-media">
+          <img src={owlHero} alt="Wise owl study app splash artwork" />
+        </div>
       </section>
 
       <DashBoard stats={stats} />
 
-      <section className="study-section" id="notes">
-        <div className="section-heading">
-          <p className="eyebrow">Read</p>
-          <h2>Plan and activation notes</h2>
-        </div>
-        <Plans plans={filteredPlans} />
-      </section>
+      <OwlAssistant activeTab={activeTab} navItems={navItems} onNavigate={setActiveTab} />
 
-      <section className="study-section" id="billing-eligibility">
-        <div className="section-heading">
-          <p className="eyebrow">Deep Dive</p>
-          <h2>Billing, Eligibility, and Plan Details</h2>
-        </div>
-        <BillingEligibilityGuide guide={billingEligibilityGuide} />
-      </section>
+      <nav className="study-nav" aria-label="Study sections">
+        {navItems.map((item) => (
+          <button
+            className={`nav-tab nav-${item.theme} ${activeTab === item.id ? 'active' : ''}`}
+            key={item.id}
+            type="button"
+            onClick={() => setActiveTab(item.id)}
+          >
+            <span>{item.label}</span>
+            <small>{item.description}</small>
+          </button>
+        ))}
+      </nav>
 
-      <section className="study-section" id="billing-eligibility-quiz">
-        <div className="section-heading">
-          <p className="eyebrow">Practice</p>
-          <h2>Billing and Eligibility Quiz</h2>
-        </div>
-        <Quiz questions={billingEligibilityQuiz} />
-      </section>
+      <section className="tab-shell">
+        {activeTab === 'billing' && (
+          <div className="tab-panel">
+            <section className="study-section" id="billing-eligibility">
+              <div className="section-heading">
+                <p className="eyebrow">Billing</p>
+                <h2>Billing, Plan, and Payment Details</h2>
+              </div>
+              <BillingEligibilityGuide guide={billingEligibilityGuide} />
+            </section>
 
-      <section className="study-section" id="account-roadmap">
-        <div className="section-heading">
-          <p className="eyebrow">Roadmap</p>
-          <h2>Subscriber Paid vs. Agency Paid Accounts</h2>
-        </div>
-        <AccountRoadmap roadmap={accountRoadmap} />
-      </section>
+            <section className="study-section paired-practice" id="billing-eligibility-quiz">
+              <div className="section-heading">
+                <p className="eyebrow">Practice</p>
+                <h2>Billing and Eligibility Quiz</h2>
+              </div>
+              <Quiz questions={billingEligibilityQuiz} />
+            </section>
+          </div>
+        )}
 
-      <section className="study-section" id="flashcards">
-        <div className="section-heading">
-          <p className="eyebrow">Recall</p>
-          <h2>Flashcards</h2>
-        </div>
-        <FlashCardGrid terms={filteredTerms} />
-      </section>
+        {activeTab === 'eligibility' && (
+          <div className="tab-panel">
+            <section className="study-section" id="notes">
+              <div className="section-heading">
+                <p className="eyebrow">Read</p>
+                <h2>Eligibility, Plans, and Activation Notes</h2>
+              </div>
+              <Plans plans={filteredPlans} />
+            </section>
 
-      <section className="study-section" id="quiz">
-        <div className="section-heading">
-          <p className="eyebrow">Practice</p>
-          <h2>Quiz</h2>
-        </div>
-        <Quiz
-          key={visibleQuestions.map((question) => question.prompt).join('|')}
-          questions={visibleQuestions}
-        />
+            <section className="study-section paired-practice" id="account-roadmap">
+              <div className="section-heading">
+                <p className="eyebrow">Scenario Roadmap</p>
+                <h2>Subscriber Paid vs. Agency Paid Accounts</h2>
+              </div>
+              <AccountRoadmap roadmap={accountRoadmap} />
+            </section>
+          </div>
+        )}
+
+        {activeTab === 'index-cards' && (
+          <div className="tab-panel">
+            <section className="study-section search-dock">
+              <Search query={query} onQueryChange={setQuery} />
+            </section>
+
+            <section className="study-section" id="flashcards">
+              <div className="section-heading">
+                <p className="eyebrow">Index Cards</p>
+                <h2>Searchable FirstNet Index Cards</h2>
+              </div>
+              <FlashCardGrid terms={filteredTerms} />
+            </section>
+
+            <section className="study-section paired-practice" id="quiz">
+              <div className="section-heading">
+                <p className="eyebrow">Practice</p>
+                <h2>Index Card Quiz</h2>
+              </div>
+              <Quiz
+                key={visibleQuestions.map((question) => question.prompt).join('|')}
+                questions={visibleQuestions}
+              />
+            </section>
+          </div>
+        )}
+
+        {activeTab === 'sso' && (
+          <div className="tab-panel">
+            <section className="study-section" id="sso-options">
+              <div className="section-heading">
+                <p className="eyebrow">Self-Service</p>
+                <h2>SSO Options Matching Game</h2>
+              </div>
+              <SelfServiceGame game={selfServiceGame} />
+            </section>
+          </div>
+        )}
       </section>
 
       <section className="study-section source-section" id="sources">

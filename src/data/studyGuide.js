@@ -613,6 +613,14 @@ export const sources = [
     label: 'FirstNet and Family Plans',
     url: 'https://www.firstnet.com/firstnet-and-family-plans.html',
   },
+  {
+    label: 'FirstNet Help',
+    url: 'https://www.firstnet.com/help.html',
+  },
+  {
+    label: 'FirstNet Assist',
+    url: 'https://www.firstnet.com/apps/featured-apps/firstnet-assist.html',
+  },
 ]
 
 export const billingEligibilityGuide = {
@@ -1070,6 +1078,171 @@ export const accountRoadmap = {
       bucket: 'shared',
       explanation:
         'Eligibility is shared due diligence. The guide should not infer eligibility from role names alone.',
+    },
+  ],
+}
+
+export const selfServiceGame = {
+  sourceNote:
+    'SSO is treated here as self-service options. These choices are based on official FirstNet Help, FirstNet Central billing help, FirstNet Assist, and FirstNet Apps pages.',
+  options: [
+    {
+      id: 'firstnet-central-billing',
+      title: 'FirstNet Central: Manage Services & Billing',
+      detail:
+        'Use FirstNet Central, then Manage Services & Billing, to reach the AT&T account overview and view/pay the bill linked to the FirstNet account.',
+    },
+    {
+      id: 'quick-help-tutorials',
+      title: 'FirstNet Central: Quick Help & Tutorials',
+      detail:
+        'Use Quick Help & Tutorials in FirstNet Central for a video explanation and additional information about the FirstNet bill.',
+    },
+    {
+      id: 'spanish-sample-bill',
+      title: 'FirstNet Central: Spanish Sample Bill Path',
+      detail:
+        'For Spanish bill help, FirstNet says to log in to FirstNet Central, open FAQ, select Billing, then view the Spanish sample bill.',
+    },
+    {
+      id: 'firstnet-central-chat',
+      title: 'FirstNet Central: Chat With an Expert',
+      detail:
+        'Sign in to FirstNet Central to chat with an expert for billing or account help.',
+    },
+    {
+      id: 'phone-support',
+      title: 'FirstNet Phone Support',
+      detail:
+        'Call 800.574.7000 to speak with a FirstNet representative.',
+    },
+    {
+      id: 'activate-esim',
+      title: 'Help: Activate eSIM',
+      detail:
+        'Use the official FirstNet help path for eSIM activation tutorials, including iPhone, iPad, Android, BYOD, setup, and upgrade options where listed.',
+    },
+    {
+      id: 'certified-devices',
+      title: 'Help: Certified Devices',
+      detail:
+        'Use the official certified devices resource to check devices associated with FirstNet Ready and FirstNet certified device guidance.',
+    },
+    {
+      id: 'numbersync-wearables',
+      title: 'Help: NumberSync for Wearables',
+      detail:
+        'Use FirstNet NumberSync help when a customer wants call and text from a supported wearable using FirstNet wearable solutions.',
+    },
+    {
+      id: 'firstnet-assist-care',
+      title: 'FirstNet Assist: Dedicated Care',
+      detail:
+        'Use FirstNet Assist for one-button voice contact or live chat text with a FirstNet care representative.',
+    },
+    {
+      id: 'firstnet-assist-diagnostics',
+      title: 'FirstNet Assist: Device Diagnostics',
+      detail:
+        'Use FirstNet Assist quick self-help diagnostics to help diagnose and resolve device issues.',
+    },
+    {
+      id: 'firstnet-assist-uplift',
+      title: 'FirstNet Assist: Uplift Request',
+      detail:
+        'Use FirstNet Assist for uplift workflows, including viewing active uplift incidents/events nearby and requesting priority uplift with one click for personnel providing critical support.',
+    },
+    {
+      id: 'app-catalog',
+      title: 'FirstNet App Catalog',
+      detail:
+        'Use the FirstNet App Catalog or online inventory to review public-safety-focused apps and tools.',
+    },
+  ],
+  scenarios: [
+    {
+      customer:
+        'A customer wants to pay the FirstNet bill online and asks if they can do it without logging in.',
+      answerId: 'firstnet-central-billing',
+      clue:
+        'FirstNet says bill pay without logging in is not available; the customer must log in to FirstNet Central and go to Manage Services & Billing.',
+    },
+    {
+      customer:
+        'A customer can see their bill, but wants a guided explanation of what the bill means.',
+      answerId: 'quick-help-tutorials',
+      clue:
+        'FirstNet says Quick Help & Tutorials in FirstNet Central includes a video explanation and more bill information.',
+    },
+    {
+      customer:
+        'A customer asks whether the bill can be viewed in Spanish.',
+      answerId: 'spanish-sample-bill',
+      clue:
+        'FirstNet says a Spanish bill view is not available, but a Spanish sample can be found through FirstNet Central FAQ and Billing.',
+    },
+    {
+      customer:
+        'A customer needs live account help but is already able to sign in.',
+      answerId: 'firstnet-central-chat',
+      clue:
+        'FirstNet says customers can sign in to FirstNet Central to chat with an expert.',
+    },
+    {
+      customer:
+        'A customer wants to speak with a FirstNet representative by phone.',
+      answerId: 'phone-support',
+      clue:
+        'FirstNet lists 800.574.7000 for speaking with a representative.',
+    },
+    {
+      customer:
+        'A user is setting up a compatible iPhone with eSIM and needs the official activation path.',
+      answerId: 'activate-esim',
+      clue:
+        'FirstNet help includes Activate eSIM resources and device-specific activation tutorials.',
+    },
+    {
+      customer:
+        'A customer asks how to check whether a device is certified for FirstNet use.',
+      answerId: 'certified-devices',
+      clue:
+        'FirstNet Help links to certified devices and FirstNet Ready device guidance.',
+    },
+    {
+      customer:
+        'A user wants calls and texts from a supported smartwatch on FirstNet wearable service.',
+      answerId: 'numbersync-wearables',
+      clue:
+        'FirstNet Help lists NumberSync for wearables for call/text functionality from the wrist.',
+    },
+    {
+      customer:
+        'A field user needs one-button voice contact or live chat with FirstNet care.',
+      answerId: 'firstnet-assist-care',
+      clue:
+        'FirstNet Assist offers dedicated care with one-button voice contact and live chat text.',
+    },
+    {
+      customer:
+        'A customer says their device is not working correctly and wants a self-help troubleshooting tool.',
+      answerId: 'firstnet-assist-diagnostics',
+      clue:
+        'FirstNet Assist includes a quick self-help tool designed to diagnose and resolve device issues.',
+    },
+    {
+      customer:
+        'Personnel supporting responders need to request priority uplift during an active event.',
+      answerId: 'firstnet-assist-uplift',
+      clue:
+        'FirstNet Assist supports nearby uplift event visibility and one-click priority uplift requests.',
+    },
+    {
+      customer:
+        'A supervisor wants to review public-safety-focused apps and tools available for FirstNet users.',
+      answerId: 'app-catalog',
+      clue:
+        'The FirstNet App Catalog and online inventory are the official app discovery paths.',
     },
   ],
 }

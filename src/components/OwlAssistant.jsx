@@ -78,7 +78,7 @@ export default function OwlAssistant({ activeTab, navItems, onNavigate }) {
         <p>{assistantReply}</p>
       </div>
 
-      <form className="owl-form" onSubmit={submitMessage}>
+      {/* <form className="owl-form" onSubmit={submitMessage}>
         <input
           type="text"
           value={message}
@@ -87,7 +87,7 @@ export default function OwlAssistant({ activeTab, navItems, onNavigate }) {
           aria-label="Ask the owl guide where to navigate"
         />
         <button type="submit">Go</button>
-      </form>
+      </form> */}
 
       <div className="owl-shortcuts">
         {navItems.map((item) => (

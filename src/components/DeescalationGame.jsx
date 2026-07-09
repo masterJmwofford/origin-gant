@@ -243,14 +243,14 @@ export default function DeescalationGame() {
         <div className="deescalation-score">
           <span>Round {round}</span>
           <span>Wins {wins}</span>
-          <span>{disposition.label}</span>
+          
         </div>
       </section>
 
       <section className="deescalation-board">
         <div className="dove-panel">
           <img className="dove-avatar" src={doveCoach} alt="Dove coach avatar" />
-          <h3>Coach cue</h3>
+          <h3>Coach Dove-inity</h3>
           <p>Use calm language. Avoid blame, shortcuts, or “policy-only” replies.</p>
           <div className="skill-tags">
             {skillGroups.map((group) => (
@@ -266,6 +266,7 @@ export default function DeescalationGame() {
               <p className="eyebrow">Customer</p>
               <h3>{scenario.name}</h3>
               <p>{scenario.role}</p>
+              <span>{disposition.label}</span>
             </div>
           </div>
 

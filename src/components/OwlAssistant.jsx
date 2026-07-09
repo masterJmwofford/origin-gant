@@ -84,7 +84,7 @@ export default function OwlAssistant({ activeTab, navItems, onNavigate }) {
         <p>{assistantReply}</p>
       </div>
 
-      <form className="owl-form" onSubmit={submitMessage}>
+      {/* <form className="owl-form" onSubmit={submitMessage}>
         <input
           type="text"
           value={message}
@@ -109,7 +109,7 @@ export default function OwlAssistant({ activeTab, navItems, onNavigate }) {
             {item.label}
           </button>
         ))}
-      </div>
+      </div> */}
     </aside>
   )
 }

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import './App.css'
 import AccountRoadmap from './components/AccountRoadmap'
@@ -70,6 +70,8 @@ function matchesSearch(item, query) {
 function App() {
   const [query, setQuery] = useState('')
   const [activeTab, setActiveTab] = useState('billing')
+  const [navCompact, setNavCompact] = useState(false)
+  const navAnchorRef = useRef(null)
   const activeNavItem = navItems.find((item) => item.id === activeTab)
 
   const filteredTerms = terms.filter((term) => matchesSearch(term, query))
@@ -94,6 +96,23 @@ function App() {
     },
   ]
 
+  useEffect(() => {
+    function updateNavState() {
+      if (!navAnchorRef.current) return
+
+      setNavCompact(navAnchorRef.current.getBoundingClientRect().top < 0)
+    }
+
+    updateNavState()
+    window.addEventListener('scroll', updateNavState, { passive: true })
+    window.addEventListener('resize', updateNavState)
+
+    return () => {
+      window.removeEventListener('scroll', updateNavState)
+      window.removeEventListener('resize', updateNavState)
+    }
+  }, [])
+
   return (
     <main className={`page theme-${activeNavItem.theme}`}>
       <section className="hero">
@@ -115,7 +134,8 @@ function App() {
 
       <OwlAssistant activeTab={activeTab} navItems={navItems} onNavigate={setActiveTab} />
 
-      <nav className="study-nav" aria-label="Study sections">
+      <div ref={navAnchorRef} className="nav-scroll-anchor" aria-hidden="true" />
+      <nav className={`study-nav ${navCompact ? 'is-compact' : ''}`} aria-label="Study sections">
         {navItems.map((item) => (
           <button
             className={`nav-tab nav-${item.theme} ${activeTab === item.id ? 'active' : ''}`}

@@ -12,7 +12,7 @@ import Plans from './components/Plans'
 import Quiz from './components/Quiz'
 import Search from './components/Search'
 import SelfServiceGame from './components/SelfServiceGame'
-import owlHero from './assets/owl-facts-hero.png'
+import owlHero from './assets/owl-att-landing.png'
 import {
   accountRoadmap,
   billingEligibilityGuide,
@@ -107,7 +107,7 @@ function App() {
           </p>
         </div>
         <div className="hero-media">
-          <img src={owlHero} alt="Wise owl study app splash artwork" />
+          <img src={owlHero} alt="Owl landing on an AT&T-style globe mark" />
         </div>
       </section>
 

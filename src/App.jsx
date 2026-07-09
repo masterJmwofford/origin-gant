@@ -4,6 +4,7 @@ import './App.css'
 import AccountRoadmap from './components/AccountRoadmap'
 import BillingEligibilityGuide from './components/BillingEligibilityGuide'
 import DashBoard from './components/DashBoard.jsx'
+import DeescalationGame from './components/DeescalationGame'
 import FlashCardGrid from './components/FlashCardGrid'
 import MesaBreaker from './components/MesaBreaker'
 import OwlAssistant from './components/OwlAssistant'
@@ -53,6 +54,12 @@ const navItems = [
     label: 'MESA Breaker',
     theme: 'green',
     description: 'Owl CORE laser brick-breaker game',
+  },
+  {
+    id: 'deescalation',
+    label: 'DoveTalk',
+    theme: 'dove',
+    description: 'Call-center customer calming simulator',
   },
 ]
 
@@ -206,6 +213,14 @@ function App() {
           <div className="tab-panel">
             <section className="study-section" id="mesa-breaker">
               <MesaBreaker />
+            </section>
+          </div>
+        )}
+
+        {activeTab === 'deescalation' && (
+          <div className="tab-panel">
+            <section className="study-section" id="deescalation">
+              <DeescalationGame />
             </section>
           </div>
         )}

@@ -13,7 +13,7 @@ import Plans from './components/Plans'
 import Quiz from './components/Quiz'
 import Search from './components/Search'
 import SelfServiceGame from './components/SelfServiceGame'
-import owlHero from './assets/owl-att-landing.png'
+import owlHero from './assets/owl-first-responder-shield.png'
 import {
   accountRoadmap,
   billingEligibilityGuide,

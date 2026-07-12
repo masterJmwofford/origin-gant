@@ -8,6 +8,7 @@ import DeescalationGame from './components/DeescalationGame'
 import EagleEye from './components/EagleEye'
 import FlashCardGrid from './components/FlashCardGrid'
 import MesaBreaker from './components/MesaBreaker'
+import PavoCristatus from './components/PavoCristatus'
 import Plans from './components/Plans'
 import Quiz from './components/Quiz'
 import Search from './components/Search'
@@ -61,6 +62,12 @@ const navItems = [
     theme: 'dove',
     description: 'Call-center customer calming simulator',
   },
+  {
+    id: 'pavo',
+    label: 'Pavo Scripts',
+    theme: 'peacock',
+    description: 'Customer script builder with source-colored feathers',
+  },
 ]
 
 const eagleEyeSummaries = {
@@ -110,6 +117,14 @@ const eagleEyeSummaries = {
       'Start by acknowledging the customer concern before explaining facts.',
       'Take ownership, then clarify the FirstNet topic: bill, plan, device, eligibility, or support path.',
       'Give a clear next step and check agreement so the customer ends calmer than they started.',
+    ],
+  },
+  pavo: {
+    title: 'Pavo Scripts in plain words',
+    points: [
+      'Each script section is built from existing app data instead of invented plan claims.',
+      'The colored source badges show whether a line came from Billing, Eligibility, Index Cards, SSO, or DoveTalk.',
+      'Use the text boxes to adjust tone, but verify facts before quoting prices or eligibility to a customer.',
     ],
   },
 }
@@ -303,6 +318,25 @@ function App() {
             {eagleEyeEnabled && <EagleEyeSummary summary={eagleEyeSummaries.deescalation} />}
             <section className="study-section" id="deescalation">
               <DeescalationGame />
+            </section>
+          </div>
+        )}
+
+        {activeTab === 'pavo' && (
+          <div className="tab-panel">
+            {eagleEyeEnabled && <EagleEyeSummary summary={eagleEyeSummaries.pavo} />}
+            <section className="study-section" id="pavo-cristatus">
+              <div className="section-heading">
+                <p className="eyebrow">Script Builder</p>
+                <h2>PavoCristatus Customer Script Studio</h2>
+              </div>
+              <PavoCristatus
+                accountRoadmap={accountRoadmap}
+                billingGuide={billingEligibilityGuide}
+                selfServiceGame={selfServiceGame}
+                studyNotes={studyNotes}
+                terms={terms}
+              />
             </section>
           </div>
         )}

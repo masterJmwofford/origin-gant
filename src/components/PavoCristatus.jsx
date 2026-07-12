@@ -128,6 +128,7 @@ export default function PavoCristatus({ billingGuide, accountRoadmap, selfServic
     [accountRoadmap, billingGuide, selfServiceGame, studyNotes, terms],
   )
   const [draft, setDraft] = useState(() => getInitialDraft(scriptSections))
+  const [activeSection, setActiveSection] = useState(null)
 
   function updateSection(key, value) {
     setDraft((current) => ({
@@ -143,7 +144,13 @@ export default function PavoCristatus({ billingGuide, accountRoadmap, selfServic
     }))
   }
 
+  function closeModal() {
+    setActiveSection(null)
+  }
+
   const combinedScript = sectionOrder.map((key) => draft[key]).join('\n\n')
+  const activeSectionData = activeSection ? scriptSections[activeSection] : null
+  const activeSource = activeSectionData ? sourceMeta[activeSectionData.source] : null
 
   return (
     <div className="pavo-cristatus">
@@ -161,6 +168,7 @@ export default function PavoCristatus({ billingGuide, accountRoadmap, selfServic
           {sectionOrder.map((key) => {
             const section = scriptSections[key]
             const meta = sourceMeta[section.source]
+            const preview = draft[key].length > 170 ? `${draft[key].slice(0, 170)}...` : draft[key]
 
             return (
               <article className={`pavo-script-section ${meta.className}`} key={key}>
@@ -172,14 +180,20 @@ export default function PavoCristatus({ billingGuide, accountRoadmap, selfServic
                   <span>{meta.label}</span>
                 </div>
                 <p>{section.helper}</p>
+                <p className="pavo-section-preview">{preview}</p>
                 <textarea
                   aria-label={`Edit ${section.title}`}
                   value={draft[key]}
                   onChange={(event) => updateSection(key, event.target.value)}
                 />
-                <button type="button" onClick={() => resetSection(key)}>
-                  Reset section
-                </button>
+                <div className="pavo-section-actions">
+                  <button type="button" onClick={() => setActiveSection(key)}>
+                    Edit section
+                  </button>
+                  <button type="button" onClick={() => resetSection(key)}>
+                    Reset section
+                  </button>
+                </div>
               </article>
             )
           })}
@@ -193,6 +207,40 @@ export default function PavoCristatus({ billingGuide, accountRoadmap, selfServic
         </div>
         <pre className="pavo-full-script">{combinedScript}</pre>
       </section>
+
+      {activeSectionData && (
+        <div className="pavo-modal-backdrop" role="presentation" onMouseDown={closeModal}>
+          <section
+            className={`pavo-edit-modal ${activeSource.className}`}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="pavo-edit-title"
+            onMouseDown={(event) => event.stopPropagation()}
+          >
+            <div className="pavo-modal-heading">
+              <div>
+                <p className="eyebrow">{activeSectionData.title}</p>
+                <h3 id="pavo-edit-title">Edit script section</h3>
+              </div>
+              <span>{activeSource.label}</span>
+            </div>
+            <p>{activeSectionData.helper}</p>
+            <textarea
+              aria-label={`Edit ${activeSectionData.title} in modal`}
+              value={draft[activeSection]}
+              onChange={(event) => updateSection(activeSection, event.target.value)}
+            />
+            <div className="pavo-modal-actions">
+              <button type="button" onClick={() => resetSection(activeSection)}>
+                Reset section
+              </button>
+              <button className="primary" type="button" onClick={closeModal}>
+                Done
+              </button>
+            </div>
+          </section>
+        </div>
+      )}
     </div>
   )
 }

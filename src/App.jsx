@@ -8,7 +8,6 @@ import DeescalationGame from './components/DeescalationGame'
 import EagleEye from './components/EagleEye'
 import FlashCardGrid from './components/FlashCardGrid'
 import MesaBreaker from './components/MesaBreaker'
-import OwlAssistant from './components/OwlAssistant'
 import Plans from './components/Plans'
 import Quiz from './components/Quiz'
 import Search from './components/Search'
@@ -197,7 +196,6 @@ function App() {
             onClick={() => setActiveTab(item.id)}
           >
             <span>{item.label}</span>
-            <small>{item.description}</small>
           </button>
         ))}
       </nav>

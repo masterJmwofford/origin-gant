@@ -204,15 +204,16 @@ button {
 
 .nav-tab {
   display: grid;
-  gap: 4px;
-  min-height: 78px;
-  padding: 14px;
+  gap: 8px;
+  min-height: 58px;
+  padding: 12px 14px;
   min-width: 0;
   border: 1px solid #dce4f0;
   border-radius: 8px;
   background: #f8fafc;
   color: #172033;
   text-align: left;
+  align-content: center;
   transition:
     min-height 0.2s ease,
     padding 0.2s ease,
@@ -264,17 +265,6 @@ button {
   overflow-wrap: anywhere;
 }
 
-.nav-tab small {
-  color: #667085;
-  line-height: 1.25;
-  max-height: 42px;
-  overflow: hidden;
-  opacity: 1;
-  transition:
-    max-height 0.2s ease,
-    opacity 0.16s ease;
-}
-
 .nav-tab:hover,
 .nav-tab.active {
   border-color: var(--nav-theme);
@@ -292,11 +282,6 @@ button {
   min-height: 48px;
   padding: 10px 12px;
   align-content: center;
-}
-
-.study-nav.is-compact .nav-tab small {
-  max-height: 0;
-  opacity: 0;
 }
 
 .eagle-eye-toggle {
@@ -1963,11 +1948,6 @@ button {
     padding: 10px;
   }
 
-  .nav-tab small {
-    font-size: 12px;
-    line-height: 1.2;
-  }
-
   .eagle-eye-toggle {
     position: static;
     width: 100%;
@@ -2039,9 +2019,5 @@ button {
   .nav-tab {
     min-height: 46px;
     align-content: center;
-  }
-
-  .nav-tab small {
-    display: none;
   }
 }

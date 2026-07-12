@@ -183,9 +183,9 @@ function App() {
         </div>
       </section>
 
-      {/* <DashBoard stats={stats} /> */}
+      <DashBoard stats={stats} />
 
-      <OwlAssistant activeTab={activeTab} navItems={navItems} onNavigate={setActiveTab} />
+      {/* <OwlAssistant activeTab={activeTab} navItems={navItems} onNavigate={setActiveTab} /> */}
 
       <div ref={navAnchorRef} className="nav-scroll-anchor" aria-hidden="true" />
       <nav className={`study-nav ${navCompact ? 'is-compact' : ''}`} aria-label="Study sections">

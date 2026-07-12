@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import pavoLogo from '../assets/pavo-logo.png'
+import pavoLogo from '../assets/pavo-logo.gif'
 
 const sectionOrder = [
   'GeneralGreeting',

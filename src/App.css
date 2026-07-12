@@ -1935,8 +1935,9 @@ button {
   flex: 0 0 auto;
   position: relative;
   z-index: 1;
-  width: 112px;
-  max-height: 76px;
+  width: auto;
+  height: 250px;
+  max-width: 42%;
   object-fit: contain;
   border-radius: 8px;
   filter: drop-shadow(0 16px 26px rgba(7, 82, 77, 0.2));
@@ -2302,8 +2303,9 @@ button {
   }
 
   .pavo-logo {
-    width: 116px;
-    max-height: 78px;
+    width: auto;
+    height: 180px;
+    max-width: 100%;
   }
 
   .pavo-center h3 {

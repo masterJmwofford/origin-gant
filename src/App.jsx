@@ -185,7 +185,7 @@ function App() {
       <section className="hero">
         <div>
           <p className="eyebrow">FirstNet learning guide</p>
-          <h1>The Owl Facts App</h1>
+          <h1>Owl Facts</h1>
           <p style={{textAlign:'right',color:'gold'}}>powered by jmw</p>
           <p>
             A guided FirstNet study workspace for billing, eligibility, index cards,

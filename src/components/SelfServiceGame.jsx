@@ -79,7 +79,9 @@ export default function SelfServiceGame({ game }) {
             onDragOver={(event) => event.preventDefault()}
             onDrop={dropOption}
           >
-            <strong>{answered ? selectedOption.title : 'Drop the best self-service option here'}</strong>
+            <strong>
+              {answered ? selectedOption.title : 'Drop the best self-service option here'}
+            </strong>
             <p>
               {answered
                 ? selectedOption.detail

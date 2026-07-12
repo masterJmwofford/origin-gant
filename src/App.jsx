@@ -5,6 +5,7 @@ import AccountRoadmap from './components/AccountRoadmap'
 import BillingEligibilityGuide from './components/BillingEligibilityGuide'
 import DashBoard from './components/DashBoard.jsx'
 import DeescalationGame from './components/DeescalationGame'
+import EagleEye from './components/EagleEye'
 import FlashCardGrid from './components/FlashCardGrid'
 import MesaBreaker from './components/MesaBreaker'
 import OwlAssistant from './components/OwlAssistant'
@@ -63,6 +64,57 @@ const navItems = [
   },
 ]
 
+const eagleEyeSummaries = {
+  billing: {
+    title: 'Billing in plain words',
+    points: [
+      'The individual plans mostly differ by monthly price, international benefits, hotspot/tablet/wearable extras, and family-line discounts.',
+      'Published FirstNet individual prices assume eligible AutoPay and paperless billing discounts; the app data says those discounts start within two bills.',
+      'Bill pay is not guest pay here: the customer signs in to FirstNet Central, then goes to Manage Services & Billing.',
+    ],
+  },
+  eligibility: {
+    title: 'Eligibility in plain words',
+    points: [
+      'Subscriber Paid means the eligible person pays for their own FirstNet service.',
+      'Agency Paid means the organization manages service for employees or personnel.',
+      'FirstNet and Family is for verified Subscriber Paid users; family lines use AT&T commercial network service, not FirstNet priority access.',
+    ],
+  },
+  'index-cards': {
+    title: 'Index Cards in plain words',
+    points: [
+      'Start with the terms that explain why FirstNet matters: Band 14, priority, preemption, and the dedicated FirstNet core.',
+      'Then learn the activation identifiers: IMEI is the device, ICCID is the SIM, and EID is for eSIM.',
+      'Use the quiz after flipping cards so you practice recall instead of only reading definitions.',
+    ],
+  },
+  sso: {
+    title: 'SSO/self-service in plain words',
+    points: [
+      'Use FirstNet Central for bill pay, account overview, billing help, and chat with an expert.',
+      'Use FirstNet Help for eSIM activation, certified device help, and NumberSync wearable help.',
+      'Use FirstNet Assist for dedicated care, live chat text, device diagnostics, and uplift workflows.',
+    ],
+  },
+  'mesa-breaker': {
+    title: 'MESA Breaker in plain words',
+    points: [
+      'Move the owl left and right, then fire CORE shots to clear the MESA bricks.',
+      'The game is practice and energy between study sections, not customer policy information.',
+      'Clear all bricks to reset the board and start the next round.',
+    ],
+  },
+  deescalation: {
+    title: 'DoveTalk in plain words',
+    points: [
+      'Start by acknowledging the customer concern before explaining facts.',
+      'Take ownership, then clarify the FirstNet topic: bill, plan, device, eligibility, or support path.',
+      'Give a clear next step and check agreement so the customer ends calmer than they started.',
+    ],
+  },
+}
+
 function matchesSearch(item, query) {
   return JSON.stringify(item).toLowerCase().includes(query.toLowerCase())
 }
@@ -71,6 +123,7 @@ function App() {
   const [query, setQuery] = useState('')
   const [activeTab, setActiveTab] = useState('billing')
   const [navCompact, setNavCompact] = useState(false)
+  const [eagleEyeEnabled, setEagleEyeEnabled] = useState(false)
   const navAnchorRef = useRef(null)
   const activeNavItem = navItems.find((item) => item.id === activeTab)
 
@@ -114,7 +167,7 @@ function App() {
   }, [])
 
   return (
-    <main className={`page theme-${activeNavItem.theme}`}>
+    <main className={`page theme-${activeNavItem.theme} ${eagleEyeEnabled ? 'eagle-eye-on' : ''}`}>
       <section className="hero">
         <div>
           <p className="eyebrow">FirstNet learning guide</p>
@@ -130,7 +183,7 @@ function App() {
         </div>
       </section>
 
-      <DashBoard stats={stats} />
+      {/* <DashBoard stats={stats} /> */}
 
       <OwlAssistant activeTab={activeTab} navItems={navItems} onNavigate={setActiveTab} />
 
@@ -149,15 +202,21 @@ function App() {
         ))}
       </nav>
 
+      <EagleEye
+        enabled={eagleEyeEnabled}
+        onToggle={() => setEagleEyeEnabled((enabled) => !enabled)}
+      />
+
       <section className="tab-shell">
         {activeTab === 'billing' && (
           <div className="tab-panel">
+            {eagleEyeEnabled && <EagleEyeSummary summary={eagleEyeSummaries.billing} />}
             <section className="study-section" id="billing-eligibility">
               <div className="section-heading">
                 <p className="eyebrow">Billing</p>
                 <h2>Billing, Plan, and Payment Details</h2>
               </div>
-              <BillingEligibilityGuide guide={billingEligibilityGuide} />
+              <BillingEligibilityGuide eagleEye={eagleEyeEnabled} guide={billingEligibilityGuide} />
             </section>
 
             <section className="study-section paired-practice" id="billing-eligibility-quiz">
@@ -172,12 +231,13 @@ function App() {
 
         {activeTab === 'eligibility' && (
           <div className="tab-panel">
+            {eagleEyeEnabled && <EagleEyeSummary summary={eagleEyeSummaries.eligibility} />}
             <section className="study-section" id="notes">
               <div className="section-heading">
                 <p className="eyebrow">Read</p>
                 <h2>Eligibility, Plans, and Activation Notes</h2>
               </div>
-              <Plans plans={filteredPlans} />
+              <Plans eagleEye={eagleEyeEnabled} plans={filteredPlans} />
             </section>
 
             <section className="study-section paired-practice" id="account-roadmap">
@@ -185,13 +245,14 @@ function App() {
                 <p className="eyebrow">Scenario Roadmap</p>
                 <h2>Subscriber Paid vs. Agency Paid Accounts</h2>
               </div>
-              <AccountRoadmap roadmap={accountRoadmap} />
+              <AccountRoadmap eagleEye={eagleEyeEnabled} roadmap={accountRoadmap} />
             </section>
           </div>
         )}
 
         {activeTab === 'index-cards' && (
           <div className="tab-panel">
+            {eagleEyeEnabled && <EagleEyeSummary summary={eagleEyeSummaries['index-cards']} />}
             <section className="study-section search-dock">
               <Search query={query} onQueryChange={setQuery} />
             </section>
@@ -201,7 +262,7 @@ function App() {
                 <p className="eyebrow">Index Cards</p>
                 <h2>Searchable FirstNet Index Cards</h2>
               </div>
-              <FlashCardGrid terms={filteredTerms} />
+              <FlashCardGrid eagleEye={eagleEyeEnabled} terms={filteredTerms} />
             </section>
 
             <section className="study-section paired-practice" id="quiz">
@@ -219,6 +280,7 @@ function App() {
 
         {activeTab === 'sso' && (
           <div className="tab-panel">
+            {eagleEyeEnabled && <EagleEyeSummary summary={eagleEyeSummaries.sso} />}
             <section className="study-section" id="sso-options">
               <div className="section-heading">
                 <p className="eyebrow">Self-Service</p>
@@ -231,6 +293,7 @@ function App() {
 
         {activeTab === 'mesa-breaker' && (
           <div className="tab-panel">
+            {eagleEyeEnabled && <EagleEyeSummary summary={eagleEyeSummaries['mesa-breaker']} />}
             <section className="study-section" id="mesa-breaker">
               <MesaBreaker />
             </section>
@@ -239,6 +302,7 @@ function App() {
 
         {activeTab === 'deescalation' && (
           <div className="tab-panel">
+            {eagleEyeEnabled && <EagleEyeSummary summary={eagleEyeSummaries.deescalation} />}
             <section className="study-section" id="deescalation">
               <DeescalationGame />
             </section>
@@ -262,6 +326,20 @@ function App() {
         </ul>
       </section>
     </main>
+  )
+}
+
+function EagleEyeSummary({ summary }) {
+  return (
+    <aside className="eagle-eye-summary">
+      <p className="eyebrow">Eagle Eye</p>
+      <h2>{summary.title}</h2>
+      <ul>
+        {summary.points.map((point) => (
+          <li key={point}>{point}</li>
+        ))}
+      </ul>
+    </aside>
   )
 }
 

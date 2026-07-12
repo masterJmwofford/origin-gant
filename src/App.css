@@ -299,6 +299,100 @@ button {
   opacity: 0;
 }
 
+.eagle-eye-toggle {
+  position: sticky;
+  top: 92px;
+  z-index: 4;
+  display: inline-grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  min-height: 54px;
+  margin-bottom: 8px;
+  padding: 10px 14px;
+  border: 1px solid #e8c75d;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #172033;
+  box-shadow: 0 10px 26px rgba(23, 32, 51, 0.08);
+}
+
+.eagle-eye-toggle strong,
+.eagle-eye-toggle small {
+  display: block;
+  text-align: left;
+}
+
+.eagle-eye-toggle small {
+  color: #725300;
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.eagle-eye-toggle.active {
+  background: linear-gradient(135deg, #fff7d7, #ffffff);
+  box-shadow:
+    0 12px 30px rgba(143, 105, 0, 0.16),
+    0 0 0 4px rgba(255, 211, 77, 0.18);
+}
+
+.eagle-eye-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: contain;
+  background: #fff7d7;
+  box-shadow: 0 0 0 4px rgba(255, 211, 77, 0.2);
+}
+
+.eagle-eye-summary {
+  margin: 18px 0 24px;
+  padding: 22px;
+  border: 2px solid #f0c84b;
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(255, 247, 215, 0.95), rgba(255, 255, 255, 0.96)),
+    #ffffff;
+  box-shadow:
+    0 14px 34px rgba(143, 105, 0, 0.14),
+    inset 0 0 0 1px rgba(255, 211, 77, 0.28);
+}
+
+.eagle-eye-summary h2 {
+  margin: 6px 0 12px;
+  color: #3f2f00;
+  font-size: 26px;
+}
+
+.eagle-eye-summary ul {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding-left: 22px;
+}
+
+.eagle-eye-summary li {
+  color: #4d3b00;
+  font-weight: 750;
+}
+
+.eagle-highlight {
+  padding: 0 3px;
+  border-radius: 3px;
+  background:
+    linear-gradient(180deg, transparent 8%, rgba(255, 224, 92, 0.55) 8%),
+    #fff2a8;
+  color: inherit;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  font-weight: 850;
+}
+
+.flash-front .eagle-highlight {
+  background: rgba(255, 224, 92, 0.9);
+  color: #172033;
+}
+
 @media (max-width: 980px) {
   .study-nav {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1872,6 +1966,11 @@ button {
   .nav-tab small {
     font-size: 12px;
     line-height: 1.2;
+  }
+
+  .eagle-eye-toggle {
+    position: static;
+    width: 100%;
   }
 
   .plan-row,

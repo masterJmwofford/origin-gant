@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import EagleHighlight from './EagleHighlight'
+import { getEagleHighlightScore } from '../utils/eagleHighlightScoring'
 
 const bucketLabels = {
   subscriber: 'Subscriber Paid',
@@ -6,22 +8,53 @@ const bucketLabels = {
   agency: 'Agency Paid',
 }
 
-function FactList({ items }) {
+function flattenText(values) {
+  return values.flatMap((value) => {
+    if (typeof value === 'string') return value
+    if (Array.isArray(value)) return flattenText(value)
+    if (value && typeof value === 'object') return flattenText(Object.values(value))
+    return []
+  })
+}
+
+function FactList({ items, eagleEye, compareWith = [] }) {
+  const bestIndex = items.reduce((winnerIndex, item, index) => {
+    const itemCompareWith = [...compareWith, ...items.slice(0, index)]
+    const score = getEagleHighlightScore(item, itemCompareWith)
+    const winningScore =
+      winnerIndex === -1
+        ? 0
+        : getEagleHighlightScore(items[winnerIndex], [...compareWith, ...items.slice(0, winnerIndex)])
+
+    return score > winningScore ? index : winnerIndex
+  }, -1)
+
   return (
     <ul>
-      {items.map((item) => (
-        <li key={item}>{item}</li>
+      {items.map((item, index) => (
+        <li key={item}>
+          <EagleHighlight
+            compareWith={[...compareWith, ...items.slice(0, index)]}
+            enabled={eagleEye && index === bestIndex}
+            text={item}
+          />
+        </li>
       ))}
     </ul>
   )
 }
 
-export default function AccountRoadmap({ roadmap }) {
+export default function AccountRoadmap({ roadmap, eagleEye }) {
   const [activeBucket, setActiveBucket] = useState('shared')
   const [currentCardIndex, setCurrentCardIndex] = useState(0)
   const [selectedBucket, setSelectedBucket] = useState('')
   const [completedCards, setCompletedCards] = useState(0)
   const active = roadmap.buckets[activeBucket]
+  const relatedBucketText = flattenText(
+    Object.entries(roadmap.buckets)
+      .filter(([bucket]) => bucket !== activeBucket)
+      .map(([, bucket]) => bucket),
+  )
   const currentCard = roadmap.sortingCards[currentCardIndex]
   const isAnswered = selectedBucket !== ''
   const isCorrect = selectedBucket === currentCard.bucket
@@ -43,7 +76,9 @@ export default function AccountRoadmap({ roadmap }) {
   return (
     <div className="account-roadmap">
       <div className="billing-guide-intro">
-        <p>{roadmap.sourceNote}</p>
+        <p>
+          <EagleHighlight enabled={eagleEye} text={roadmap.sourceNote} />
+        </p>
       </div>
 
       <section className="roadmap-venn-panel">
@@ -77,7 +112,9 @@ export default function AccountRoadmap({ roadmap }) {
           <p className="eyebrow">Selected Path</p>
           <h3>{active.title}</h3>
           <p className="roadmap-subtitle">{active.subtitle}</p>
-          <p>{active.summary}</p>
+          <p>
+            <EagleHighlight compareWith={relatedBucketText} enabled={eagleEye} text={active.summary} />
+          </p>
           <div className="roadmap-chip-row">
             {active.plans.map((plan) => (
               <span className="roadmap-chip" key={plan}>
@@ -85,7 +122,7 @@ export default function AccountRoadmap({ roadmap }) {
               </span>
             ))}
           </div>
-          <FactList items={active.facts} />
+          <FactList compareWith={relatedBucketText} eagleEye={eagleEye} items={active.facts} />
         </article>
       </section>
 
@@ -96,11 +133,15 @@ export default function AccountRoadmap({ roadmap }) {
             <div className="decision-columns">
               <div>
                 <strong>Subscriber Paid</strong>
-                <p>{step.subscriber}</p>
+                <p>
+                  <EagleHighlight compareWith={[step.agency]} enabled={eagleEye} text={step.subscriber} />
+                </p>
               </div>
               <div>
                 <strong>Agency Paid</strong>
-                <p>{step.agency}</p>
+                <p>
+                  <EagleHighlight compareWith={[step.subscriber]} enabled={eagleEye} text={step.agency} />
+                </p>
               </div>
             </div>
           </article>

@@ -1,0 +1,7 @@
+name = "origin-gant"
+pages_build_output_dir = "dist"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "kobe"
+database_id = "f9be1593-754a-4777-950b-deaa672595b5"

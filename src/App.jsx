@@ -174,29 +174,26 @@ function App() {
     if (viewTrackedRef.current) return
 
     viewTrackedRef.current = true
-    const controller = new AbortController()
+    let isActive = true
 
     fetch('/api/views', {
       method: 'POST',
-      signal: controller.signal,
     })
       .then((response) => {
         if (!response.ok) throw new Error('Unable to update site views')
         return response.json()
       })
       .then((data) => {
-        if (typeof data.views === 'number') {
+        if (isActive && typeof data.views === 'number') {
           setSiteViews(data.views)
         }
       })
-      .catch((error) => {
-        if (error.name !== 'AbortError') {
-          setSiteViews(0)
-        }
+      .catch(() => {
+        if (isActive) setSiteViews(0)
       })
 
     return () => {
-      controller.abort()
+      isActive = false
     }
   }, [])
 

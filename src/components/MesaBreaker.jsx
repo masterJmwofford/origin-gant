@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 const GAME_WIDTH = 760
 const GAME_HEIGHT = 460
@@ -8,6 +8,9 @@ const BRICK_HEIGHT = 12
 const BRICK_GAP = 4
 const LASER_HEIGHT = 34
 const LASER_WIDTH = 12
+const BRICK_DRIFT_LIMIT = 46
+const BRICK_DRIFT_SPEED = 2
+const BRICK_BOB_AMOUNT = 10
 const OWL_AVI = 'https://i.pinimg.com/originals/a2/7c/76/a27c768c469972cec4cd4b1500a13c23.gif'
 
 const letterMap = {
@@ -52,27 +55,60 @@ function createInitialGame(round = 1) {
     bricks: createMesaBricks(),
     lasers: [],
     owlX: GAME_WIDTH / 2 - OWL_WIDTH / 2,
+    brickOffsetX: 0,
+    brickOffsetY: 0,
+    brickDirection: 1,
+    tick: 0,
     score: 0,
     round,
     won: false,
   }
 }
 
-function laserHitsBrick(laser, brick) {
+function laserHitsBrick(laser, brick, offsetX, offsetY) {
+  const brickX = brick.x + offsetX
+  const brickY = brick.y + offsetY
+
   return (
-    laser.x < brick.x + BRICK_WIDTH &&
-    laser.x + LASER_WIDTH > brick.x &&
-    laser.y < brick.y + BRICK_HEIGHT &&
-    laser.y + LASER_HEIGHT > brick.y
+    laser.x < brickX + BRICK_WIDTH &&
+    laser.x + LASER_WIDTH > brickX &&
+    laser.y < brickY + BRICK_HEIGHT &&
+    laser.y + LASER_HEIGHT > brickY
   )
 }
 
 export default function MesaBreaker() {
   const [game, setGame] = useState(() => createInitialGame())
+  const [stageScale, setStageScale] = useState(1)
+  const stageWrapRef = useRef(null)
   const progress = useMemo(() => {
     const total = createMesaBricks().length
     return Math.round(((total - game.bricks.length) / total) * 100)
   }, [game.bricks.length])
+
+  useEffect(() => {
+    function updateScale() {
+      if (!stageWrapRef.current) return
+
+      const availableWidth = stageWrapRef.current.clientWidth
+      setStageScale(Math.min(1, availableWidth / GAME_WIDTH))
+    }
+
+    updateScale()
+
+    const observer = new ResizeObserver(updateScale)
+
+    if (stageWrapRef.current) {
+      observer.observe(stageWrapRef.current)
+    }
+
+    window.addEventListener('resize', updateScale)
+
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('resize', updateScale)
+    }
+  }, [])
 
   function moveOwl(direction) {
     setGame((current) => ({
@@ -132,6 +168,16 @@ export default function MesaBreaker() {
       setGame((current) => {
         if (current.won) return current
 
+        const nextTick = current.tick + 1
+        let nextDirection = current.brickDirection
+        let nextOffsetX = current.brickOffsetX + current.brickDirection * BRICK_DRIFT_SPEED
+
+        if (Math.abs(nextOffsetX) >= BRICK_DRIFT_LIMIT) {
+          nextDirection = current.brickDirection * -1
+          nextOffsetX = current.brickOffsetX + nextDirection * BRICK_DRIFT_SPEED
+        }
+
+        const nextOffsetY = Math.sin(nextTick / 13) * BRICK_BOB_AMOUNT
         const movedLasers = current.lasers
           .map((laser) => ({ ...laser, y: laser.y - 16 }))
           .filter((laser) => laser.y > -LASER_HEIGHT)
@@ -140,7 +186,9 @@ export default function MesaBreaker() {
 
         movedLasers.forEach((laser) => {
           const brick = current.bricks.find(
-            (candidate) => !hitBrickIds.has(candidate.id) && laserHitsBrick(laser, candidate),
+            (candidate) =>
+              !hitBrickIds.has(candidate.id) &&
+              laserHitsBrick(laser, candidate, nextOffsetX, nextOffsetY),
           )
 
           if (brick) {
@@ -154,6 +202,10 @@ export default function MesaBreaker() {
 
         return {
           ...current,
+          brickOffsetX: nextOffsetX,
+          brickOffsetY: nextOffsetY,
+          brickDirection: nextDirection,
+          tick: nextTick,
           bricks: remainingBricks,
           lasers: movedLasers.filter((laser) => !usedLaserIds.has(laser.id)),
           score: current.score + hitBrickIds.size * 100,
@@ -193,7 +245,11 @@ export default function MesaBreaker() {
         </div>
       </section>
 
-      <section className="mesa-stage-wrap">
+      <section
+        className="mesa-stage-wrap"
+        ref={stageWrapRef}
+        style={{ '--stage-scale': stageScale, '--scaled-game-height': `${GAME_HEIGHT * stageScale}px` }}
+      >
         <div
           className="mesa-stage"
           style={{
@@ -210,6 +266,7 @@ export default function MesaBreaker() {
               style={{
                 left: `${brick.x}px`,
                 top: `${brick.y}px`,
+                transform: `translate(${game.brickOffsetX}px, ${game.brickOffsetY}px)`,
               }}
             />
           ))}

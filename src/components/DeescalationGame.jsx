@@ -58,6 +58,51 @@ const skillGroups = [
   },
 ]
 
+const pavoCheckpoints = [
+  {
+    id: 'greeting',
+    label: 'Greeting',
+    keywords: ['thank', 'thanks', 'calling', 'today', 'help', 'assist'],
+    coach: 'Start with a greeting and a helpful reason for the conversation.',
+  },
+  {
+    id: 'verification',
+    label: 'Verification',
+    keywords: ['verify', 'confirm', 'account', 'access', 'sign in', 'login', 'firstnet central'],
+    coach: 'Verify the account path before discussing account-specific steps.',
+  },
+  {
+    id: 'eligibility',
+    label: 'Eligibility',
+    keywords: ['eligible', 'eligibility', 'subscriber paid', 'agency paid', 'first responder', 'public safety', 'verify eligibility'],
+    coach: 'Address eligibility or account type without guessing from job title alone.',
+  },
+  {
+    id: 'accountInfo',
+    label: 'Account Info',
+    keywords: ['line', 'device', 'sim', 'esim', 'plan', 'family', 'bill', 'account type'],
+    coach: 'Ask or state the account detail that determines the right recommendation.',
+  },
+  {
+    id: 'billingSuggestions',
+    label: 'Billing Suggestions',
+    keywords: ['autopay', 'paperless', 'discount', 'taxes', 'fees', 'price', 'billing', 'bill', 'within two bills', 'plan'],
+    coach: 'Give a billing or plan suggestion tied to the customer concern.',
+  },
+  {
+    id: 'talkingPoints',
+    label: 'Talking Points',
+    keywords: ['priority', 'preemption', 'first priority', 'dedicated core', 'hotspot', 'commercial network', 'support', 'firstnet assist'],
+    coach: 'Use a relevant value point such as priority, support, hotspot, or family-line boundaries.',
+  },
+  {
+    id: 'close',
+    label: 'Close',
+    keywords: ['next step', 'summary', 'does that work', 'sound good', 'compare', 'review one more', 'before we end'],
+    coach: 'Close with a summary, next step, and agreement check.',
+  },
+]
+
 const escalationWords = ['calm down', 'policy', 'wrong', 'obviously', 'just', 'you need to', 'not my fault']
 
 const customerScenarios = [
@@ -134,34 +179,45 @@ function scanResponse(response, scenario) {
   const matchedGroups = skillGroups.filter((group) =>
     group.keywords.some((keyword) => normalized.includes(keyword)),
   )
+  const matchedCheckpoints = pavoCheckpoints.filter((checkpoint) =>
+    checkpoint.keywords.some((keyword) => normalized.includes(keyword)),
+  )
   const matchedEscalators = escalationWords.filter((word) => normalized.includes(word))
   const targetMatches = matchedGroups.filter((group) => scenario.targetSkills.includes(group.id))
-  const uniqueMatches = new Set(matchedGroups.map((group) => group.id))
-  const reduction = Math.max(0, targetMatches.length + Math.max(0, uniqueMatches.size - 2) - matchedEscalators.length)
+  const checkpointMatches = new Set(matchedCheckpoints.map((checkpoint) => checkpoint.id))
+  const requiredCheckpointCount = pavoCheckpoints.length
+  const skillBonus = Math.min(2, targetMatches.length)
+  const reduction = Math.max(
+    0,
+    Math.floor(checkpointMatches.size / 2) + skillBonus - matchedEscalators.length,
+  )
+  const didHitAllCheckpoints = checkpointMatches.size === requiredCheckpointCount
 
   return {
     matchedGroups,
+    matchedCheckpoints,
     matchedEscalators,
     reduction,
+    didHitAllCheckpoints,
   }
 }
 
 function buildAdvice(result, didResolve) {
   const matchedLabels = result.matchedGroups.map((group) => group.label)
-  const missingCoaching = skillGroups
-    .filter((group) => !result.matchedGroups.some((match) => match.id === group.id))
+  const missingCheckpoints = pavoCheckpoints
+    .filter((checkpoint) => !result.matchedCheckpoints.some((match) => match.id === checkpoint.id))
     .slice(0, 2)
-    .map((group) => group.coach)
+    .map((checkpoint) => checkpoint.coach)
 
   if (didResolve) {
-    return `DoveTalk advice: Great recovery. You used ${matchedLabels.join(', ') || 'calming language'} and brought the customer to a calm close.`
+    return `DoveTalk advice: Complete call flow. You used ${matchedLabels.join(', ') || 'calming language'} and covered every Pavo checkpoint before closing.`
   }
 
   if (result.reduction > 0) {
-    return `DoveTalk advice: Good progress. Matched ${matchedLabels.join(', ')}. Next, add: ${missingCoaching.join(' ')}`
+    return `DoveTalk advice: Good progress, but the customer is not fully resolved until every Pavo checkpoint is covered. Next, add: ${missingCheckpoints.join(' ')}`
   }
 
-  return `DoveTalk advice: Try again with a warmer opening. ${missingCoaching.join(' ')}`
+  return `DoveTalk advice: Try again with the full call flow. ${missingCheckpoints.join(' ')}`
 }
 
 export default function DeescalationGame() {
@@ -190,18 +246,18 @@ export default function DeescalationGame() {
 
     const result = scanResponse(response, scenario)
     const nextLevel = Math.min(dispositionLevels.length - 1, calmLevel + result.reduction)
-    const didResolve = nextLevel === dispositionLevels.length - 1
+    const didResolve = nextLevel === dispositionLevels.length - 1 && result.didHitAllCheckpoints
     const advice = buildAdvice(result, didResolve)
 
-    setCalmLevel(nextLevel)
+    setCalmLevel(didResolve ? dispositionLevels.length - 1 : Math.min(nextLevel, dispositionLevels.length - 2))
     setFeedback({
       ...result,
       didResolve,
       advice,
       message:
         result.reduction > 0
-          ? 'Nice. That response used language that lowers tension.'
-          : 'Try adding empathy, ownership, a clarifying check, and a clear next step.',
+          ? 'Nice. That response lowered tension. Keep going until every Pavo checkpoint is covered.'
+          : 'Try the full flow: greeting, verification, eligibility, account info, billing suggestion, talking point, and close.',
     })
 
     if (didResolve) {
@@ -257,6 +313,12 @@ export default function DeescalationGame() {
               <span key={group.id}>{group.label}</span>
             ))}
           </div>
+          <div className="pavo-call-flow">
+            <strong>Pavo call flow</strong>
+            {pavoCheckpoints.map((checkpoint) => (
+              <span key={checkpoint.id}>{checkpoint.label}</span>
+            ))}
+          </div>
         </div>
 
         <div className={`customer-panel ${disposition.className}`}>
@@ -301,11 +363,18 @@ export default function DeescalationGame() {
           ))}
         </div>
 
+        <div className="target-skills pavo-targets">
+          <strong>Required Pavo checkpoints:</strong>
+          {pavoCheckpoints.map((checkpoint) => (
+            <span key={checkpoint.id}>{checkpoint.label}</span>
+          ))}
+        </div>
+
         <form className="deescalation-form" onSubmit={submitResponse}>
           <textarea
             value={response}
             onChange={(event) => setResponse(event.target.value)}
-            placeholder="Example: I understand why that bill is frustrating. I can help review the account, confirm the discount timing, and walk through the next step with you."
+            placeholder="Example: Thanks for calling. I understand why this is frustrating, and I can help. First I want to verify the account and confirm whether this is Subscriber Paid, Agency Paid, or family service. Then I can review the bill, plan, device, or eligibility details, explain any discount/tax/fee timing, and summarize the next step before we end."
             aria-label="Type your de-escalation response"
           />
           <button type="submit" disabled={resolved}>
@@ -323,16 +392,31 @@ export default function DeescalationGame() {
                 ? feedback.matchedGroups.map((group) => group.label).join(', ')
                 : 'No ideal de-escalation keywords yet'}
             </p>
+            <div className="checkpoint-results">
+              {pavoCheckpoints.map((checkpoint) => {
+                const isMatched = feedback.matchedCheckpoints.some(
+                  (match) => match.id === checkpoint.id,
+                )
+
+                return (
+                  <span className={isMatched ? 'hit' : 'miss'} key={checkpoint.id}>
+                    {isMatched ? '✓' : '•'} {checkpoint.label}
+                  </span>
+                )
+              })}
+            </div>
             {feedback.matchedEscalators.length > 0 && (
               <p>Avoided next time: {feedback.matchedEscalators.join(', ')}</p>
             )}
             {!feedback.didResolve && (
               <ul>
-                {skillGroups
-                  .filter((group) => !feedback.matchedGroups.some((match) => match.id === group.id))
+                {pavoCheckpoints
+                  .filter((checkpoint) =>
+                    !feedback.matchedCheckpoints.some((match) => match.id === checkpoint.id),
+                  )
                   .slice(0, 2)
-                  .map((group) => (
-                    <li key={group.id}>{group.coach}</li>
+                  .map((checkpoint) => (
+                    <li key={checkpoint.id}>{checkpoint.coach}</li>
                   ))}
               </ul>
             )}

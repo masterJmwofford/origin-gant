@@ -1132,15 +1132,17 @@ button {
 }
 
 .mesa-stage-wrap {
-  overflow-x: auto;
-  padding: 8px 0 2px;
+  width: 100%;
+  height: var(--scaled-game-height);
+  overflow: hidden;
+  padding: 0;
 }
 
 .mesa-stage {
   position: relative;
   width: var(--game-width);
   height: var(--game-height);
-  margin: 0 auto;
+  margin-left: max(0px, calc((100% - var(--game-width)) / 2));
   overflow: hidden;
   border: 1px solid #10361e;
   border-radius: 8px;
@@ -1149,6 +1151,8 @@ button {
     radial-gradient(circle at 82% 28%, rgba(76, 181, 255, 0.16), transparent 26%),
     linear-gradient(180deg, #0a1b17, #0f1f2d 55%, #081112);
   box-shadow: 0 18px 48px rgba(8, 17, 18, 0.28);
+  transform: scale(var(--stage-scale));
+  transform-origin: top left;
 }
 
 .mesa-stars {
@@ -1175,6 +1179,8 @@ button {
   box-shadow:
     inset 0 -2px 0 rgba(0, 0, 0, 0.18),
     0 0 12px rgba(255, 255, 255, 0.12);
+  transition: transform 45ms linear;
+  will-change: transform;
 }
 
 .brick-m {
@@ -1382,6 +1388,30 @@ button {
   font-weight: 900;
 }
 
+.pavo-call-flow {
+  display: grid;
+  gap: 7px;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cae8ed;
+  border-radius: 8px;
+  background: #f6fcfd;
+  text-align: left;
+}
+
+.pavo-call-flow strong {
+  color: #172033;
+}
+
+.pavo-call-flow span {
+  padding: 7px 9px;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #075567;
+  font-size: 13px;
+  font-weight: 900;
+}
+
 .customer-panel {
   display: grid;
   gap: 14px;
@@ -1492,6 +1522,13 @@ button {
   align-items: center;
 }
 
+.pavo-targets {
+  padding: 12px;
+  border: 1px solid #cae8ed;
+  border-radius: 8px;
+  background: #f6fcfd;
+}
+
 .target-skills strong {
   color: #172033;
 }
@@ -1552,6 +1589,30 @@ button {
 .deescalation-feedback p,
 .deescalation-feedback li {
   color: #566174;
+}
+
+.checkpoint-results {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.checkpoint-results span {
+  padding: 7px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.checkpoint-results .hit {
+  background: #daf5e6;
+  color: #11633b;
+}
+
+.checkpoint-results .miss {
+  background: #fff0d0;
+  color: #7a4b00;
 }
 
 .next-customer {

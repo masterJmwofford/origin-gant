@@ -1518,6 +1518,81 @@ button {
   gap: 14px;
 }
 
+.conversation-log {
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid #cae8ed;
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(246, 252, 253, 0.95), rgba(255, 255, 255, 0.98)),
+    #ffffff;
+}
+
+.conversation-log-header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.conversation-log-header h3 {
+  margin: 4px 0 0;
+  color: #172033;
+  font-size: 20px;
+}
+
+.conversation-log-header span {
+  flex: 0 0 auto;
+  padding: 8px 10px;
+  border: 1px solid #b8e1e7;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #075567;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.conversation-thread {
+  display: grid;
+  gap: 10px;
+  max-height: 420px;
+  overflow: auto;
+  padding-right: 4px;
+}
+
+.conversation-message {
+  width: min(88%, 760px);
+  padding: 12px 14px;
+  border: 1px solid #dce4f0;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.conversation-message strong {
+  display: block;
+  margin-bottom: 6px;
+  color: #172033;
+  font-size: 13px;
+}
+
+.conversation-message p {
+  margin: 0;
+  color: #566174;
+}
+
+.conversation-message.agent {
+  justify-self: end;
+  border-color: #bee6c4;
+  background: #f0fbf4;
+}
+
+.conversation-message.customer {
+  justify-self: start;
+  border-color: #f0d19b;
+  background: #fffaf0;
+}
+
 .target-skills {
   align-items: center;
 }
@@ -2471,6 +2546,15 @@ button {
   .deescalation-board,
   .deescalation-form {
     grid-template-columns: 1fr;
+  }
+
+  .conversation-log-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .conversation-message {
+    width: 100%;
   }
 
   .mesa-stage {

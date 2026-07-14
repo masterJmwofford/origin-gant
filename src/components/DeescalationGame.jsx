@@ -113,6 +113,10 @@ const customerScenarios = [
       'Mara says her FirstNet bill looks higher than expected and she is angry because she thought AutoPay and paperless billing were already included.',
     context:
       'Useful facts: published FirstNet individual prices assume eligible AutoPay and paperless billing discount; FirstNet says those discounts start within two bills, and taxes/fees are extra.',
+    dummyInfo: {
+      verification: 'Dummy verification: ZIP 80214, callback ending 4412, security word "Ladder".',
+      account: 'Dummy account info: Subscriber Paid, one phone line, FirstNet Unlimited plan, AutoPay enrolled last bill cycle, paperless billing active.',
+    },
     targetSkills: ['empathy', 'ownership', 'clarify', 'reassure'],
   },
   {
@@ -122,6 +126,10 @@ const customerScenarios = [
       'Andre wants FirstNet and Family, but his spouse thinks every family line will get FirstNet priority access.',
     context:
       'Useful facts: FirstNet and Family is for verified Subscriber Paid Users; family lines use AT&T commercial network service, not the FirstNet network.',
+    dummyInfo: {
+      verification: 'Dummy verification: ZIP 60622, callback ending 1180, security word "Shift".',
+      account: 'Dummy account info: Subscriber Paid user, one FirstNet line, two family lines being discussed for AT&T commercial network service.',
+    },
     targetSkills: ['empathy', 'clarify', 'reassure', 'close'],
   },
   {
@@ -131,6 +139,10 @@ const customerScenarios = [
       'Jules is upset because they do not know whether a department account should use Subscriber Paid or Agency Paid setup.',
     context:
       'Useful facts: Subscriber Paid is individual-paid service; agency plans are for public safety organizations providing service to employees or personnel.',
+    dummyInfo: {
+      verification: 'Dummy verification: agency contact email admin@example.test, department code 7321, callback ending 9055.',
+      account: 'Dummy account info: Public safety agency account discussion, 18 potential employee lines, deciding between individual-paid and agency-paid setup.',
+    },
     targetSkills: ['empathy', 'ownership', 'clarify', 'reassure'],
   },
   {
@@ -140,6 +152,10 @@ const customerScenarios = [
       'Priya is frustrated because her compatible phone needs eSIM activation and she does not know where to start.',
     context:
       'Useful facts: FirstNet Help has Activate eSIM resources, including device-specific activation tutorials.',
+    dummyInfo: {
+      verification: 'Dummy verification: ZIP 30309, callback ending 7724, security word "Badge".',
+      account: 'Dummy account info: New FirstNet phone user, compatible device, eSIM activation not completed yet, needs activation steps.',
+    },
     targetSkills: ['empathy', 'ownership', 'reassure', 'close'],
   },
   {
@@ -149,6 +165,10 @@ const customerScenarios = [
       'Cole is worried because personnel in the field need support and a device diagnostic path during an incident.',
     context:
       'Useful facts: FirstNet Assist provides dedicated care, live chat text, one-button voice contact, device diagnostics, and uplift workflows.',
+    dummyInfo: {
+      verification: 'Dummy verification: supervisor ID FS-204, callback ending 6630, region code North.',
+      account: 'Dummy account info: Field supervisor, agency-supported team, multiple active devices, needs FirstNet Assist and device diagnostic guidance.',
+    },
     targetSkills: ['empathy', 'clarify', 'reassure', 'close'],
   },
   {
@@ -158,6 +178,10 @@ const customerScenarios = [
       'Sam says eligibility feels confusing and does not know whether to trust a job title alone.',
     context:
       'Useful facts: eligibility should be verified through official FirstNet workflows; examples include first responders and people who support first responders.',
+    dummyInfo: {
+      verification: 'Dummy verification: ZIP 85004, callback ending 2901, volunteer organization "County Search Team".',
+      account: 'Dummy account info: Volunteer responder, eligibility not completed, needs official FirstNet eligibility verification before plan guidance.',
+    },
     targetSkills: ['empathy', 'ownership', 'clarify', 'reassure'],
   },
 ]
@@ -172,6 +196,16 @@ function pickScenarioIndex(currentIndex = -1) {
   }
 
   return nextIndex
+}
+
+function createStartingConversation(scenario) {
+  return [
+    {
+      speaker: 'customer',
+      tone: 'Escalated',
+      text: scenario.concern,
+    },
+  ]
 }
 
 function scanResponse(response, scenario) {
@@ -202,10 +236,30 @@ function scanResponse(response, scenario) {
   }
 }
 
+function getMissingCheckpoints(result) {
+  return pavoCheckpoints.filter(
+    (checkpoint) => !result.matchedCheckpoints.some((match) => match.id === checkpoint.id),
+  )
+}
+
+function getRequestedDummyInfo(response) {
+  const normalized = response.toLowerCase()
+  const asksVerification = ['verify', 'verification', 'confirm', 'security', 'zip', 'callback'].some(
+    (word) => normalized.includes(word),
+  )
+  const asksAccount = ['account', 'line', 'device', 'plan', 'bill', 'eligibility', 'subscriber paid', 'agency paid'].some(
+    (word) => normalized.includes(word),
+  )
+
+  return {
+    asksVerification,
+    asksAccount,
+  }
+}
+
 function buildAdvice(result, didResolve) {
   const matchedLabels = result.matchedGroups.map((group) => group.label)
-  const missingCheckpoints = pavoCheckpoints
-    .filter((checkpoint) => !result.matchedCheckpoints.some((match) => match.id === checkpoint.id))
+  const missingCheckpoints = getMissingCheckpoints(result)
     .slice(0, 2)
     .map((checkpoint) => checkpoint.coach)
 
@@ -220,14 +274,57 @@ function buildAdvice(result, didResolve) {
   return `DoveTalk advice: Try again with the full call flow. ${missingCheckpoints.join(' ')}`
 }
 
+function buildCustomerReply(scenario, result, didResolve, nextDisposition, requestedInfo) {
+  const missingCheckpoints = getMissingCheckpoints(result)
+  const missingLabels = missingCheckpoints.map((checkpoint) => checkpoint.label)
+  const matchedLabels = result.matchedGroups.map((group) => group.label)
+  const firstMissing = missingLabels.slice(0, 2).join(' and ')
+  const details = [
+    requestedInfo.asksVerification ? scenario.dummyInfo.verification : '',
+    requestedInfo.asksAccount ? scenario.dummyInfo.account : '',
+  ].filter(Boolean)
+  const detailText = details.length > 0 ? ` ${details.join(' ')}` : ''
+
+  if (didResolve) {
+    return `Okay, that finally makes sense. You acknowledged the issue, verified the right account path, tied the eligibility and billing details to my situation, and gave me a clear next step. I feel comfortable moving forward.${detailText}`
+  }
+
+  if (result.matchedEscalators.length > 0) {
+    return `I still feel brushed off. Words like "${result.matchedEscalators[0]}" make this sound like my concern is being dismissed. Can you slow down, verify what applies to my FirstNet account, and explain the next step clearly?${detailText}`
+  }
+
+  if (result.reduction === 0) {
+    return `I am still frustrated because I do not hear a complete path yet. Please start by acknowledging the concern, then confirm the account or eligibility details before giving me a billing or plan answer.${detailText}`
+  }
+
+  if (nextDisposition.label === 'Tense') {
+    return `That helps a little, especially the ${matchedLabels.join(' and ') || 'calmer tone'}, but I am not settled yet. I still need you to cover ${firstMissing || 'the missing account details'} so I know this answer applies to my situation.${detailText}`
+  }
+
+  if (nextDisposition.label === 'Concerned') {
+    return `I am listening now. Before I agree, please connect this back to ${scenario.role.toLowerCase()} details and finish the part about ${firstMissing || 'the final next step'} in plain language.${detailText}`
+  }
+
+  return `I am closer to calm, but I need the last piece before we wrap up: ${firstMissing || 'a clear summary and agreement check'}.${detailText}`
+}
+
 export default function DeescalationGame() {
-  const [scenarioIndex, setScenarioIndex] = useState(() => pickScenarioIndex())
+  const [roundState, setRoundState] = useState(() => {
+    const scenarioIndex = pickScenarioIndex()
+
+    return {
+      scenarioIndex,
+      conversation: createStartingConversation(customerScenarios[scenarioIndex]),
+    }
+  })
   const [calmLevel, setCalmLevel] = useState(0)
   const [response, setResponse] = useState('')
   const [feedback, setFeedback] = useState(null)
   const [advicePopup, setAdvicePopup] = useState(null)
   const [round, setRound] = useState(1)
   const [wins, setWins] = useState(0)
+  const [turns, setTurns] = useState(0)
+  const { scenarioIndex, conversation } = roundState
   const scenario = customerScenarios[scenarioIndex]
   const disposition = dispositionLevels[calmLevel]
   const resolved = calmLevel === dispositionLevels.length - 1
@@ -245,11 +342,39 @@ export default function DeescalationGame() {
     if (!response.trim() || resolved) return
 
     const result = scanResponse(response, scenario)
+    const requestedInfo = getRequestedDummyInfo(response)
     const nextLevel = Math.min(dispositionLevels.length - 1, calmLevel + result.reduction)
     const didResolve = nextLevel === dispositionLevels.length - 1 && result.didHitAllCheckpoints
+    const displayedNextLevel = didResolve
+      ? dispositionLevels.length - 1
+      : Math.min(nextLevel, dispositionLevels.length - 2)
+    const customerReply = buildCustomerReply(
+      scenario,
+      result,
+      didResolve,
+      dispositionLevels[displayedNextLevel],
+      requestedInfo,
+    )
     const advice = buildAdvice(result, didResolve)
 
-    setCalmLevel(didResolve ? dispositionLevels.length - 1 : Math.min(nextLevel, dispositionLevels.length - 2))
+    setCalmLevel(displayedNextLevel)
+    setTurns((count) => count + 1)
+    setRoundState((current) => ({
+      ...current,
+      conversation: [
+        ...current.conversation,
+        {
+          speaker: 'agent',
+          tone: 'Response',
+          text: response.trim(),
+        },
+        {
+          speaker: 'customer',
+          tone: dispositionLevels[displayedNextLevel].label,
+          text: customerReply,
+        },
+      ],
+    }))
     setFeedback({
       ...result,
       didResolve,
@@ -272,11 +397,19 @@ export default function DeescalationGame() {
   }
 
   function nextCustomer() {
-    setScenarioIndex((index) => pickScenarioIndex(index))
+    setRoundState((current) => {
+      const nextIndex = pickScenarioIndex(current.scenarioIndex)
+
+      return {
+        scenarioIndex: nextIndex,
+        conversation: createStartingConversation(customerScenarios[nextIndex]),
+      }
+    })
     setCalmLevel(0)
     setResponse('')
     setFeedback(null)
     setAdvicePopup(null)
+    setTurns(0)
     setRound((count) => count + 1)
   }
 
@@ -299,7 +432,7 @@ export default function DeescalationGame() {
         <div className="deescalation-score">
           <span>Round {round}</span>
           <span>Wins {wins}</span>
-          
+          <span>Turns {turns}</span>
         </div>
       </section>
 
@@ -342,6 +475,11 @@ export default function DeescalationGame() {
             <p>{scenario.context}</p>
           </article>
 
+          <article className="customer-context">
+            <h4>Simulation note</h4>
+            <p>Verification and account details in DoveTalk are fictional practice data only.</p>
+          </article>
+
           <div className="calm-meter" aria-label={`Customer disposition: ${disposition.label}`}>
             {dispositionLevels.map((level, index) => (
               <span
@@ -356,6 +494,26 @@ export default function DeescalationGame() {
       </section>
 
       <section className="response-panel">
+        <article className="conversation-log" aria-label="Live DoveTalk conversation">
+          <div className="conversation-log-header">
+            <div>
+              <p className="eyebrow">Live Interaction</p>
+              <h3>Customer responds after every scan</h3>
+            </div>
+            <span>{disposition.label}</span>
+          </div>
+          <div className="conversation-thread">
+            {conversation.map((message, index) => (
+              <div className={`conversation-message ${message.speaker}`} key={`${message.speaker}-${index}`}>
+                <strong>
+                  {message.speaker === 'customer' ? `${scenario.name} · ${message.tone}` : 'You · Rep response'}
+                </strong>
+                <p>{message.text}</p>
+              </div>
+            ))}
+          </div>
+        </article>
+
         <div className="target-skills">
           <strong>Best skills for this call:</strong>
           {targetLabels.map((label) => (

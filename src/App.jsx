@@ -138,7 +138,9 @@ function App() {
   const [activeTab, setActiveTab] = useState('billing')
   const [navCompact, setNavCompact] = useState(false)
   const [eagleEyeEnabled, setEagleEyeEnabled] = useState(false)
+  const [siteViews, setSiteViews] = useState(0)
   const navAnchorRef = useRef(null)
+  const viewTrackedRef = useRef(false)
   const activeNavItem = navItems.find((item) => item.id === activeTab)
 
   const filteredTerms = terms.filter((term) => matchesSearch(term, query))
@@ -161,7 +163,42 @@ function App() {
       value: visibleQuestions.length,
       description: 'Practice questions ready for review.',
     },
+    {
+      label: 'Site Views',
+      value: siteViews,
+      description: 'Total views recorded by the site tracker.',
+    },
   ]
+
+  useEffect(() => {
+    if (viewTrackedRef.current) return
+
+    viewTrackedRef.current = true
+    const controller = new AbortController()
+
+    fetch('/api/views', {
+      method: 'POST',
+      signal: controller.signal,
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error('Unable to update site views')
+        return response.json()
+      })
+      .then((data) => {
+        if (typeof data.views === 'number') {
+          setSiteViews(data.views)
+        }
+      })
+      .catch((error) => {
+        if (error.name !== 'AbortError') {
+          setSiteViews(0)
+        }
+      })
+
+    return () => {
+      controller.abort()
+    }
+  }, [])
 
   useEffect(() => {
     function updateNavState() {
@@ -197,7 +234,7 @@ function App() {
         </div>
       </section>
 
-      {/* <DashBoard stats={stats} /> */}
+      <DashBoard stats={stats} />
 
       {/* <OwlAssistant activeTab={activeTab} navItems={navItems} onNavigate={setActiveTab} /> */}
 

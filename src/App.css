@@ -1973,29 +1973,28 @@ button {
 }
 
 .upgrade-explainer {
-  display: grid;
-  grid-template-columns: 110px minmax(0, 1fr) minmax(280px, 0.95fr);
-  gap: 18px;
-  align-items: center;
+  display: block;
   padding: 18px;
-  border: 2px solid rgba(209, 164, 45, 0.42);
-  border-radius: 12px;
-  background:
-    radial-gradient(circle at 8% 50%, rgba(209, 164, 45, 0.22), transparent 28%),
-    linear-gradient(135deg, rgba(255, 252, 241, 0.98), rgba(255, 246, 221, 0.98)),
-    #ffffff;
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.72),
-    0 12px 30px rgba(76, 16, 24, 0.12);
+  border: 1px solid #dce4f0;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgba(23, 32, 51, 0.06);
 }
 
 .dealer-avatar {
   position: relative;
   display: grid;
   place-items: center;
-  width: 96px;
-  height: 118px;
-  justify-self: center;
+  width: 100%;
+  min-height: 0;
+  margin-bottom: 12px;
+}
+
+.dealer-avatar img {
+  width: min(220px, 100%);
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 18px rgba(23, 32, 51, 0.16));
 }
 
 .dealer-hat {
@@ -2054,18 +2053,21 @@ button {
   margin: 4px 0 8px;
   color: #4c1018;
   font-size: 22px;
+  text-align: center;
 }
 
 .dealer-script p:not(.eyebrow) {
   margin: 0;
   color: #566174;
   line-height: 1.5;
+  text-align: center;
 }
 
 .upgrade-rule-cards {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px;
+  margin-top: 14px;
 }
 
 .upgrade-rule-cards article {
@@ -2501,6 +2503,23 @@ button {
   }
 }
 
+@keyframes card-slide-next-to-dealer {
+  0% {
+    opacity: 0;
+    transform: translate(140px, 90px) rotate(8deg) scale(0.88);
+  }
+
+  72% {
+    opacity: 1;
+    transform: translate(-10px, -8px) rotate(-2deg) scale(1.03);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0deg) scale(1);
+  }
+}
+
 /* Blackjack-style D-Vice learning mode */
 .device-upgrade-game {
   padding: 8px;
@@ -2580,6 +2599,127 @@ button {
 
 .terminology-chip-grid {
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.academy-carousel {
+  display: grid;
+  gap: 14px;
+}
+
+.academy-carousel-toolbar {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 44px;
+  gap: 12px;
+  align-items: center;
+}
+
+.academy-carousel-toolbar button {
+  width: 44px;
+  height: 44px;
+  border: 1px solid #b8c7d8;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #0b513c;
+  font-size: 30px;
+  line-height: 1;
+  font-weight: 900;
+}
+
+.academy-carousel-toolbar button:hover {
+  border-color: #0b513c;
+  background: #e8f5f1;
+}
+
+.academy-carousel-toolbar div {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+  text-align: center;
+}
+
+.academy-carousel-toolbar span {
+  color: #667085;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.academy-carousel-toolbar strong {
+  color: #172033;
+  font-size: clamp(20px, 3vw, 28px);
+}
+
+.academy-slide {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  min-height: 260px;
+}
+
+.academy-term-card {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  padding: 16px;
+  border: 1px solid #dce4f0;
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, #ffffff, #f8fafc),
+    #ffffff;
+  box-shadow: 0 6px 16px rgba(23, 32, 51, 0.05);
+}
+
+.academy-term-card span {
+  justify-self: start;
+  padding: 6px 9px;
+  border-radius: 999px;
+  background: #e8f5f1;
+  color: #0b513c;
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.academy-term-card h4 {
+  margin: 0;
+  color: #172033;
+  font-size: 20px;
+}
+
+.academy-term-card p,
+.academy-term-card small {
+  color: #566174;
+  line-height: 1.4;
+}
+
+.academy-term-card p {
+  margin: 0;
+}
+
+.academy-term-card small {
+  align-self: end;
+  font-weight: 800;
+}
+
+.academy-dots {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.academy-dots button {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #b8c7d8;
+}
+
+.academy-dots button.active {
+  width: 28px;
+  border-radius: 999px;
+  background: #0b513c;
 }
 
 .terminology-chip-card,
@@ -2671,7 +2811,7 @@ button {
 }
 
 .dealer-card-row {
-  grid-template-columns: repeat(2, minmax(0, 260px));
+  grid-template-columns: repeat(3, minmax(0, 260px));
 }
 
 .player-card-row {
@@ -2700,24 +2840,31 @@ button {
   min-height: 210px;
 }
 
-.player-card:not(.held) {
+.player-card {
   background:
-    linear-gradient(135deg, transparent 0 42%, rgba(255, 255, 255, 0.16) 43% 47%, transparent 48%),
-    linear-gradient(45deg, transparent 0 42%, rgba(255, 255, 255, 0.16) 43% 47%, transparent 48%),
-    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.13), transparent 36%),
-    linear-gradient(145deg, #0b513c, #172033),
-    #0b513c;
-  color: #ffffff;
+    radial-gradient(circle at 50% 0%, rgba(11, 81, 60, 0.05), transparent 34%),
+    #ffffff;
+  color: #172033;
   box-shadow:
-    inset 0 0 0 6px #0b513c,
-    inset 0 0 0 8px rgba(255, 255, 255, 0.5),
+    inset 0 0 0 6px #ffffff,
+    inset 0 0 0 8px #d9dee8,
     0 16px 24px rgba(0, 0, 0, 0.22);
 }
 
-.player-card:not(.held) .card-label,
-.player-card:not(.held) .card-suit {
-  background: rgba(255, 255, 255, 0.14);
-  color: #ffffff;
+.player-card.played-from-hand {
+  opacity: 0.45;
+  transform: translateY(10px) scale(0.96);
+  box-shadow: none;
+}
+
+.played-requirement-card {
+  animation: card-slide-next-to-dealer 0.55s cubic-bezier(0.22, 0.88, 0.28, 1.12);
+  border-color: #0b513c;
+  box-shadow:
+    inset 0 0 0 6px #ffffff,
+    inset 0 0 0 8px #0b513c,
+    0 0 0 4px rgba(11, 81, 60, 0.16),
+    0 20px 30px rgba(0, 0, 0, 0.24);
 }
 
 .upgrade-card:hover {
@@ -2755,6 +2902,15 @@ button {
   height: 54px;
   margin: 12px 0 4px;
   box-shadow: none;
+}
+
+.device-card-image {
+  justify-self: center;
+  width: min(150px, 72%);
+  max-height: 120px;
+  object-fit: contain;
+  margin: 6px 0 8px;
+  filter: drop-shadow(0 8px 12px rgba(23, 32, 51, 0.16));
 }
 
 .dealer-message.approved {
@@ -3618,8 +3774,57 @@ button {
     grid-template-columns: 1fr;
   }
 
+  .upgrade-explainer {
+    gap: 12px;
+    padding: 14px;
+    text-align: center;
+  }
+
+  .dealer-avatar {
+    width: 100%;
+    min-height: 0;
+  }
+
+  .dealer-avatar img {
+    width: min(200px, 72vw);
+    max-height: 132px;
+  }
+
+  .dealer-script h3 {
+    font-size: 20px;
+  }
+
+  .dealer-script p:not(.eyebrow) {
+    font-size: 14px;
+  }
+
+  .upgrade-rule-cards article {
+    min-height: 0;
+    padding: 12px 14px;
+    text-align: left;
+  }
+
+  .upgrade-rule-cards span {
+    width: 30px;
+    height: 30px;
+  }
+
   .terminology-chip-grid {
     grid-template-columns: 1fr;
+  }
+
+  .academy-carousel-toolbar {
+    grid-template-columns: 40px minmax(0, 1fr) 40px;
+  }
+
+  .academy-carousel-toolbar button {
+    width: 40px;
+    height: 40px;
+  }
+
+  .academy-slide {
+    grid-template-columns: 1fr;
+    min-height: 0;
   }
 
   .terminology-chip-card {
@@ -3639,6 +3844,11 @@ button {
 
   .upgrade-card {
     min-height: 220px;
+  }
+
+  .device-card-image {
+    width: min(130px, 68%);
+    max-height: 96px;
   }
 
   .upgrade-actions {

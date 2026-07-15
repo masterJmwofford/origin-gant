@@ -1,9 +1,14 @@
 import { useState } from 'react'
 
+const dealerAvatarImage =
+  'https://static.vecteezy.com/system/resources/thumbnails/024/485/231/small_2x/woman-croupier-near-card-table-in-casino-offers-to-play-black-jack-or-preference-in-las-vegas-png.png'
+
 const upgradeRounds = [
   {
     id: 'iphone-17-pro',
     device: 'Apple iPhone 17 Pro',
+    imageUrl:
+      'https://www.firstnet.com/content/dam/firstnet/images/image-and-text/image-text-iphone-17-pro-max-pdp.jpg',
     category: 'Certified smartphone',
     categoryNote:
       'The FirstNet phones page lists this device among certified phones/devices compatible with the FirstNet Evolved Packet Core.',
@@ -23,6 +28,8 @@ const upgradeRounds = [
   {
     id: 'galaxy-s26-ultra',
     device: 'Samsung Galaxy S26 Ultra',
+    imageUrl:
+      'https://www.firstnet.com/content/dam/firstnet/images/image-and-text/6054400-s26ultra-pen-image-text.jpg',
     category: 'Certified smartphone',
     categoryNote:
       'The FirstNet phones page lists this device among certified phones/devices compatible with the FirstNet Evolved Packet Core.',
@@ -41,6 +48,8 @@ const upgradeRounds = [
   {
     id: 'pixel-10-pro-xl',
     device: 'Google Pixel 10 Pro XL',
+    imageUrl:
+      'https://www.firstnet.com/content/dam/firstnet/images/image-and-text/image-text-firstnet-google-pixel-10-pro-xl-mt5.jpg',
     category: 'Certified smartphone',
     categoryNote:
       'The FirstNet phones page lists this device among certified phones/devices compatible with the FirstNet Evolved Packet Core.',
@@ -60,6 +69,8 @@ const upgradeRounds = [
   {
     id: 'sonim-xp5-plus-5g',
     device: 'Sonim XP5+ 5G',
+    imageUrl:
+      'https://www.firstnet.com/content/dam/firstnet/images/image-and-text/6406251-FN-SonimOmega-knobs-image-text.jpg',
     category: 'Certified rugged / specialty device',
     categoryNote:
       'The FirstNet phones page lists this device among certified phones/devices compatible with the FirstNet Evolved Packet Core.',
@@ -263,6 +274,7 @@ function createRound(roundIndex = 0) {
 export default function DeviceUpgradeGame() {
   const [roundIndex, setRoundIndex] = useState(0)
   const [game, setGame] = useState(() => createRound(0))
+  const [academySlide, setAcademySlide] = useState(0)
   const [score, setScore] = useState(0)
   const [attempts, setAttempts] = useState(0)
   const [message, setMessage] = useState(
@@ -307,6 +319,20 @@ export default function DeviceUpgradeGame() {
     setMessage('Fresh table. Pick the requirement card that allows the upgrade to process.')
   }
 
+  function previousAcademySlide() {
+    setAcademySlide((index) => (index === 0 ? terminologyGroups.length - 1 : index - 1))
+  }
+
+  function nextAcademySlide() {
+    setAcademySlide((index) => (index + 1) % terminologyGroups.length)
+  }
+
+  const activeAcademyGroup = terminologyGroups[academySlide]
+  const activeAcademyTerms = deviceTerminology.filter((item) =>
+    activeAcademyGroup.categories.includes(item.category),
+  )
+  const selectedRequirementCard = game.hand.find((card) => card.id === game.selectedCardId)
+
   return (
     <div className="device-upgrade-game">
       <section className="upgrade-game-hero">
@@ -334,31 +360,48 @@ export default function DeviceUpgradeGame() {
             identifiers, capabilities, and pricing requirements.
           </p>
         </div>
-        <div className="terminology-chip-grid">
-          {terminologyGroups.map((group) => (
-            <article className="terminology-chip-card terminology-group-card" key={group.title}>
-              <h4>{group.title}</h4>
-              {deviceTerminology
-                .filter((item) => group.categories.includes(item.category))
-                .map((item) => (
-                  <div className="terminology-mini-row" key={item.term}>
-                    <span>{item.term}</span>
-                    <p>{item.plain}</p>
-                    <small>{item.whyItMatters}</small>
-                  </div>
-                ))}
-            </article>
-          ))}
+        <div className="academy-carousel">
+          <div className="academy-carousel-toolbar">
+            <button type="button" onClick={previousAcademySlide} aria-label="Previous academy section">
+              ‹
+            </button>
+            <div>
+              <span>Section {academySlide + 1} of {terminologyGroups.length}</span>
+              <strong>{activeAcademyGroup.title}</strong>
+            </div>
+            <button type="button" onClick={nextAcademySlide} aria-label="Next academy section">
+              ›
+            </button>
+          </div>
+
+          <article className="academy-slide">
+            {activeAcademyTerms.map((item) => (
+              <div className="academy-term-card" key={item.term}>
+                <span>{item.category}</span>
+                <h4>{item.term}</h4>
+                <p>{item.plain}</p>
+                <small>{item.whyItMatters}</small>
+              </div>
+            ))}
+          </article>
+
+          <div className="academy-dots" aria-label="Academy sections">
+            {terminologyGroups.map((group, index) => (
+              <button
+                className={academySlide === index ? 'active' : ''}
+                key={group.title}
+                type="button"
+                onClick={() => setAcademySlide(index)}
+                aria-label={`Open ${group.title}`}
+              />
+            ))}
+          </div>
         </div>
       </section>
 
       <section className="upgrade-explainer" aria-label="How FirstNet device upgrades work">
-        <div className="dealer-avatar" aria-hidden="true">
-          <span className="dealer-hat" />
-          <span className="dealer-face">
-            <i />
-          </span>
-          <span className="dealer-bowtie" />
+        <div className="dealer-avatar">
+          <img src={dealerAvatarImage} alt="Croupier dealing cards at a casino table" />
         </div>
         <div className="dealer-script">
           <p className="eyebrow">Dealer briefing</p>
@@ -418,6 +461,7 @@ export default function DeviceUpgradeGame() {
                 <em>FN</em>
               </span>
               <span className="card-suit" aria-hidden="true">D</span>
+              <img className="device-card-image" src={game.round.imageUrl} alt={game.round.device} />
               <span className="card-label">Device</span>
               <strong>{game.round.device}</strong>
               <p>{game.round.category}</p>
@@ -437,22 +481,41 @@ export default function DeviceUpgradeGame() {
               <strong>{game.round.offer}</strong>
               <p>{game.round.pricingNote}</p>
             </article>
+
+            {selectedRequirementCard && (
+              <article className="upgrade-card requirement table-card played-requirement-card">
+                <span className="card-corner top">
+                  <b>R</b>
+                  <em>REQ</em>
+                </span>
+                <span className="card-corner bottom">
+                  <b>R</b>
+                  <em>REQ</em>
+                </span>
+                <span className="card-suit" aria-hidden="true">R</span>
+                <span className="card-label">
+                  {selectedRequirementCard.isCorrect ? 'Correct match' : 'Not a match'}
+                </span>
+                <strong>Played requirement</strong>
+                <p>{selectedRequirementCard.body}</p>
+              </article>
+            )}
           </div>
         </div>
 
         <div className="player-hand-zone">
           <div className="table-zone-heading">
             <p className="eyebrow">Your hand</p>
-            <h3>Play one requirement card</h3>
+            <h3>Choose one visible requirement</h3>
           </div>
           <div className="player-card-row">
             {game.hand.map((card) => (
               <button
-                className={`upgrade-card requirement player-card ${game.selectedCardId === card.id ? 'held thrown-card' : ''}`}
+                className={`upgrade-card requirement player-card ${game.selectedCardId === card.id ? 'played-from-hand' : ''}`}
                 key={card.id}
                 type="button"
                 onClick={() => playCard(card.id)}
-                disabled={game.processed}
+                disabled={game.processed || game.selectedCardId === card.id}
               >
                 <span className="card-corner top">
                   <b>R</b>
@@ -463,14 +526,16 @@ export default function DeviceUpgradeGame() {
                   <em>REQ</em>
                 </span>
                 <span className="card-suit" aria-hidden="true">R</span>
-                <span className="card-label">{game.selectedCardId === card.id ? 'Played' : 'Mystery requirement'}</span>
-                <strong>{game.selectedCardId === card.id ? card.title : 'Face-down requirement'}</strong>
-                <p>
+                <span className="card-label">
                   {game.selectedCardId === card.id
-                    ? card.body
-                    : 'Play this card to reveal whether its requirement matches the dealer cards.'}
-                </p>
-                <small>{game.selectedCardId === card.id ? 'Dealt to table' : 'Tap to throw'}</small>
+                    ? card.isCorrect
+                      ? 'Correct match'
+                      : 'Not a match'
+                    : 'Requirement option'}
+                </span>
+                <strong>Requirement</strong>
+                <p>{card.body}</p>
+                <small>{game.selectedCardId === card.id ? 'Moved to dealer row' : 'Tap to play'}</small>
               </button>
             ))}
           </div>

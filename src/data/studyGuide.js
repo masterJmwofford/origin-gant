@@ -598,6 +598,10 @@ export const sources = [
     url: 'https://www.firstnet.com/plans.html',
   },
   {
+    label: 'FirstNet Devices and Phones',
+    url: 'https://www.firstnet.com/devices/phones.html',
+  },
+  {
     label: 'FirstNet Eligibility',
     url: 'https://www.firstnet.com/signup/eligibility.html',
   },

@@ -5,6 +5,7 @@ import AccountRoadmap from './components/AccountRoadmap'
 import BillingEligibilityGuide from './components/BillingEligibilityGuide'
 import DashBoard from './components/DashBoard.jsx'
 import DeescalationGame from './components/DeescalationGame'
+import DeviceUpgradeGame from './components/DeviceUpgradeGame'
 import EagleEye from './components/EagleEye'
 import FlashCardGrid from './components/FlashCardGrid'
 import MesaBreaker from './components/MesaBreaker'
@@ -49,6 +50,12 @@ const navItems = [
     label: 'SSO Options',
     theme: 'violet',
     description: 'Self-service scenario matching game',
+  },
+  {
+    id: 'device-upgrades',
+    label: 'D-Vice',
+    theme: 'steel',
+    description: 'FirstNet device upgrade learning card game',
   },
   {
     id: 'mesa-breaker',
@@ -101,6 +108,14 @@ const eagleEyeSummaries = {
       'Use FirstNet Central for bill pay, account overview, billing help, and chat with an expert.',
       'Use FirstNet Help for eSIM activation, certified device help, and NumberSync wearable help.',
       'Use FirstNet Assist for dedicated care, live chat text, device diagnostics, and uplift workflows.',
+    ],
+  },
+  'device-upgrades': {
+    title: 'D-Vice in plain words',
+    points: [
+      'Do not quote an upgrade unless the device, offer price, and requirements belong together.',
+      'The iPhone 17 Pro offer in this game requires the matching trade-in value, installment plan, and FirstNet Extra 2.0 or higher condition.',
+      'Certified devices without a published offer card should be treated as verify-current-pricing before quoting.',
     ],
   },
   'mesa-breaker': {
@@ -334,6 +349,15 @@ function App() {
                 <h2>SSO Options Matching Game</h2>
               </div>
               <SelfServiceGame game={selfServiceGame} />
+            </section>
+          </div>
+        )}
+
+        {activeTab === 'device-upgrades' && (
+          <div className="tab-panel">
+            {eagleEyeEnabled && <EagleEyeSummary summary={eagleEyeSummaries['device-upgrades']} />}
+            <section className="study-section" id="device-upgrades">
+              <DeviceUpgradeGame />
             </section>
           </div>
         )}

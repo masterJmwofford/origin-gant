@@ -83,6 +83,14 @@ img {
   --theme-ring: rgba(11, 127, 118, 0.28);
 }
 
+.page.theme-steel {
+  --theme: #315a77;
+  --theme-dark: #18384f;
+  --theme-soft: #edf5f8;
+  --theme-tint: rgba(49, 90, 119, 0.16);
+  --theme-ring: rgba(49, 90, 119, 0.28);
+}
+
 button,
 input,
 select,
@@ -1756,6 +1764,1056 @@ button {
   background: #e6f7f8;
 }
 
+.device-upgrade-game {
+  display: grid;
+  gap: 18px;
+  padding: 4px;
+  border-radius: 12px;
+  background:
+    linear-gradient(135deg, rgba(159, 31, 45, 0.08), rgba(209, 164, 45, 0.12)),
+    transparent;
+}
+
+.upgrade-game-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: center;
+  padding: 26px;
+  border: 3px solid #d1a42d;
+  border-radius: 12px;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(255, 225, 132, 0.3), transparent 22%),
+    linear-gradient(135deg, rgba(77, 8, 18, 0.98), rgba(16, 20, 33, 0.96) 58%, rgba(10, 68, 48, 0.92)),
+    #4c1018;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.18),
+    inset 0 0 32px rgba(209, 164, 45, 0.18),
+    0 22px 52px rgba(23, 32, 51, 0.28);
+  overflow: hidden;
+}
+
+.upgrade-game-hero::after {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 2px dotted rgba(255, 222, 121, 0.55);
+  border-radius: 50%;
+  opacity: 0.75;
+  pointer-events: none;
+}
+
+.upgrade-game-hero h2 {
+  margin: 4px 0 8px;
+  color: #ffe37a;
+  font-size: clamp(42px, 8vw, 82px);
+  line-height: 0.95;
+  text-shadow:
+    0 2px 0 #5f111c,
+    0 0 14px rgba(255, 219, 103, 0.62),
+    0 8px 24px rgba(0, 0, 0, 0.36);
+  text-transform: uppercase;
+}
+
+.upgrade-game-hero p:not(.eyebrow) {
+  max-width: 760px;
+  color: rgba(255, 248, 225, 0.82);
+}
+
+.upgrade-scoreboard {
+  display: grid;
+  grid-template-columns: repeat(3, max-content);
+  gap: 8px;
+}
+
+.upgrade-scoreboard span {
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 223, 117, 0.52);
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.05)),
+    rgba(0, 0, 0, 0.24);
+  color: #ffe37a;
+  font-weight: 900;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 0 14px rgba(209, 164, 45, 0.16);
+}
+
+.device-terminology-casino {
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+  border: 2px solid rgba(209, 164, 45, 0.42);
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 88% 0%, rgba(159, 31, 45, 0.18), transparent 26%),
+    linear-gradient(135deg, #fffdf7, #fff3d4),
+    #ffffff;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.76),
+    0 14px 34px rgba(76, 16, 24, 0.12);
+}
+
+.terminology-marquee {
+  padding: 16px;
+  border: 1px solid rgba(209, 164, 45, 0.4);
+  border-radius: 12px;
+  background:
+    linear-gradient(135deg, rgba(76, 16, 24, 0.96), rgba(17, 20, 33, 0.94)),
+    #4c1018;
+  color: #fff8e1;
+}
+
+.terminology-marquee h3 {
+  margin: 4px 0 8px;
+  color: #ffe37a;
+  font-size: clamp(24px, 4vw, 36px);
+  line-height: 1.05;
+  text-shadow: 0 0 14px rgba(255, 227, 122, 0.28);
+}
+
+.terminology-marquee p:not(.eyebrow) {
+  max-width: 850px;
+  margin: 0;
+  color: rgba(255, 248, 225, 0.82);
+}
+
+.terminology-chip-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 12px;
+}
+
+.terminology-chip-card {
+  position: relative;
+  display: grid;
+  gap: 8px;
+  min-height: 210px;
+  padding: 16px;
+  border: 1px solid rgba(209, 164, 45, 0.38);
+  border-radius: 50% / 12%;
+  background:
+    radial-gradient(circle at 50% 12%, rgba(255, 227, 122, 0.22), transparent 30%),
+    linear-gradient(145deg, #ffffff, #fff9e8),
+    #ffffff;
+  box-shadow:
+    inset 0 0 0 5px #ffffff,
+    inset 0 0 0 8px rgba(209, 164, 45, 0.52),
+    0 10px 22px rgba(76, 16, 24, 0.1);
+}
+
+.terminology-chip-card::before,
+.terminology-chip-card::after {
+  content: "";
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  height: 1px;
+  background: rgba(209, 164, 45, 0.34);
+}
+
+.terminology-chip-card::before {
+  top: 13px;
+}
+
+.terminology-chip-card::after {
+  bottom: 13px;
+}
+
+.terminology-chip-card span {
+  justify-self: start;
+  padding: 6px 9px;
+  border-radius: 999px;
+  background: #4c1018;
+  color: #ffe37a;
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.terminology-chip-card h4 {
+  margin: 0;
+  color: #172033;
+  font-size: 19px;
+}
+
+.terminology-chip-card p {
+  margin: 0;
+  color: #566174;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.terminology-chip-card small {
+  align-self: end;
+  color: #7a4b00;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.terminology-group-card {
+  align-content: start;
+}
+
+.terminology-mini-row {
+  display: grid;
+  gap: 4px;
+  padding: 10px 0;
+  border-top: 1px solid #e1e6ef;
+}
+
+.terminology-mini-row:first-of-type {
+  border-top: 0;
+}
+
+.terminology-mini-row span {
+  justify-self: start;
+}
+
+.upgrade-explainer {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr) minmax(280px, 0.95fr);
+  gap: 18px;
+  align-items: center;
+  padding: 18px;
+  border: 2px solid rgba(209, 164, 45, 0.42);
+  border-radius: 12px;
+  background:
+    radial-gradient(circle at 8% 50%, rgba(209, 164, 45, 0.22), transparent 28%),
+    linear-gradient(135deg, rgba(255, 252, 241, 0.98), rgba(255, 246, 221, 0.98)),
+    #ffffff;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.72),
+    0 12px 30px rgba(76, 16, 24, 0.12);
+}
+
+.dealer-avatar {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 96px;
+  height: 118px;
+  justify-self: center;
+}
+
+.dealer-hat {
+  position: absolute;
+  top: 4px;
+  width: 82px;
+  height: 28px;
+  border: 3px solid #4c1018;
+  border-radius: 8px 8px 4px 4px;
+  background:
+    linear-gradient(90deg, #ffffff 0 30%, #9f1f2d 30% 48%, #d1a42d 48% 58%, #111421 58% 70%, #ffffff 70%),
+    #ffffff;
+  box-shadow: 0 6px 0 #4c1018;
+}
+
+.dealer-face {
+  position: relative;
+  display: block;
+  width: 74px;
+  height: 74px;
+  margin-top: 22px;
+  border: 4px solid #4c1018;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 33% 38%, #172033 0 4px, transparent 5px),
+    radial-gradient(circle at 67% 38%, #172033 0 4px, transparent 5px),
+    linear-gradient(180deg, #ffe2c7, #f3b98c);
+  box-shadow:
+    0 0 0 7px #ffffff,
+    0 12px 22px rgba(76, 16, 24, 0.2);
+}
+
+.dealer-face i {
+  position: absolute;
+  left: 50%;
+  bottom: 17px;
+  width: 24px;
+  height: 10px;
+  border-bottom: 4px solid #4c1018;
+  border-radius: 0 0 999px 999px;
+  transform: translateX(-50%);
+}
+
+.dealer-bowtie {
+  position: absolute;
+  bottom: 5px;
+  width: 50px;
+  height: 22px;
+  background:
+    radial-gradient(circle at 50% 50%, #f3cf53 0 5px, transparent 6px),
+    linear-gradient(135deg, transparent 0 16%, #9f1f2d 17% 48%, transparent 49%),
+    linear-gradient(225deg, transparent 0 16%, #9f1f2d 17% 48%, transparent 49%);
+}
+
+.dealer-script h3 {
+  margin: 4px 0 8px;
+  color: #4c1018;
+  font-size: 22px;
+}
+
+.dealer-script p:not(.eyebrow) {
+  margin: 0;
+  color: #566174;
+  line-height: 1.5;
+}
+
+.upgrade-rule-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.upgrade-rule-cards article {
+  display: grid;
+  gap: 7px;
+  min-height: 132px;
+  padding: 12px;
+  border: 1px solid rgba(209, 164, 45, 0.42);
+  border-radius: 12px;
+  background:
+    linear-gradient(145deg, #ffffff, #fff7df),
+    #ffffff;
+  box-shadow:
+    inset 0 0 0 4px #ffffff,
+    inset 0 0 0 6px #e5c873,
+    0 8px 16px rgba(76, 16, 24, 0.08);
+}
+
+.upgrade-rule-cards span {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #4c1018;
+  color: #ffe37a;
+  font-weight: 900;
+}
+
+.upgrade-rule-cards strong {
+  color: #172033;
+}
+
+.upgrade-rule-cards p {
+  margin: 0;
+  color: #566174;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.upgrade-table {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(18px, 2vw, 24px);
+  padding: clamp(18px, 3vw, 32px);
+  border: 12px solid #3b1019;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 50% 10%, rgba(255, 222, 121, 0.2), transparent 28%),
+    radial-gradient(circle at 12% 82%, rgba(159, 31, 45, 0.26), transparent 30%),
+    linear-gradient(135deg, #074b37, #063529 58%, #021f1b);
+  box-shadow:
+    inset 0 0 0 3px rgba(209, 164, 45, 0.55),
+    inset 0 22px 70px rgba(255, 255, 255, 0.08),
+    inset 0 -28px 70px rgba(0, 0, 0, 0.22),
+    0 28px 60px rgba(23, 32, 51, 0.34);
+}
+
+.upgrade-table::before {
+  content: "D-VICE TABLE";
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  color: rgba(255, 227, 122, 0.2);
+  font-size: clamp(18px, 4vw, 42px);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-align: center;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.dealer-table-zone,
+.player-hand-zone {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 14px;
+}
+
+.table-zone-heading {
+  display: flex;
+  gap: 12px;
+  align-items: end;
+  justify-content: space-between;
+  padding: 0 4px;
+}
+
+.table-zone-heading h3 {
+  margin: 0;
+  color: #ffe37a;
+  font-size: clamp(20px, 3vw, 28px);
+  text-shadow:
+    0 2px 0 #4c1018,
+    0 2px 10px rgba(0, 0, 0, 0.42);
+}
+
+.dealer-card-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 280px));
+  gap: 16px;
+  justify-content: center;
+}
+
+.player-card-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.upgrade-learning-board {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.upgrade-learning-board article {
+  padding: 18px;
+  border: 1px solid rgba(209, 164, 45, 0.36);
+  border-radius: 12px;
+  background:
+    linear-gradient(145deg, #ffffff, #fff8e8),
+    #ffffff;
+  box-shadow: 0 10px 26px rgba(76, 16, 24, 0.08);
+}
+
+.upgrade-learning-board span {
+  display: inline-flex;
+  margin-bottom: 10px;
+  padding: 6px 9px;
+  border-radius: 999px;
+  background: #4c1018;
+  color: #ffe37a;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.upgrade-learning-board h3 {
+  margin: 0 0 8px;
+  color: #172033;
+  font-size: 20px;
+}
+
+.upgrade-learning-board p {
+  margin: 0;
+  color: #566174;
+  line-height: 1.45;
+}
+
+.upgrade-card {
+  position: relative;
+  display: grid;
+  align-content: start;
+  min-height: 300px;
+  padding: 34px 22px 22px;
+  border: 1px solid #f7efd9;
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 227, 122, 0.16), transparent 32%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.99), rgba(255, 250, 238, 0.99)),
+    #ffffff;
+  color: #172033;
+  text-align: center;
+  box-shadow:
+    inset 0 0 0 7px #ffffff,
+    inset 0 0 0 9px #d1a42d,
+    0 18px 22px rgba(0, 0, 0, 0.28);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.table-card {
+  min-height: 280px;
+}
+
+.player-card {
+  min-height: 250px;
+  padding-inline: 16px;
+}
+
+.player-card:not(.held) {
+  background:
+    linear-gradient(135deg, transparent 0 42%, rgba(255, 227, 122, 0.28) 43% 47%, transparent 48%),
+    linear-gradient(45deg, transparent 0 42%, rgba(255, 227, 122, 0.28) 43% 47%, transparent 48%),
+    radial-gradient(circle at 50% 50%, rgba(255, 227, 122, 0.2), transparent 36%),
+    linear-gradient(145deg, #4c1018, #111421),
+    #4c1018;
+  color: #fff8e1;
+  box-shadow:
+    inset 0 0 0 7px #4c1018,
+    inset 0 0 0 9px #d1a42d,
+    0 18px 22px rgba(0, 0, 0, 0.28);
+}
+
+.player-card:not(.held) .card-label,
+.player-card:not(.held) .card-suit {
+  background: rgba(255, 227, 122, 0.12);
+  color: #ffe37a;
+}
+
+.player-card:not(.held) .card-corner,
+.player-card:not(.held) strong,
+.player-card:not(.held) p,
+.player-card:not(.held) small {
+  color: #fff8e1;
+}
+
+.upgrade-card:hover {
+  transform: translateY(-7px) rotate(-0.8deg);
+  box-shadow:
+    inset 0 0 0 7px #ffffff,
+    inset 0 0 0 9px #d1a42d,
+    0 26px 32px rgba(0, 0, 0, 0.32);
+}
+
+.upgrade-card.held {
+  border-color: #ffe37a;
+  transform: translateY(-10px);
+  box-shadow:
+    inset 0 0 0 7px #ffffff,
+    inset 0 0 0 9px #ffe37a,
+    0 0 0 5px rgba(255, 227, 122, 0.34),
+    0 0 34px rgba(255, 227, 122, 0.22),
+    0 28px 38px rgba(0, 0, 0, 0.34);
+}
+
+.player-card.held {
+  transform: translateY(-14px) scale(1.02);
+}
+
+.player-card.thrown-card {
+  animation: card-throw-to-table 0.55s cubic-bezier(0.22, 0.88, 0.28, 1.22);
+  z-index: 2;
+}
+
+.player-card:disabled {
+  cursor: default;
+}
+
+.upgrade-card.device {
+  --card-suit: #111421;
+  --card-soft: #edf1f7;
+}
+
+.upgrade-card.offer {
+  --card-suit: #9f1f2d;
+  --card-soft: #fff0f0;
+}
+
+.upgrade-card.requirement {
+  --card-suit: #a16d00;
+  --card-soft: #fff4df;
+}
+
+.card-label {
+  justify-self: center;
+  padding: 7px 11px;
+  border-radius: 999px;
+  background: var(--card-soft);
+  color: var(--card-suit);
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.card-corner {
+  position: absolute;
+  display: grid;
+  gap: 1px;
+  justify-items: center;
+  color: var(--card-suit);
+  font-style: normal;
+  line-height: 1;
+}
+
+.card-corner b {
+  font-size: 20px;
+}
+
+.card-corner em {
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 900;
+}
+
+.card-corner.top {
+  top: 12px;
+  left: 12px;
+}
+
+.card-corner.bottom {
+  right: 12px;
+  bottom: 12px;
+  transform: rotate(180deg);
+}
+
+.card-suit {
+  display: grid;
+  place-items: center;
+  justify-self: center;
+  width: 70px;
+  height: 70px;
+  margin: 18px 0 4px;
+  border: 2px solid color-mix(in srgb, var(--card-suit) 38%, #ffffff);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.9), transparent 34%),
+    var(--card-soft);
+  color: var(--card-suit);
+  font-size: 30px;
+  font-weight: 900;
+  box-shadow: inset 0 -8px 16px rgba(23, 32, 51, 0.08);
+}
+
+.upgrade-card strong {
+  display: block;
+  margin: 12px 0 10px;
+  color: #172033;
+  font-size: clamp(18px, 2vw, 22px);
+  line-height: 1.2;
+}
+
+.upgrade-card p {
+  margin: 0 0 18px;
+  color: #566174;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.upgrade-card small {
+  align-self: end;
+  margin-top: auto;
+  color: var(--card-suit);
+  font-weight: 900;
+}
+
+.upgrade-controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: center;
+}
+
+.dealer-message {
+  padding: 18px;
+  border: 2px solid rgba(209, 164, 45, 0.48);
+  border-radius: 12px;
+  background:
+    radial-gradient(circle at 2% 50%, rgba(209, 164, 45, 0.22), transparent 18%),
+    linear-gradient(135deg, rgba(255, 252, 241, 0.98), rgba(255, 247, 225, 0.98)),
+    #ffffff;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.72),
+    0 10px 26px rgba(76, 16, 24, 0.1);
+}
+
+.dealer-message.approved {
+  border-color: #d1a42d;
+  background:
+    linear-gradient(135deg, rgba(255, 248, 225, 0.98), rgba(240, 251, 244, 0.96)),
+    #fff8e1;
+  box-shadow:
+    0 0 0 5px rgba(209, 164, 45, 0.18),
+    0 10px 26px rgba(76, 16, 24, 0.1);
+}
+
+.dealer-message strong {
+  color: #4c1018;
+}
+
+.dealer-message p {
+  margin: 6px 0 0;
+  color: #566174;
+}
+
+.upgrade-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.upgrade-actions button {
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 1px solid rgba(209, 164, 45, 0.46);
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, #ffffff, #fff4d7),
+    #ffffff;
+  color: #4c1018;
+  font-weight: 900;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 8px 16px rgba(76, 16, 24, 0.12);
+}
+
+.upgrade-actions .primary {
+  border-color: #d1a42d;
+  background:
+    linear-gradient(180deg, #ffe37a, #c78d19),
+    #d1a42d;
+  color: #331006;
+}
+
+.upgrade-actions .ask-dealer {
+  background:
+    linear-gradient(180deg, #d33348, #8d1827),
+    #9f1f2d;
+  border-color: #ffd36a;
+  color: #ffffff;
+}
+
+@keyframes card-throw-to-table {
+  0% {
+    opacity: 0.85;
+    transform: translateY(84px) rotate(9deg) scale(0.9);
+  }
+
+  70% {
+    opacity: 1;
+    transform: translateY(-20px) rotate(-4deg) scale(1.04);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(-14px) rotate(0deg) scale(1.02);
+  }
+}
+
+/* Blackjack-style D-Vice learning mode */
+.device-upgrade-game {
+  padding: 8px;
+  border-radius: 12px;
+  background:
+    linear-gradient(135deg, rgba(5, 81, 61, 0.08), rgba(23, 32, 51, 0.05)),
+    transparent;
+}
+
+.upgrade-game-hero,
+.device-terminology-casino,
+.upgrade-explainer,
+.upgrade-learning-board article,
+.dealer-message {
+  border: 1px solid #dce4f0;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgba(23, 32, 51, 0.06);
+}
+
+.upgrade-game-hero {
+  padding: 22px;
+  border-color: #b8c7d8;
+  background:
+    linear-gradient(135deg, rgba(5, 81, 61, 0.12), rgba(255, 255, 255, 0.96)),
+    #ffffff;
+}
+
+.upgrade-game-hero::after,
+.upgrade-table::before,
+.terminology-chip-card::before,
+.terminology-chip-card::after {
+  display: none;
+}
+
+.upgrade-game-hero h2 {
+  margin: 6px 0 8px;
+  color: #0b513c;
+  font-size: clamp(38px, 6vw, 62px);
+  line-height: 1;
+  text-shadow: 0 2px 0 rgba(255, 255, 255, 0.8);
+  text-transform: uppercase;
+}
+
+.upgrade-game-hero p:not(.eyebrow),
+.terminology-marquee p:not(.eyebrow) {
+  color: #566174;
+}
+
+.upgrade-scoreboard span {
+  border: 1px solid #b8c7d8;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #0b513c;
+  box-shadow: inset 0 -2px 0 rgba(5, 81, 61, 0.08);
+}
+
+.device-terminology-casino,
+.upgrade-explainer {
+  padding: 18px;
+  background: #ffffff;
+}
+
+.terminology-marquee {
+  padding: 0 0 4px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #172033;
+}
+
+.terminology-marquee h3,
+.dealer-script h3 {
+  color: #172033;
+  text-shadow: none;
+}
+
+.terminology-chip-grid {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.terminology-chip-card,
+.upgrade-rule-cards article {
+  min-height: auto;
+  border: 1px solid #dce4f0;
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, #ffffff, #f8fafc),
+    #ffffff;
+  box-shadow: 0 6px 16px rgba(23, 32, 51, 0.05);
+}
+
+.terminology-chip-card span,
+.upgrade-rule-cards span,
+.upgrade-learning-board span {
+  background: #e8f5f1;
+  color: #0b513c;
+}
+
+.terminology-chip-card small {
+  color: #566174;
+}
+
+.terminology-mini-row span {
+  background: #e8f5f1;
+  color: #0b513c;
+}
+
+.dealer-hat {
+  border-color: #172033;
+  background:
+    linear-gradient(90deg, #ffffff 0 34%, #0b513c 34% 50%, #9f1f2d 50% 66%, #ffffff 66%),
+    #ffffff;
+  box-shadow: 0 6px 0 #172033;
+}
+
+.dealer-face {
+  border-color: #172033;
+  box-shadow:
+    0 0 0 7px #ffffff,
+    0 10px 20px rgba(23, 32, 51, 0.12);
+}
+
+.dealer-face i {
+  border-bottom-color: #172033;
+}
+
+.dealer-bowtie {
+  background:
+    radial-gradient(circle at 50% 50%, #ffffff 0 5px, transparent 6px),
+    linear-gradient(135deg, transparent 0 16%, #9f1f2d 17% 48%, transparent 49%),
+    linear-gradient(225deg, transparent 0 16%, #0b513c 17% 48%, transparent 49%);
+}
+
+.upgrade-table {
+  position: relative;
+  gap: 20px;
+  padding: clamp(18px, 3vw, 28px);
+  border: 10px solid #17362f;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.14), transparent 34%),
+    radial-gradient(circle at 14% 88%, rgba(255, 255, 255, 0.08), transparent 26%),
+    linear-gradient(135deg, #0b654a, #063f34 58%, #052b27);
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 255, 255, 0.08),
+    inset 0 22px 60px rgba(255, 255, 255, 0.05),
+    0 22px 42px rgba(23, 32, 51, 0.22);
+}
+
+.upgrade-table::after {
+  content: "D-Vice Blackjack Table";
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  color: rgba(255, 255, 255, 0.18);
+  font-size: clamp(18px, 4vw, 40px);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  transform: translateX(-50%);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.table-zone-heading h3 {
+  color: #ffffff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.32);
+}
+
+.dealer-card-row {
+  grid-template-columns: repeat(2, minmax(0, 260px));
+}
+
+.player-card-row {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.upgrade-card {
+  min-height: 236px;
+  padding: 30px 16px 16px;
+  border: 1px solid #d7dce6;
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(11, 81, 60, 0.05), transparent 34%),
+    #ffffff;
+  box-shadow:
+    inset 0 0 0 6px #ffffff,
+    inset 0 0 0 8px #d9dee8,
+    0 16px 24px rgba(0, 0, 0, 0.22);
+}
+
+.table-card {
+  min-height: 220px;
+}
+
+.player-card {
+  min-height: 210px;
+}
+
+.player-card:not(.held) {
+  background:
+    linear-gradient(135deg, transparent 0 42%, rgba(255, 255, 255, 0.16) 43% 47%, transparent 48%),
+    linear-gradient(45deg, transparent 0 42%, rgba(255, 255, 255, 0.16) 43% 47%, transparent 48%),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.13), transparent 36%),
+    linear-gradient(145deg, #0b513c, #172033),
+    #0b513c;
+  color: #ffffff;
+  box-shadow:
+    inset 0 0 0 6px #0b513c,
+    inset 0 0 0 8px rgba(255, 255, 255, 0.5),
+    0 16px 24px rgba(0, 0, 0, 0.22);
+}
+
+.player-card:not(.held) .card-label,
+.player-card:not(.held) .card-suit {
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+}
+
+.upgrade-card:hover {
+  transform: translateY(-6px) rotate(-0.4deg);
+  box-shadow:
+    inset 0 0 0 6px #ffffff,
+    inset 0 0 0 8px #d9dee8,
+    0 22px 30px rgba(0, 0, 0, 0.26);
+}
+
+.upgrade-card.held,
+.player-card.held {
+  border-color: #315a77;
+  transform: translateY(-10px);
+  box-shadow:
+    inset 0 0 0 6px #ffffff,
+    inset 0 0 0 8px #315a77,
+    0 0 0 4px rgba(49, 90, 119, 0.18),
+    0 20px 30px rgba(0, 0, 0, 0.24);
+}
+
+.upgrade-card.device,
+.upgrade-card.requirement {
+  --card-suit: #172033;
+  --card-soft: #edf5f8;
+}
+
+.upgrade-card.offer {
+  --card-suit: #9f1f2d;
+  --card-soft: #fff0f0;
+}
+
+.card-suit {
+  width: 54px;
+  height: 54px;
+  margin: 12px 0 4px;
+  box-shadow: none;
+}
+
+.dealer-message.approved {
+  border-color: #53a375;
+  background:
+    linear-gradient(135deg, #f0fbf4, #ffffff),
+    #f0fbf4;
+  box-shadow: 0 8px 24px rgba(23, 32, 51, 0.08);
+}
+
+.dealer-message strong {
+  color: #172033;
+}
+
+.upgrade-actions button {
+  border: 1px solid #b8c7d8;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #172033;
+  box-shadow: 0 6px 14px rgba(23, 32, 51, 0.08);
+}
+
+.upgrade-actions .primary,
+.upgrade-actions .ask-dealer {
+  border-color: #315a77;
+  background: linear-gradient(180deg, #315a77, #18384f);
+  color: #ffffff;
+}
+
+.upgrade-learning-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.upgrade-learning-grid article {
+  padding: 18px;
+  border: 1px solid #dce4f0;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgba(23, 32, 51, 0.05);
+}
+
+.upgrade-learning-grid h3 {
+  margin: 0 0 10px;
+  color: #172033;
+}
+
+.upgrade-learning-grid ol,
+.upgrade-learning-grid ul {
+  margin: 0;
+  padding-left: 20px;
+  color: #566174;
+}
+
+.upgrade-learning-grid li + li {
+  margin-top: 6px;
+}
+
 @keyframes dove-swoop-in {
   0% {
     opacity: 0;
@@ -2541,11 +3599,54 @@ button {
   .mesa-info,
   .mesa-stats,
   .mesa-controls,
+  .upgrade-game-hero,
+  .upgrade-scoreboard,
+  .device-terminology-casino,
+  .upgrade-explainer,
+  .upgrade-table,
+  .upgrade-controls,
+  .upgrade-learning-board,
+  .upgrade-learning-grid,
   .deescalation-brief,
   .deescalation-score,
   .deescalation-board,
   .deescalation-form {
     grid-template-columns: 1fr;
+  }
+
+  .upgrade-rule-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .terminology-chip-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .terminology-chip-card {
+    border-radius: 16px;
+    min-height: 0;
+  }
+
+  .dealer-card-row,
+  .player-card-row {
+    grid-template-columns: 1fr;
+  }
+
+  .table-zone-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .upgrade-card {
+    min-height: 220px;
+  }
+
+  .upgrade-actions {
+    justify-content: stretch;
+  }
+
+  .upgrade-actions button {
+    flex: 1 1 180px;
   }
 
   .conversation-log-header {

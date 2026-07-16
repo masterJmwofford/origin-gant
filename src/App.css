@@ -1773,8 +1773,54 @@ button {
 }
 
 .heatmap-tool {
+  position: relative;
   display: grid;
   gap: 18px;
+  overflow: hidden;
+  padding: 18px;
+  border: 1px solid #d7e5ee;
+  border-radius: 8px;
+  background:
+    linear-gradient(120deg, rgba(255, 255, 255, 0.82), rgba(237, 248, 251, 0.78)),
+    url("https://c8.alamy.com/comp/CWXNG5/international-business-background-with-flags-from-the-world-in-three-CWXNG5.jpg") center / cover no-repeat,
+    #f4fbfd;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+.heatmap-tool::before,
+.heatmap-tool::after {
+  position: absolute;
+  inset: auto;
+  z-index: 0;
+  content: "";
+  pointer-events: none;
+}
+
+.heatmap-tool::before {
+  inset: 0;
+  opacity: 0.9;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.56), transparent 32%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.58));
+}
+
+.heatmap-tool::after {
+  right: -42px;
+  bottom: -64px;
+  width: min(420px, 70vw);
+  height: min(220px, 34vw);
+  opacity: 0.18;
+  background:
+    linear-gradient(90deg, rgba(0, 82, 155, 0.85), rgba(255, 255, 255, 0.18), rgba(213, 43, 30, 0.72)),
+    url("https://c8.alamy.com/comp/CWXNG5/international-business-background-with-flags-from-the-world-in-three-CWXNG5.jpg") center / cover no-repeat;
+  border-radius: 50%;
+  transform: rotate(-9deg);
+  filter: blur(0.4px);
+}
+
+.heatmap-tool > * {
+  position: relative;
+  z-index: 1;
 }
 
 .heatmap-brief,
@@ -1783,8 +1829,9 @@ button {
 .coverage-plan-grid article {
   border: 1px solid #dce4f0;
   border-radius: 8px;
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.94);
   box-shadow: 0 8px 24px rgba(23, 32, 51, 0.06);
+  backdrop-filter: blur(6px);
 }
 
 .heatmap-brief {
@@ -1794,7 +1841,8 @@ button {
   align-items: center;
   padding: 22px;
   background:
-    linear-gradient(135deg, rgba(32, 108, 143, 0.12), rgba(255, 255, 255, 0.96)),
+    linear-gradient(135deg, rgba(32, 108, 143, 0.16), rgba(255, 255, 255, 0.96)),
+    linear-gradient(90deg, rgba(0, 82, 155, 0.14), transparent 18%, rgba(213, 43, 30, 0.1) 34%, transparent 50%, rgba(18, 137, 89, 0.12) 66%, transparent 82%),
     #ffffff;
 }
 
@@ -1837,14 +1885,17 @@ button {
   padding: 9px 12px;
   border: 1px solid #c8d9e3;
   border-radius: 999px;
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.94);
   color: #11445d;
   font-weight: 900;
+  box-shadow: 0 6px 16px rgba(23, 32, 51, 0.06);
 }
 
 .heatmap-layer-buttons button.active {
   border-color: #206c8f;
-  background: #206c8f;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.14), transparent),
+    #206c8f;
   color: #ffffff;
 }
 
@@ -1859,7 +1910,10 @@ button {
   overflow: hidden;
   border: 1px solid #c8d9e3;
   border-radius: 8px;
-  background: #dff3f8;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.58), rgba(223, 243, 248, 0.72)),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.18) 0 18px, transparent 18px 38px),
+    #dff3f8;
 }
 
 .world-map-panel svg {

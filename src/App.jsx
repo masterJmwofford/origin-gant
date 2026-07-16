@@ -7,6 +7,7 @@ import DashBoard from './components/DashBoard.jsx'
 import DeescalationGame from './components/DeescalationGame'
 import DeviceUpgradeGame from './components/DeviceUpgradeGame'
 import EagleEye from './components/EagleEye'
+import EssentialQuestions from './components/EssentialQuestions'
 import FlashCardGrid from './components/FlashCardGrid'
 import HeatMap from './components/HeatMap'
 import MesaBreaker from './components/MesaBreaker'
@@ -51,6 +52,12 @@ const navItems = [
     label: 'SSO Options',
     theme: 'violet',
     description: 'Self-service scenario matching game',
+  },
+  {
+    id: 'questions',
+    label: 'Call Questions',
+    theme: 'indigo',
+    description: 'Essential questions by customer need',
   },
   {
     id: 'heatmap',
@@ -115,6 +122,14 @@ const eagleEyeSummaries = {
       'Use FirstNet Central for bill pay, account overview, billing help, and chat with an expert.',
       'Use FirstNet Help for eSIM activation, certified device help, and NumberSync wearable help.',
       'Use FirstNet Assist for dedicated care, live chat text, device diagnostics, and uplift workflows.',
+    ],
+  },
+  questions: {
+    title: 'Call questions in plain words',
+    points: [
+      'Start by identifying the caller need and account path before explaining anything account-specific.',
+      'IRU and CRU calls are treated as Subscriber Paid and Agency Paid paths in this guide, so reps verify before applying billing, device, or eligibility guidance.',
+      'Use the category questions to gather the right identifiers: account type, plan, device model, IMEI, ICCID, EID, destination, or support path.',
     ],
   },
   heatmap: {
@@ -364,6 +379,15 @@ function App() {
                 <h2>SSO Options Matching Game</h2>
               </div>
               <SelfServiceGame game={selfServiceGame} />
+            </section>
+          </div>
+        )}
+
+        {activeTab === 'questions' && (
+          <div className="tab-panel">
+            {eagleEyeEnabled && <EagleEyeSummary summary={eagleEyeSummaries.questions} />}
+            <section className="study-section" id="essential-questions">
+              <EssentialQuestions />
             </section>
           </div>
         )}

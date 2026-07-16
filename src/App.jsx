@@ -8,6 +8,7 @@ import DeescalationGame from './components/DeescalationGame'
 import DeviceUpgradeGame from './components/DeviceUpgradeGame'
 import EagleEye from './components/EagleEye'
 import FlashCardGrid from './components/FlashCardGrid'
+import HeatMap from './components/HeatMap'
 import MesaBreaker from './components/MesaBreaker'
 import PavoCristatus from './components/PavoCristatus'
 import Plans from './components/Plans'
@@ -50,6 +51,12 @@ const navItems = [
     label: 'SSO Options',
     theme: 'violet',
     description: 'Self-service scenario matching game',
+  },
+  {
+    id: 'heatmap',
+    label: 'HeatMap',
+    theme: 'map',
+    description: 'Coverage and travel feature learning map',
   },
   {
     id: 'device-upgrades',
@@ -108,6 +115,14 @@ const eagleEyeSummaries = {
       'Use FirstNet Central for bill pay, account overview, billing help, and chat with an expert.',
       'Use FirstNet Help for eSIM activation, certified device help, and NumberSync wearable help.',
       'Use FirstNet Assist for dedicated care, live chat text, device diagnostics, and uplift workflows.',
+    ],
+  },
+  heatmap: {
+    title: 'HeatMap in plain words',
+    points: [
+      'Use this as a learning map, not as a live address-level coverage checker.',
+      'All listed individual FirstNet plans include First Priority language, but international features differ by plan.',
+      '5G and International Day Pass both need verification before quoting: check the device, destination, location, and account details.',
     ],
   },
   'device-upgrades': {
@@ -349,6 +364,15 @@ function App() {
                 <h2>SSO Options Matching Game</h2>
               </div>
               <SelfServiceGame game={selfServiceGame} />
+            </section>
+          </div>
+        )}
+
+        {activeTab === 'heatmap' && (
+          <div className="tab-panel">
+            {eagleEyeEnabled && <EagleEyeSummary summary={eagleEyeSummaries.heatmap} />}
+            <section className="study-section" id="heatmap">
+              <HeatMap />
             </section>
           </div>
         )}

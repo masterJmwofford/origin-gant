@@ -115,6 +115,9 @@ const deviceTerminology = [
       'A device designation for devices tested and approved to operate on FirstNet.',
     whyItMatters:
       'Use this before talking upgrade benefits, because FirstNet service depends on a compatible device path.',
+    verify: 'Confirm the exact device model before discussing activation, SIM, or upgrade next steps.',
+    customerPhrase:
+      'First I want to make sure the device itself is ready for the FirstNet experience before we talk about the offer.',
   },
   {
     term: 'FirstNet Capable',
@@ -123,6 +126,9 @@ const deviceTerminology = [
       'The app study data uses this for a device that can be provisioned for FirstNet service.',
     whyItMatters:
       'Plans and activation should be paired with a capable device and a FirstNet SIM or eSIM.',
+    verify: 'Confirm the device can be provisioned with FirstNet service and the right SIM path.',
+    customerPhrase:
+      'The phone and the line both have to be set up for FirstNet, so I am checking the device path and the SIM path together.',
   },
   {
     term: 'Certified device',
@@ -131,6 +137,9 @@ const deviceTerminology = [
       'A device listed by FirstNet as certified or compatible with the FirstNet Evolved Packet Core.',
     whyItMatters:
       'Certification helps you know the device belongs in the FirstNet device conversation.',
+    verify: 'Use the official certified-device guidance or product page before presenting it as compatible.',
+    customerPhrase:
+      'I am checking whether this model is listed for FirstNet instead of assuming from the brand name alone.',
   },
   {
     term: 'FirstNet Trio SIM',
@@ -139,6 +148,9 @@ const deviceTerminology = [
       'A physical SIM option used for FirstNet activation.',
     whyItMatters:
       'A device may be right, but the line still needs the right SIM path to activate correctly.',
+    verify: 'Confirm whether the customer needs a physical SIM, a replacement SIM, or an eSIM path.',
+    customerPhrase:
+      'If your phone uses a physical SIM, we need the correct FirstNet SIM associated with the line.',
   },
   {
     term: 'eSIM',
@@ -147,6 +159,9 @@ const deviceTerminology = [
       'A digital SIM supported by FirstNet on compatible devices, allowing activation without a removable physical SIM.',
     whyItMatters:
       'Some upgrades need an eSIM activation path instead of a physical SIM swap.',
+    verify: 'Confirm the device supports eSIM and that the customer is using the official activation path.',
+    customerPhrase:
+      'For eSIM, we do not swap a plastic card; we activate the digital SIM that belongs to the device.',
   },
   {
     term: 'IMEI',
@@ -155,6 +170,9 @@ const deviceTerminology = [
       'The device identifier used to identify the phone or connected device.',
     whyItMatters:
       'Use it when checking device compatibility, activation, or upgrade details.',
+    verify: 'Ask for or locate the IMEI when the question is about the device itself.',
+    customerPhrase:
+      'The IMEI identifies the device, so it helps me check the phone rather than guessing from the model name.',
   },
   {
     term: 'ICCID',
@@ -163,6 +181,9 @@ const deviceTerminology = [
       'The identifier for a physical SIM card.',
     whyItMatters:
       'It helps connect the correct physical SIM to the correct line during activation.',
+    verify: 'Use ICCID when the support issue is about a physical SIM card.',
+    customerPhrase:
+      'The ICCID identifies the SIM card, so it helps make sure the right card is tied to the right line.',
   },
   {
     term: 'EID',
@@ -171,6 +192,9 @@ const deviceTerminology = [
       'The identifier used for eSIM-capable devices.',
     whyItMatters:
       'It matters when the upgrade or activation uses digital SIM service.',
+    verify: 'Use EID when the support issue is about eSIM setup or digital SIM activation.',
+    customerPhrase:
+      'The EID helps identify the digital SIM capability on the device.',
   },
   {
     term: 'HPUE',
@@ -179,6 +203,9 @@ const deviceTerminology = [
       'High-power user equipment can transmit at higher power on Band 14 than standard LTE devices.',
     whyItMatters:
       'It is a device capability conversation, not a generic discount or plan requirement.',
+    verify: 'Confirm that the conversation is about a device capability, not simply a smartphone promo.',
+    customerPhrase:
+      'That feature is about device capability and coverage behavior, not just the monthly plan price.',
   },
   {
     term: 'Wireless Broadband',
@@ -187,6 +214,9 @@ const deviceTerminology = [
       'A FirstNet data option for routers, modems, hotspots, and other data-only connectivity needs.',
     whyItMatters:
       'Not every device conversation is a phone upgrade; some are data-only device needs.',
+    verify: 'Confirm whether the customer needs smartphone service or data-only connectivity.',
+    customerPhrase:
+      'This sounds like a data-device need, so I want to separate it from a regular phone upgrade.',
   },
   {
     term: 'Software update',
@@ -195,6 +225,9 @@ const deviceTerminology = [
       'Some FirstNet Ready devices may need a software update.',
     whyItMatters:
       'A device can be eligible but still need an update before the experience is complete.',
+    verify: 'If activation or features are not behaving as expected, check whether a software update is needed.',
+    customerPhrase:
+      'The device may be compatible, but we should also make sure the software is current.',
   },
   {
     term: 'Trade-in',
@@ -203,6 +236,9 @@ const deviceTerminology = [
       'A device promotion may depend on the customer trading in an eligible device at a required value.',
     whyItMatters:
       'Trade-in value is often the difference between quoting an offer correctly and quoting it too broadly.',
+    verify: 'Confirm the required trade-in value for the specific offer before quoting the promotional amount.',
+    customerPhrase:
+      'That offer depends on the trade-in meeting the required value, so I want to verify that condition first.',
   },
   {
     term: 'Installment plan',
@@ -211,6 +247,9 @@ const deviceTerminology = [
       'Some device offers require the new device to be purchased on an installment plan.',
     whyItMatters:
       'If the offer requires installments, do not separate the promo from that condition.',
+    verify: 'Confirm whether the offer requires installments before presenting the monthly credit or discount.',
+    customerPhrase:
+      'The promotion may be tied to how the device is purchased, so I need to check the installment requirement.',
   },
   {
     term: 'Verify current pricing',
@@ -219,6 +258,108 @@ const deviceTerminology = [
       'When the source does not publish a device-specific offer, confirm current pricing before quoting.',
     whyItMatters:
       'This is the safe move that prevents invented prices.',
+    verify: 'If no specific promo is shown for that device, do not quote a dollar amount until current pricing is checked.',
+    customerPhrase:
+      'I do not want to guess on pricing. Let me verify the current offer before I quote it.',
+  },
+  {
+    term: 'BYOD',
+    category: 'Customer scenario',
+    plain:
+      'Bring Your Own Device means the customer wants to use an existing device instead of buying a new one.',
+    whyItMatters:
+      'BYOD changes the support path: focus on compatibility, SIM/eSIM, and activation instead of a device promo.',
+    verify: 'Confirm the exact model, IMEI, SIM/eSIM path, and whether the device is eligible for FirstNet service.',
+    customerPhrase:
+      'Since you want to use your current device, I am checking compatibility and activation first.',
+  },
+  {
+    term: 'Device upgrade',
+    category: 'Customer scenario',
+    plain:
+      'A device upgrade means the customer is replacing the device on an existing or eligible line.',
+    whyItMatters:
+      'Support should separate the device purchase, the plan requirement, and the activation/SIM steps.',
+    verify: 'Confirm line/account context, device offer, trade-in requirement, plan requirement, and activation path.',
+    customerPhrase:
+      'For the upgrade, I am going to match the device, the offer, the plan requirement, and the activation step.',
+  },
+  {
+    term: 'Rugged device',
+    category: 'Device type',
+    plain:
+      'A rugged or specialty device is built for field use and may not follow the same promo pattern as flagship smartphones.',
+    whyItMatters:
+      'Do not assume smartphone promotional rules apply to rugged or specialty devices.',
+    verify: 'Confirm the device page, current price, SIM needs, and whether any software update is required.',
+    customerPhrase:
+      'This is a specialty device, so I am going to verify the current offer instead of applying a phone promo by assumption.',
+  },
+  {
+    term: 'FirstNet Assist',
+    category: 'Support path',
+    plain:
+      'A FirstNet app that helps users access support resources, service information, and assistance from a mobile device.',
+    whyItMatters:
+      'It can be a support path for care, device diagnostics, and field-user help.',
+    verify: 'Use it when the customer needs mobile support, diagnostics, or care access rather than a sales quote.',
+    customerPhrase:
+      'For troubleshooting, FirstNet Assist may be the better path because it is built for support and device help.',
+  },
+  {
+    term: 'Device diagnostics',
+    category: 'Support path',
+    plain:
+      'A troubleshooting path used when a customer says the device is not working correctly.',
+    whyItMatters:
+      'It keeps support focused on the device issue before jumping to replacement or plan changes.',
+    verify: 'Ask what is failing: activation, signal, SIM/eSIM, calls/texts, data, app support, or physical device behavior.',
+    customerPhrase:
+      'Before we talk replacement, let us narrow down whether this is activation, SIM, network, or device behavior.',
+  },
+  {
+    term: 'NumberSync wearables',
+    category: 'Support path',
+    plain:
+      'A support topic for calls and texts from a supported wearable.',
+    whyItMatters:
+      'Wearables are not the same as phone upgrades; they need their own supported setup path.',
+    verify: 'Confirm supported wearable, line relationship, and the official NumberSync path.',
+    customerPhrase:
+      'Because this is a wearable, I want to check the NumberSync setup instead of treating it like a phone line.',
+  },
+  {
+    term: 'Account type',
+    category: 'Support process',
+    plain:
+      'Device conversations can differ depending on Subscriber Paid, Agency Paid, or family/commercial-line context.',
+    whyItMatters:
+      'The account type can change who manages the line, what can be discussed, and which offers or support paths apply.',
+    verify: 'Confirm whether the line is Subscriber Paid, Agency Paid, or a family/commercial line before giving account-specific guidance.',
+    customerPhrase:
+      'I want to confirm the account type first so I do not apply the wrong device or billing path.',
+  },
+  {
+    term: 'Plan requirement',
+    category: 'Support process',
+    plain:
+      'Some device offers require a specific eligible plan level.',
+    whyItMatters:
+      'The device may qualify, but the offer can still fail if the plan requirement is not met.',
+    verify: 'Check the offer language for plan-level requirements before saying the customer qualifies.',
+    customerPhrase:
+      'The device is only one part of the offer; I also need to confirm the plan requirement.',
+  },
+  {
+    term: 'Safe quote',
+    category: 'Support process',
+    plain:
+      'A safe quote is a customer explanation that includes the condition attached to the price or discount.',
+    whyItMatters:
+      'It prevents overpromising by tying the offer to trade-in, plan, installment, and verification steps.',
+    verify: 'Before quoting, match device, offer, requirement, account type, and activation path.',
+    customerPhrase:
+      'Based on what I can verify, here is the offer and the conditions that must be met for it to apply.',
   },
 ]
 
@@ -226,18 +367,44 @@ const terminologyGroups = [
   {
     title: '1. Confirm the device',
     categories: ['Device status'],
+    supportGoal:
+      'Start every device conversation by identifying what the customer has or wants. Do not assume compatibility from brand name alone.',
   },
   {
     title: '2. Know activation and IDs',
     categories: ['Activation', 'Identifier'],
+    supportGoal:
+      'Use the right identifier for the right problem: IMEI for device, ICCID for physical SIM, and EID for eSIM.',
   },
   {
     title: '3. Recognize device types',
     categories: ['Capability', 'Device type', 'Readiness'],
+    supportGoal:
+      'Separate smartphone, rugged, data-only, capability, and readiness conversations so the support path stays accurate.',
   },
   {
     title: '4. Match pricing rules',
     categories: ['Pricing'],
+    supportGoal:
+      'Never quote a device price without matching it to the published promo and its requirements.',
+  },
+  {
+    title: '5. Handle customer scenarios',
+    categories: ['Customer scenario'],
+    supportGoal:
+      'Listen for whether the customer is bringing a device, upgrading a device, or asking about a specialty device.',
+  },
+  {
+    title: '6. Route support correctly',
+    categories: ['Support path'],
+    supportGoal:
+      'Use support paths when the issue is troubleshooting, wearable setup, diagnostics, or care access rather than pricing.',
+  },
+  {
+    title: '7. Give the safe answer',
+    categories: ['Support process'],
+    supportGoal:
+      'Close the loop by confirming account type, plan requirement, and the conditions attached to the offer.',
   },
 ]
 
@@ -375,12 +542,29 @@ export default function DeviceUpgradeGame() {
           </div>
 
           <article className="academy-slide">
+            <div className="academy-support-goal">
+              <strong>Support goal</strong>
+              <p>{activeAcademyGroup.supportGoal}</p>
+            </div>
             {activeAcademyTerms.map((item) => (
               <div className="academy-term-card" key={item.term}>
                 <span>{item.category}</span>
                 <h4>{item.term}</h4>
                 <p>{item.plain}</p>
-                <small>{item.whyItMatters}</small>
+                <dl>
+                  <div>
+                    <dt>Why it matters</dt>
+                    <dd>{item.whyItMatters}</dd>
+                  </div>
+                  <div>
+                    <dt>Verify</dt>
+                    <dd>{item.verify}</dd>
+                  </div>
+                  <div>
+                    <dt>Customer phrase</dt>
+                    <dd>{item.customerPhrase}</dd>
+                  </div>
+                </dl>
               </div>
             ))}
           </article>

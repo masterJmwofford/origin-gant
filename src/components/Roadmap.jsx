@@ -255,6 +255,107 @@ const issueProfiles = {
   },
 }
 
+function createInternationalFeatureBranches(profileKey) {
+  const profile = issueProfiles[profileKey]
+
+  return [
+    {
+      id: `${profileKey}-domestic-coverage`,
+      label: 'Domestic Coverage',
+      type: 'feature',
+      summary: `${profile.prefix} domestic coverage path. Use this when the caller asks whether FirstNet service, priority, Band 14, LTE, or 5G-supported service works at a specific U.S. location.`,
+      questions: [
+        profile.accountCheck,
+        'What exact service address, work location, incident location, or travel route needs to be checked?',
+        'Which device and line are involved?',
+        'Is the caller asking about general coverage, First Priority, Band 14, 5G, hotspot, or device behavior?',
+      ],
+      steps: [
+        'Use the official coverage map or account tools for address-level answers.',
+        'Confirm device compatibility and provisioning before assuming the issue is network coverage.',
+        'If the issue is agency-managed, confirm whether the caller is an admin/contact or end user.',
+        'Explain that the training map is not a live coverage checker.',
+      ],
+    },
+    {
+      id: `${profileKey}-fiveg-check`,
+      label: '5G Check',
+      type: 'feature',
+      summary: `${profile.prefix} 5G verification path. The app data says 5G access requires a compatible device and is not available everywhere.`,
+      questions: [
+        profile.accountCheck,
+        'What device model and line are involved?',
+        'Is the customer physically in the location where they expect 5G?',
+        'Is the issue no 5G indicator, slow data, activation, SIM/eSIM, plan expectation, or coverage expectation?',
+        'Has device compatibility and provisioning been checked?',
+      ],
+      steps: [
+        'Confirm device compatibility first.',
+        'Verify location availability in official tools.',
+        'Separate 5G availability from general FirstNet service availability.',
+        'Avoid promising 5G in every location because the app data explicitly says it is not available everywhere.',
+      ],
+    },
+    {
+      id: `${profileKey}-latin-america`,
+      label: 'Latin America',
+      type: 'feature',
+      summary: `${profile.prefix} Latin America plan-feature path. The app data says FirstNet Premium 2.0 and Elite 2.0 include unlimited talk, text, and high-speed data in 20 Latin American countries at no extra cost; coverage and data speeds vary.`,
+      questions: [
+        profile.accountCheck,
+        'Is the customer on Premium 2.0 or Elite 2.0?',
+        'What exact Latin American destination is involved?',
+        'Is the customer asking about talk, text, high-speed data, hotspot, roaming behavior, or billing expectation?',
+        'Has the exact country been verified in official destination tools?',
+      ],
+      steps: [
+        'Verify the customer plan before explaining the Latin America feature.',
+        'Verify the exact destination before quoting availability.',
+        'Do not name the exact 20 countries from memory because the app data stores the count, not the full official list.',
+        'Remind the agent that coverage and data speeds vary.',
+      ],
+    },
+    {
+      id: `${profileKey}-elite-global-data`,
+      label: 'Elite Global Data',
+      type: 'feature',
+      summary: `${profile.prefix} Elite global data path. The app data says FirstNet Elite 2.0 includes 20GB of international data per month for over 210 destinations; after 20GB, speeds may be reduced to a maximum of 512 Kbps.`,
+      questions: [
+        profile.accountCheck,
+        'Is the customer on FirstNet Elite 2.0?',
+        'What destination is involved?',
+        'Is the customer asking about the 20GB monthly international data amount, reduced speed after 20GB, or destination eligibility?',
+        'Has the exact destination and account eligibility been verified?',
+      ],
+      steps: [
+        'Confirm Elite 2.0 before explaining the 20GB international data feature.',
+        'Verify the destination in official tools before quoting coverage or availability.',
+        'Explain the app-stored threshold carefully: after 20GB, international data speeds may be reduced to a maximum of 512 Kbps.',
+        'Do not list over-210 destinations unless official tools confirm the customer destination.',
+      ],
+    },
+    {
+      id: `${profileKey}-international-day-pass`,
+      label: 'Intl Day Pass',
+      type: 'feature',
+      summary: `${profile.prefix} International Day Pass verification path. The app does not store exact IDP pricing or destination lists, so this path is intentionally a verify-before-quote workflow.`,
+      questions: [
+        profile.accountCheck,
+        'What country or destination is the customer traveling to?',
+        'What plan and account type does the customer have?',
+        'Is the customer asking whether to add IDP, how much it costs, whether the destination is supported, or whether the account is eligible?',
+        'Has IDP availability, pricing, destination support, and account eligibility been checked in official tools?',
+      ],
+      steps: [
+        'Do not quote IDP pricing from this app.',
+        'Verify destination support, account eligibility, and current pricing in official tools.',
+        'Separate IDP from Elite included international data and Premium/Elite Latin America features.',
+        'Use IDP as a verification branch, not as an assumed add-on.',
+      ],
+    },
+  ]
+}
+
 function createIssueBranches(profileKey, allowedIssueIds = issueBranches.map((issue) => issue.id)) {
   const profile = issueProfiles[profileKey]
 
@@ -357,6 +458,7 @@ function createIssueBranches(profileKey, allowedIssueIds = issueBranches.map((is
           'Verify plan-specific international features before quoting country or destination availability.',
           'Remind the caller that coverage and data speeds vary.',
         ],
+        children: createInternationalFeatureBranches(profileKey),
       }
     })
 }
@@ -442,7 +544,7 @@ const roadmapTree = {
             'Explain that family lines use AT&T commercial network service, not FirstNet network access.',
             'If family members are already on another AT&T account, the app data says they must visit a store to combine accounts.',
           ],
-          children: createIssueBranches('family', ['billing', 'devices', 'account-access']),
+          children: createIssueBranches('family', ['billing', 'devices', 'account-access', 'coverage-travel']),
         },
       ],
     },
@@ -511,7 +613,7 @@ const roadmapTree = {
             'Keep FirstNet-user questions separate from family commercial-line questions.',
             'Verify account authority before discussing details.',
           ],
-          children: createIssueBranches('family', ['billing', 'devices', 'account-access']),
+          children: createIssueBranches('family', ['billing', 'devices', 'account-access', 'coverage-travel']),
         },
       ],
     },
@@ -526,11 +628,376 @@ function getTravelPrompt(node) {
   if (node.type === 'start') return 'Start by choosing whether this caller is new or existing.'
   if (node.type === 'customer') return 'Choose the account path that best matches the caller.'
   if (node.type === 'account') return 'Choose the issue the caller needs help with.'
+  if (node.id.includes('coverage-travel') && node.children) return 'Choose the exact coverage or international feature the caller is asking about.'
   return 'Review the personalized path and use the node detail for the live call.'
 }
 
 function getNodeTypeLabel(node) {
   return node.type ?? 'issue'
+}
+
+function getIssueKind(node) {
+  return issueBranches.find((issue) => node.id.endsWith(issue.id))?.id ?? null
+}
+
+function getAccountContext(node) {
+  if (node.id.includes('newSubscriber')) return 'new Subscriber Paid / IRU'
+  if (node.id.includes('existingSubscriber')) return 'existing Subscriber Paid / IRU'
+  if (node.id.includes('newAgency')) return 'new Agency Paid / CRU'
+  if (node.id.includes('existingAgency')) return 'existing Agency Paid / CRU'
+  if (node.id.includes('family') || node.id.includes('family-commercial')) return 'FirstNet and Family or family/commercial'
+  if (node.id.includes('subscriber')) return 'Subscriber Paid / IRU'
+  if (node.id.includes('agency')) return 'Agency Paid / CRU'
+  if (node.id.includes('new')) return 'new/prospective customer'
+  if (node.id.includes('existing')) return 'existing customer'
+  return 'general call-in'
+}
+
+function getDetailedSections(node) {
+  const nodeType = getNodeTypeLabel(node)
+  const issueKind = getIssueKind(node)
+  const accountContext = getAccountContext(node)
+  const baseSections = [
+    {
+      title: 'Listen For',
+      items: [
+        'The exact words the caller uses to describe ownership, account access, and urgency.',
+        'Whether the caller sounds like the account owner, agency admin, device end user, family-line user, or prospect.',
+        'Whether the caller is asking for education, account action, troubleshooting, or a quote.',
+      ],
+    },
+    {
+      title: 'Before You Proceed',
+      items: [
+        'Confirm caller authority before discussing account-specific details.',
+        'Confirm account type before applying billing, device, eligibility, activation, coverage, or travel guidance.',
+        'Use official tools for anything that could change by account, destination, device, price, or eligibility status.',
+      ],
+    },
+  ]
+
+  if (nodeType === 'start') {
+    return [
+      ...baseSections,
+      {
+        title: 'Manager Coaching',
+        items: [
+          'Coach agents to slow the call down before choosing a path; the first wrong split causes the rest of the call to drift.',
+          'The first decision is not the product. The first decision is who the caller is and what authority they have.',
+          'A clean opening should capture need, status, account path, and the object of the issue: line, device, bill, location, or eligibility request.',
+        ],
+      },
+      {
+        title: 'Path Forward',
+        items: [
+          'If no account exists, move toward new/prospective customer and eligibility or setup questions.',
+          'If service exists, move toward existing customer and verify account authority.',
+          'If the caller is unsure, ask whether service is personally paid, agency-managed, or tied to family/commercial lines.',
+        ],
+      },
+    ]
+  }
+
+  if (nodeType === 'customer') {
+    return [
+      ...baseSections,
+      {
+        title: 'Decision Logic',
+        items: [
+          node.id.includes('new')
+            ? 'New/prospective callers need eligibility, account-path, plan, device, and setup guidance before account-specific support.'
+            : 'Existing callers need verification first, then issue routing by account type and caller authority.',
+          'The agent should identify whether the caller is trying to start service, manage current service, troubleshoot, or understand a bill/feature.',
+          'Do not let a product question skip the account path; device, billing, and travel answers can change by account type.',
+        ],
+      },
+      {
+        title: 'Branch Choices',
+        items: [
+          'Subscriber Paid / IRU means the eligible individual personally manages and pays for service.',
+          'Agency Paid / CRU means an organization manages service for personnel or devices.',
+          'FirstNet and Family or family/commercial paths require separating FirstNet user questions from AT&T commercial family-line questions.',
+        ],
+      },
+    ]
+  }
+
+  if (nodeType === 'account') {
+    const isAgency = node.id.includes('agency')
+    const isFamily = node.id.includes('family')
+    return [
+      ...baseSections,
+      {
+        title: 'Account-Specific Focus',
+        items: isAgency
+          ? [
+              'Verify whether the caller is an agency admin/contact or an end user with a device issue.',
+              'Separate agency plan categories: unlimited, pooled data, Data Only, or Wireless Broadband.',
+              'For Wireless Broadband, remember the app data references 175GB per billing cycle and conversion behavior after overuse for three consecutive billing periods.',
+            ]
+          : isFamily
+            ? [
+                'Confirm the verified FirstNet Subscriber Paid user exists before discussing FirstNet and Family setup.',
+                'Clarify that family lines use AT&T commercial network service, not FirstNet network access.',
+                'If family members are already on a separate AT&T account, the app data says the customer must visit a store to combine accounts.',
+              ]
+            : [
+                'Verify the caller is the Subscriber Paid user or otherwise authorized.',
+                'Separate individual plan questions across Value, Extra, Premium, and Elite.',
+                'If family lines are involved, confirm FirstNet and Family eligibility and keep family/commercial lines separate from FirstNet network access.',
+              ],
+      },
+      {
+        title: 'Best Next Branch',
+        items: [
+          'Billing / Payment when the caller mentions bill, charge, payment, discount, taxes, fees, price, or bill explanation.',
+          'Devices / Upgrade when the caller mentions model, IMEI, BYOD, trade-in, promo, rugged device, hotspot, router, modem, SIM, or replacement.',
+          isFamily
+            ? 'Account Access / SSO when the issue is sign-in, bill access, combining accounts, or reaching the right support path.'
+            : 'Coverage / Travel, Activation / SIM, Eligibility, or Account Access when those words describe the caller’s actual need.',
+        ],
+      },
+    ]
+  }
+
+  if (nodeType === 'feature') {
+    const featureDetails = {
+      'domestic-coverage': {
+        focus: [
+          'Use this path for U.S. location, service, Band 14, First Priority, or domestic availability conversations.',
+          'The exact address, route, incident location, device, and account type matter before interpreting coverage.',
+          'If the caller says the device used to work but no longer does, consider activation, SIM/eSIM, device behavior, and software before assuming coverage changed.',
+        ],
+        verify: [
+          'Official coverage or account tools for address-level information.',
+          'Device compatibility and provisioning status.',
+          'Whether the caller is authorized to discuss the line or only reporting an issue as an end user.',
+        ],
+        avoid: [
+          'Do not use the training HeatMap as a live coverage checker.',
+          'Do not promise FirstNet, LTE, 5G, or Band 14 behavior at an exact address without official verification.',
+          'Do not skip account type because agency and Subscriber Paid support paths can differ.',
+        ],
+      },
+      'fiveg-check': {
+        focus: [
+          'Use this path when the customer expects 5G, sees no 5G indicator, asks about 5G plan access, or reports data behavior tied to 5G expectations.',
+          'The app data says 5G requires a compatible device and is not available everywhere.',
+          'A plan feature can exist while device or location support still prevents the expected experience.',
+        ],
+        verify: [
+          'Exact device model and compatibility.',
+          'Location where the customer expects 5G.',
+          'SIM/eSIM provisioning and activation if the issue appeared after setup or upgrade.',
+        ],
+        avoid: [
+          'Do not say 5G is available everywhere.',
+          'Do not assume slow data is a plan issue before checking device, location, and provisioning.',
+          'Do not use a general coverage statement to answer a device-specific 5G question.',
+        ],
+      },
+      'latin-america': {
+        focus: [
+          'Use this path for Premium 2.0 or Elite 2.0 callers asking about Latin America talk, text, or high-speed data.',
+          'The app data stores the feature as “20 Latin American countries” but does not store the exact official country list.',
+          'The phrase “coverage and data speeds vary” should stay attached to this feature.',
+        ],
+        verify: [
+          'Plan: Premium 2.0 or Elite 2.0.',
+          'Exact destination country in official tools.',
+          'Whether the caller is asking about talk, text, high-speed data, hotspot, roaming, or billing expectation.',
+        ],
+        avoid: [
+          'Do not name the exact 20 countries unless official tools confirm them.',
+          'Do not apply the Latin America feature to Value 2.0 or Extra 2.0 from this app data.',
+          'Do not promise speed or coverage because the app data says coverage and data speeds vary.',
+        ],
+      },
+      'elite-global-data': {
+        focus: [
+          'Use this path for FirstNet Elite 2.0 customers asking about the 20GB monthly international data feature.',
+          'The app data says Elite includes 20GB of international data per month for over 210 destinations.',
+          'The app data says after 20GB, international data speeds may be reduced to a maximum of 512 Kbps.',
+        ],
+        verify: [
+          'Plan: FirstNet Elite 2.0.',
+          'Exact destination in official tools.',
+          'Whether the question is about included data, post-20GB speed, billing expectation, or destination support.',
+        ],
+        avoid: [
+          'Do not apply Elite global data to non-Elite plans.',
+          'Do not list over-210 destinations from memory.',
+          'Do not present the 20GB feature as unlimited high-speed international data.',
+        ],
+      },
+      'international-day-pass': {
+        focus: [
+          'Use this path when the customer asks about adding International Day Pass, destination support, pricing, or travel coverage outside the included plan features.',
+          'The app does not store exact IDP pricing or exact destination lists.',
+          'IDP should be treated as a verify-before-quote option, not an assumed feature.',
+        ],
+        verify: [
+          'Destination support.',
+          'Current pricing.',
+          'Account eligibility.',
+          'Whether another included feature, such as Elite global data or Premium/Elite Latin America, applies first.',
+        ],
+        avoid: [
+          'Do not quote IDP pricing from this app.',
+          'Do not assume IDP is available for every destination or account.',
+          'Do not confuse IDP with Elite included international data or the Premium/Elite Latin America feature.',
+        ],
+      },
+    }
+    const featureKey = Object.keys(featureDetails).find((key) => node.id.includes(key))
+    const detail = featureDetails[featureKey]
+
+    return [
+      {
+        title: 'Feature Focus',
+        items: detail.focus,
+      },
+      {
+        title: 'Must Verify',
+        items: detail.verify,
+      },
+      {
+        title: 'Avoid',
+        items: detail.avoid,
+      },
+      {
+        title: 'Customer-Friendly Framing',
+        items: [
+          '“I want to match the destination, plan, device, and account before I set the expectation.”',
+          '“Some travel features are plan-included, and some require a separate verification path.”',
+          '“I can explain the feature, then verify whether it applies to your exact account and destination.”',
+        ],
+      },
+    ]
+  }
+
+  const issueDetails = {
+    billing: {
+      listen: [
+        'Listen for payment, bill view, bill explanation, published price mismatch, discount timing, taxes, fees, Spanish sample bill, or account overview.',
+        'Confirm whether this is education about pricing or an account-specific billing issue.',
+        'Check whether the account context is personal Subscriber Paid, agency-managed, or family/commercial.',
+      ],
+      proceed: [
+        'Use FirstNet Central and Manage Services & Billing for bill access paths when applicable.',
+        'Mention eligible AutoPay and paperless billing discount timing only where it applies to individual plan pricing.',
+        'Do not use individual plan price assumptions for agency-paid billing.',
+      ],
+      avoid: [
+        'Do not promise an exact monthly total because taxes and fees are extra.',
+        'Do not discuss bill details without verification.',
+        'Do not route family commercial-line billing as if it receives FirstNet network access.',
+      ],
+    },
+    eligibility: {
+      listen: [
+        'Listen for role, employer, agency, essential-services organization, volunteer status, healthcare, utility, transportation, or family-line eligibility.',
+        'Identify whether the caller is applying personally or through an organization.',
+        'Watch for callers who ask if a title automatically qualifies them.',
+      ],
+      proceed: [
+        'Route individual requests toward official eligibility verification.',
+        'Route organization-managed service toward agency sign-up or specialist workflows.',
+        'For FirstNet and Family, verify Subscriber Paid status before family discussion.',
+      ],
+      avoid: [
+        'Do not approve eligibility from a job title alone.',
+        'Do not mix agency-managed service with personal Subscriber Paid signup.',
+        'Do not tell family-line users they receive FirstNet network access.',
+      ],
+    },
+    devices: {
+      listen: [
+        'Listen for phone, rugged device, hotspot, router, modem, BYOD, upgrade, trade-in, promo, replacement, SIM, eSIM, IMEI, ICCID, or EID.',
+        'Identify whether the caller wants compatibility, troubleshooting, activation, pricing, or upgrade help.',
+        'Check whether the device is tied to a Subscriber Paid line, agency line, or family/commercial line.',
+      ],
+      proceed: [
+        'Use IMEI for the device, ICCID for physical SIM, and EID for eSIM questions.',
+        'Confirm FirstNet Ready/Capable or certified-device path before setting expectations.',
+        'Match device, offer, plan requirement, trade-in, and activation path before quoting an upgrade.',
+      ],
+      avoid: [
+        'Do not apply smartphone promo rules to rugged or specialty devices by assumption.',
+        'Do not quote a device offer if the source does not publish a specific promo for that device.',
+        'Do not troubleshoot device behavior without separating activation, SIM/eSIM, network, and physical device issues.',
+      ],
+    },
+    activation: {
+      listen: [
+        'Listen for new line, replacement, BYOD, physical SIM, eSIM, setup, software update, device swap, or activation failure.',
+        'Identify whether the account is Subscriber Paid, Agency Paid, or family/commercial before activation guidance.',
+        'Ask whether the issue began before or after a SIM/eSIM/device change.',
+      ],
+      proceed: [
+        'Confirm compatible or FirstNet Ready/Capable device path.',
+        'Use IMEI, ICCID, or EID based on the activation type.',
+        'Use official FirstNet Help activation resources for the exact device path.',
+      ],
+      avoid: [
+        'Do not assume a physical SIM path if the device is using eSIM.',
+        'Do not skip software update checks where device behavior suggests setup is incomplete.',
+        'Do not give account-changing activation guidance without caller authority.',
+      ],
+    },
+    'account-access': {
+      listen: [
+        'Listen for sign-in, FirstNet Central, Manage Services & Billing, expert chat, FirstNet Help, FirstNet Assist, diagnostics, or store/specialist routing.',
+        'Identify whether the caller is blocked before login or needs help after login.',
+        'Check whether the issue belongs to an account owner/admin or a device end user.',
+      ],
+      proceed: [
+        'Use FirstNet Central for account, services, billing, and expert chat paths.',
+        'Use FirstNet Help for device-specific and eSIM resources.',
+        'Use FirstNet Assist for diagnostics and device support workflows.',
+      ],
+      avoid: [
+        'Do not discuss account-specific details without verified authority.',
+        'Do not send every device issue to billing/account access when FirstNet Assist or FirstNet Help is more appropriate.',
+        'Do not treat family account combination as a pure online self-service path when the app data says store visit may be required.',
+      ],
+    },
+    'coverage-travel': {
+      listen: [
+        'Listen for address, destination, 5G, Latin America, Elite international data, International Day Pass, roaming, hotspot, high-speed data, or reduced speeds.',
+        'Identify plan, device, destination, and account type before explaining features.',
+        'Separate domestic coverage from international travel benefits.',
+      ],
+      proceed: [
+        'Use official coverage and destination tools before quoting.',
+        'Confirm 5G compatible device and location support.',
+        'For Premium/Elite Latin America, Elite global data, or International Day Pass, verify exact destination and account eligibility.',
+      ],
+      avoid: [
+        'Do not use the HeatMap as an address-level coverage checker.',
+        'Do not name exact Latin America or over-210 destinations unless official tools confirm them.',
+        'Do not promise data speed because coverage and data speeds vary.',
+      ],
+    },
+  }[issueKind]
+
+  if (issueDetails) {
+    return [
+      {
+        title: 'Account Lens',
+        items: [
+          `This modal is for a ${accountContext} path.`,
+          'Keep the issue tied to the selected account context; the same issue can require different questions for different account types.',
+          'If the caller’s answers contradict the selected path, back up in Travel mode and choose the correct branch.',
+        ],
+      },
+      { title: 'Listen For', items: issueDetails.listen },
+      { title: 'Proceed With', items: issueDetails.proceed },
+      { title: 'Avoid', items: issueDetails.avoid },
+    ]
+  }
+
+  return baseSections
 }
 
 function RoadmapBranch({ depth = 0, node, onSelect }) {
@@ -555,12 +1022,13 @@ function RoadmapBranch({ depth = 0, node, onSelect }) {
 }
 
 export default function Roadmap() {
-  const [selectedNode, setSelectedNode] = useState(roadmapTree)
+  const [selectedNode, setSelectedNode] = useState(null)
   const [travelOpen, setTravelOpen] = useState(false)
   const [travelPath, setTravelPath] = useState([roadmapTree])
   const nodes = useMemo(() => flattenNodes(roadmapTree), [])
   const currentTravelNode = travelPath[travelPath.length - 1]
   const travelComplete = !currentTravelNode.children
+  const selectedDetails = selectedNode ? getDetailedSections(selectedNode) : []
 
   function chooseTravelNode(node) {
     setTravelPath((path) => [...path, node])
@@ -637,8 +1105,11 @@ export default function Roadmap() {
 
             <article className="travel-card">
               <div className="travel-card-heading">
-                <span>{getNodeTypeLabel(currentTravelNode)}</span>
-                <h4>{currentTravelNode.label}</h4>
+                <div>
+                  <span>{getNodeTypeLabel(currentTravelNode)}</span>
+                  <h4>{currentTravelNode.label}</h4>
+                </div>
+                <strong className="travel-level">Stage {travelPath.length}</strong>
               </div>
               <p>{currentTravelNode.summary}</p>
 
@@ -655,6 +1126,7 @@ export default function Roadmap() {
                 <div className="travel-choice-grid">
                   {currentTravelNode.children.map((child) => (
                     <button key={child.id} type="button" onClick={() => chooseTravelNode(child)}>
+                      <i aria-hidden="true" />
                       <span>{getNodeTypeLabel(child)}</span>
                       <strong>{child.label}</strong>
                     </button>
@@ -734,6 +1206,18 @@ export default function Roadmap() {
                   ))}
                 </ul>
               </article>
+            </div>
+            <div className="roadmap-detail-grid">
+              {selectedDetails.map((section) => (
+                <article key={section.title}>
+                  <h4>{section.title}</h4>
+                  <ul>
+                    {section.items.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </article>
+              ))}
             </div>
           </section>
         </div>

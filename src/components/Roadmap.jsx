@@ -522,8 +522,19 @@ function flattenNodes(node) {
   return [node, ...(node.children ?? []).flatMap((child) => flattenNodes(child))]
 }
 
+function getTravelPrompt(node) {
+  if (node.type === 'start') return 'Start by choosing whether this caller is new or existing.'
+  if (node.type === 'customer') return 'Choose the account path that best matches the caller.'
+  if (node.type === 'account') return 'Choose the issue the caller needs help with.'
+  return 'Review the personalized path and use the node detail for the live call.'
+}
+
+function getNodeTypeLabel(node) {
+  return node.type ?? 'issue'
+}
+
 function RoadmapBranch({ depth = 0, node, onSelect }) {
-  const nodeType = node.type ?? 'issue'
+  const nodeType = getNodeTypeLabel(node)
   const branchType = (node.children?.length ?? 0) > 2 ? 'is-multi' : 'is-binary'
 
   return (
@@ -545,7 +556,23 @@ function RoadmapBranch({ depth = 0, node, onSelect }) {
 
 export default function Roadmap() {
   const [selectedNode, setSelectedNode] = useState(roadmapTree)
+  const [travelOpen, setTravelOpen] = useState(false)
+  const [travelPath, setTravelPath] = useState([roadmapTree])
   const nodes = useMemo(() => flattenNodes(roadmapTree), [])
+  const currentTravelNode = travelPath[travelPath.length - 1]
+  const travelComplete = !currentTravelNode.children
+
+  function chooseTravelNode(node) {
+    setTravelPath((path) => [...path, node])
+  }
+
+  function stepTravelBack() {
+    setTravelPath((path) => (path.length > 1 ? path.slice(0, -1) : path))
+  }
+
+  function resetTravel() {
+    setTravelPath([roadmapTree])
+  }
 
   return (
     <div className="call-roadmap">
@@ -572,6 +599,94 @@ export default function Roadmap() {
             <p>{step}</p>
           </article>
         ))}
+      </section>
+
+      <section className={`roadmap-travel ${travelOpen ? 'is-open' : ''}`} aria-label="Travel the call path">
+        <div className="roadmap-travel-top">
+          <div>
+            <p className="eyebrow">Progressive Coaching</p>
+            <h3>Travel the Path</h3>
+            <p>
+              Walk through the call one decision at a time. Each choice personalizes the
+              next question set until the agent reaches a final issue path.
+            </p>
+          </div>
+          <button
+            className="roadmap-travel-toggle"
+            type="button"
+            onClick={() => setTravelOpen((open) => !open)}
+          >
+            {travelOpen ? 'Hide Travel' : 'Start Travel'}
+          </button>
+        </div>
+
+        {travelOpen && (
+          <div className="roadmap-carousel">
+            <div className="travel-progress">
+              {travelPath.map((node, index) => (
+                <button
+                  className={node.id === currentTravelNode.id ? 'active' : ''}
+                  key={`${node.id}-${index}`}
+                  type="button"
+                  onClick={() => setSelectedNode(node)}
+                >
+                  {index + 1}. {node.label}
+                </button>
+              ))}
+            </div>
+
+            <article className="travel-card">
+              <div className="travel-card-heading">
+                <span>{getNodeTypeLabel(currentTravelNode)}</span>
+                <h4>{currentTravelNode.label}</h4>
+              </div>
+              <p>{currentTravelNode.summary}</p>
+
+              <div className="travel-question-panel">
+                <strong>{getTravelPrompt(currentTravelNode)}</strong>
+                <ul>
+                  {(currentTravelNode.questions ?? []).slice(0, 3).map((question) => (
+                    <li key={question}>{question}</li>
+                  ))}
+                </ul>
+              </div>
+
+              {currentTravelNode.children ? (
+                <div className="travel-choice-grid">
+                  {currentTravelNode.children.map((child) => (
+                    <button key={child.id} type="button" onClick={() => chooseTravelNode(child)}>
+                      <span>{getNodeTypeLabel(child)}</span>
+                      <strong>{child.label}</strong>
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <div className="travel-finish">
+                  <strong>Path Complete</strong>
+                  <p>
+                    Use the selected issue modal to guide essential questions, verification,
+                    and next steps for this exact customer journey.
+                  </p>
+                  <button type="button" onClick={() => setSelectedNode(currentTravelNode)}>
+                    Open Final Node
+                  </button>
+                </div>
+              )}
+
+              <div className="travel-actions">
+                <button type="button" onClick={stepTravelBack} disabled={travelPath.length === 1}>
+                  Back
+                </button>
+                <button type="button" onClick={() => setSelectedNode(currentTravelNode)}>
+                  View Node Details
+                </button>
+                <button type="button" onClick={resetTravel} disabled={travelPath.length === 1 && !travelComplete}>
+                  Reset
+                </button>
+              </div>
+            </article>
+          </div>
+        )}
       </section>
 
       <section className="roadmap-tree-panel">

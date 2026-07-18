@@ -558,6 +558,7 @@ button {
   .essential-question-grid,
   .roadmap-hero,
   .roadmap-verification-strip,
+  .roadmap-carousel,
   .roadmap-modal-grid {
     grid-template-columns: 1fr;
   }
@@ -1011,6 +1012,187 @@ button {
 .roadmap-verification-strip p {
   margin: 0;
   font-size: 14px;
+}
+
+.roadmap-travel {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid color-mix(in srgb, var(--theme) 22%, #dce4f0);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--theme-soft) 72%, #ffffff), rgba(255, 255, 255, 0.96)),
+    #ffffff;
+  box-shadow: 0 10px 26px rgba(23, 32, 51, 0.06);
+}
+
+.roadmap-travel-top {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.roadmap-travel-top h3 {
+  margin: 4px 0 6px;
+  color: #172033;
+  font-size: 26px;
+}
+
+.roadmap-travel-top p:not(.eyebrow),
+.travel-card p,
+.travel-question-panel li,
+.travel-finish p {
+  color: #566174;
+  line-height: 1.42;
+}
+
+.roadmap-travel-toggle,
+.travel-actions button,
+.travel-finish button {
+  min-height: 38px;
+  padding: 8px 12px;
+  border: 1px solid color-mix(in srgb, var(--theme) 30%, #dce4f0);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--theme-dark);
+  font-weight: 900;
+}
+
+.roadmap-travel-toggle {
+  flex: 0 0 auto;
+  background: var(--theme);
+  color: #ffffff;
+}
+
+.roadmap-carousel {
+  display: grid;
+  grid-template-columns: minmax(160px, 0.26fr) minmax(0, 1fr);
+  gap: 14px;
+}
+
+.travel-progress {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+}
+
+.travel-progress button {
+  min-height: 36px;
+  padding: 8px 10px;
+  border: 1px solid color-mix(in srgb, var(--theme) 18%, #dce4f0);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #364254;
+  font-size: 12px;
+  font-weight: 850;
+  text-align: left;
+}
+
+.travel-progress button.active {
+  border-color: var(--theme);
+  background: var(--theme-soft);
+  color: var(--theme-dark);
+}
+
+.travel-card {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid color-mix(in srgb, var(--theme) 22%, #dce4f0);
+  border-left: 6px solid var(--theme);
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.travel-card-heading {
+  display: grid;
+  gap: 4px;
+}
+
+.travel-card-heading span,
+.travel-choice-grid span {
+  color: var(--theme);
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.travel-card-heading h4 {
+  margin: 0;
+  color: #172033;
+  font-size: 24px;
+}
+
+.travel-question-panel {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid #dce4f0;
+  border-radius: 8px;
+  background: #f8fafc;
+}
+
+.travel-question-panel strong,
+.travel-finish strong {
+  color: #172033;
+}
+
+.travel-question-panel ul {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+  padding-left: 20px;
+}
+
+.travel-choice-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(138px, 1fr));
+  gap: 10px;
+}
+
+.travel-choice-grid button {
+  display: grid;
+  gap: 5px;
+  min-height: 68px;
+  padding: 10px;
+  border: 1px solid color-mix(in srgb, var(--theme) 22%, #dce4f0);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, #ffffff, color-mix(in srgb, var(--theme-soft) 42%, #ffffff));
+  color: #172033;
+  text-align: left;
+}
+
+.travel-choice-grid strong {
+  font-size: 13px;
+  line-height: 1.2;
+}
+
+.travel-finish {
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid color-mix(in srgb, #168557 28%, #dce4f0);
+  border-radius: 8px;
+  background: #f2fbf7;
+}
+
+.travel-finish p {
+  margin: 0;
+}
+
+.travel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.travel-actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
 }
 
 .roadmap-tree-panel {

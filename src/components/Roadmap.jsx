@@ -96,17 +96,17 @@ const issueBranches = [
   {
     id: 'coverage-travel',
     label: 'Coverage / Travel',
-    summary: 'Domestic coverage, 5G, Latin America, Elite international data, International Day Pass, or destination question.',
+    summary: 'Coverage and travel issue only: domestic coverage, 5G, Latin America, Elite international data, International Day Pass, or destination question.',
     questions: [
       'What exact location or destination is involved?',
       'What plan, device, and account type does the customer have?',
       'Is the question about 5G, talk/text, high-speed data, hotspot, roaming, or speed after threshold?',
-      'Is the customer asking about Premium/Elite Latin America, Elite global data, or International Day Pass?',
+      'Is the customer asking about a coverage/travel issue such as Premium/Elite Latin America, Elite global data, or International Day Pass?',
     ],
     steps: [
       'Use official coverage and destination tools before quoting.',
       'Confirm 5G device compatibility and location availability.',
-      'Verify exact destinations for Latin America, Elite international data, or International Day Pass.',
+      'Verify exact destinations for Latin America, Elite international data, or International Day Pass as coverage/travel support issues.',
       'Remind agents that coverage and data speeds vary.',
     ],
   },
@@ -255,17 +255,61 @@ const issueProfiles = {
   },
 }
 
-function createInternationalFeatureBranches(profileKey) {
+function getCoverageTravelAccountGuidance(profileKey) {
+  const guidance = {
+    newSubscriber: {
+      context: 'New Subscriber Paid / IRU',
+      authority: 'Keep this educational until eligibility and the individual account path are verified.',
+      planRule: 'Only explain included international benefits as plan comparisons; do not add, quote, or promise travel service before official verification.',
+      routing: 'Use official eligibility, plan, coverage, and destination tools before moving from education to account setup.',
+    },
+    existingSubscriber: {
+      context: 'Existing Subscriber Paid / IRU',
+      authority: 'Verify the individual FirstNet user or authorized account access before discussing line-specific travel expectations.',
+      planRule: 'Match the current plan first: Value/Extra have fewer stored international benefits than Premium/Elite, and Elite has the stored 20GB global data feature.',
+      routing: 'Use FirstNet Central/account tools plus official coverage and destination tools before quoting or changing a travel option.',
+    },
+    newAgency: {
+      context: 'New Agency Paid / CRU',
+      authority: 'Confirm the caller is authorized to discuss agency-managed service; keep international guidance at discovery level until specialist workflow confirms the account setup.',
+      planRule: 'Do not apply individual Subscriber Paid plan assumptions to an agency prospect. Agency pricing and plan setup must be confirmed through official agency/specialist workflows.',
+      routing: 'Capture destination, device group, use case, and admin contact, then route through agency setup or specialist support.',
+    },
+    existingAgency: {
+      context: 'Existing Agency Paid / CRU',
+      authority: 'Confirm whether the caller is an agency admin/contact or only an end user reporting travel or coverage behavior.',
+      planRule: 'Agency-managed travel, roaming, and coverage support can depend on the agency plan, device fleet, provisioning, and admin permissions.',
+      routing: 'Use official agency/account tools for plan and feature availability before quoting or changing international support.',
+    },
+    family: {
+      context: 'FirstNet and Family / AT&T commercial family line',
+      authority: 'Identify whether the caller is the verified FirstNet user or a family/commercial-line user before discussing account-specific details.',
+      planRule: 'Keep FirstNet travel benefits tied to the FirstNet Subscriber Paid line; family lines use AT&T commercial network service and may follow different commercial travel rules.',
+      routing: 'Separate FirstNet line coverage/travel questions from AT&T commercial family-line travel questions before routing or quoting.',
+    },
+  }
+
+  return guidance[profileKey]
+}
+
+function createCoverageTravelSubIssueBranches(profileKey) {
   const profile = issueProfiles[profileKey]
+  const accountGuidance = getCoverageTravelAccountGuidance(profileKey)
+  const accountQuestions = [
+    accountGuidance.authority,
+    accountGuidance.planRule,
+    accountGuidance.routing,
+  ]
 
   return [
     {
       id: `${profileKey}-domestic-coverage`,
       label: 'Domestic Coverage',
-      type: 'feature',
-      summary: `${profile.prefix} domestic coverage path. Use this when the caller asks whether FirstNet service, priority, Band 14, LTE, or 5G-supported service works at a specific U.S. location.`,
+      type: 'travel-issue',
+      summary: `${profile.prefix} domestic coverage issue. Account lens: ${accountGuidance.context}. Use this when the caller asks whether FirstNet service, priority, Band 14, LTE, or 5G-supported service works at a specific U.S. location.`,
       questions: [
         profile.accountCheck,
+        ...accountQuestions,
         'What exact service address, work location, incident location, or travel route needs to be checked?',
         'Which device and line are involved?',
         'Is the caller asking about general coverage, First Priority, Band 14, 5G, hotspot, or device behavior?',
@@ -280,10 +324,11 @@ function createInternationalFeatureBranches(profileKey) {
     {
       id: `${profileKey}-fiveg-check`,
       label: '5G Check',
-      type: 'feature',
-      summary: `${profile.prefix} 5G verification path. The app data says 5G access requires a compatible device and is not available everywhere.`,
+      type: 'travel-issue',
+      summary: `${profile.prefix} 5G coverage issue. Account lens: ${accountGuidance.context}. The app data says 5G access requires a compatible device and is not available everywhere.`,
       questions: [
         profile.accountCheck,
+        ...accountQuestions,
         'What device model and line are involved?',
         'Is the customer physically in the location where they expect 5G?',
         'Is the issue no 5G indicator, slow data, activation, SIM/eSIM, plan expectation, or coverage expectation?',
@@ -299,10 +344,11 @@ function createInternationalFeatureBranches(profileKey) {
     {
       id: `${profileKey}-latin-america`,
       label: 'Latin America',
-      type: 'feature',
-      summary: `${profile.prefix} Latin America plan-feature path. The app data says FirstNet Premium 2.0 and Elite 2.0 include unlimited talk, text, and high-speed data in 20 Latin American countries at no extra cost; coverage and data speeds vary.`,
+      type: 'travel-issue',
+      summary: `${profile.prefix} Latin America travel issue. Account lens: ${accountGuidance.context}. The app data says FirstNet Premium 2.0 and Elite 2.0 include unlimited talk, text, and high-speed data in 20 Latin American countries at no extra cost; coverage and data speeds vary.`,
       questions: [
         profile.accountCheck,
+        ...accountQuestions,
         'Is the customer on Premium 2.0 or Elite 2.0?',
         'What exact Latin American destination is involved?',
         'Is the customer asking about talk, text, high-speed data, hotspot, roaming behavior, or billing expectation?',
@@ -318,10 +364,11 @@ function createInternationalFeatureBranches(profileKey) {
     {
       id: `${profileKey}-elite-global-data`,
       label: 'Elite Global Data',
-      type: 'feature',
-      summary: `${profile.prefix} Elite global data path. The app data says FirstNet Elite 2.0 includes 20GB of international data per month for over 210 destinations; after 20GB, speeds may be reduced to a maximum of 512 Kbps.`,
+      type: 'travel-issue',
+      summary: `${profile.prefix} Elite global data travel issue. Account lens: ${accountGuidance.context}. The app data says FirstNet Elite 2.0 includes 20GB of international data per month for over 210 destinations; after 20GB, speeds may be reduced to a maximum of 512 Kbps.`,
       questions: [
         profile.accountCheck,
+        ...accountQuestions,
         'Is the customer on FirstNet Elite 2.0?',
         'What destination is involved?',
         'Is the customer asking about the 20GB monthly international data amount, reduced speed after 20GB, or destination eligibility?',
@@ -337,10 +384,11 @@ function createInternationalFeatureBranches(profileKey) {
     {
       id: `${profileKey}-international-day-pass`,
       label: 'Intl Day Pass',
-      type: 'feature',
-      summary: `${profile.prefix} International Day Pass verification path. The app does not store exact IDP pricing or destination lists, so this path is intentionally a verify-before-quote workflow.`,
+      type: 'travel-issue',
+      summary: `${profile.prefix} International Day Pass coverage/travel issue. Account lens: ${accountGuidance.context}. The app does not store exact IDP pricing or destination lists, so this path is intentionally a verify-before-quote workflow.`,
       questions: [
         profile.accountCheck,
+        ...accountQuestions,
         'What country or destination is the customer traveling to?',
         'What plan and account type does the customer have?',
         'Is the customer asking whether to add IDP, how much it costs, whether the destination is supported, or whether the account is eligible?',
@@ -445,20 +493,20 @@ function createIssueBranches(profileKey, allowedIssueIds = issueBranches.map((is
       return {
         ...issue,
         id: `${profileKey}-${issue.id}`,
-        summary: `${profile.prefix} coverage/travel path. Verify plan, destination, device, and account before setting expectations.`,
+        summary: `${profile.prefix} coverage/travel issue path. Verify plan, destination, device, and account before setting expectations. International options only appear here because they should be handled as coverage/travel issues.`,
         questions: [
           profile.accountCheck,
           'What exact address or destination needs verification?',
           'Which plan and device are involved?',
-          'Is the question domestic coverage, 5G, Latin America, Elite international data, or International Day Pass?',
+          'Is the coverage/travel issue domestic coverage, 5G, Latin America, Elite international data, or International Day Pass?',
         ],
         steps: [
           'Use official coverage and destination tools before quoting.',
           'Confirm device compatibility for 5G.',
-          'Verify plan-specific international features before quoting country or destination availability.',
+          'Verify plan-specific international coverage/travel details before quoting country or destination availability.',
           'Remind the caller that coverage and data speeds vary.',
         ],
-        children: createInternationalFeatureBranches(profileKey),
+        children: createCoverageTravelSubIssueBranches(profileKey),
       }
     })
 }
@@ -628,7 +676,7 @@ function getTravelPrompt(node) {
   if (node.type === 'start') return 'Start by choosing whether this caller is new or existing.'
   if (node.type === 'customer') return 'Choose the account path that best matches the caller.'
   if (node.type === 'account') return 'Choose the issue the caller needs help with.'
-  if (node.id.includes('coverage-travel') && node.children) return 'Choose the exact coverage or international feature the caller is asking about.'
+  if (node.id.includes('coverage-travel') && node.children) return 'Choose the exact coverage/travel issue the caller is asking about.'
   return 'Review the personalized path and use the node detail for the live call.'
 }
 
@@ -760,8 +808,11 @@ function getDetailedSections(node) {
     ]
   }
 
-  if (nodeType === 'feature') {
-    const featureDetails = {
+  if (nodeType === 'travel-issue') {
+    const accountGuidance = getCoverageTravelAccountGuidance(
+      Object.keys(issueProfiles).find((profileKey) => node.id.startsWith(profileKey)) ?? 'existingSubscriber',
+    )
+    const travelIssueDetails = {
       'domestic-coverage': {
         focus: [
           'Use this path for U.S. location, service, Band 14, First Priority, or domestic availability conversations.',
@@ -783,7 +834,7 @@ function getDetailedSections(node) {
         focus: [
           'Use this path when the customer expects 5G, sees no 5G indicator, asks about 5G plan access, or reports data behavior tied to 5G expectations.',
           'The app data says 5G requires a compatible device and is not available everywhere.',
-          'A plan feature can exist while device or location support still prevents the expected experience.',
+          'A plan benefit can exist while device or location support still prevents the expected experience.',
         ],
         verify: [
           'Exact device model and compatibility.',
@@ -798,9 +849,9 @@ function getDetailedSections(node) {
       },
       'latin-america': {
         focus: [
-          'Use this path for Premium 2.0 or Elite 2.0 callers asking about Latin America talk, text, or high-speed data.',
-          'The app data stores the feature as “20 Latin American countries” but does not store the exact official country list.',
-          'The phrase “coverage and data speeds vary” should stay attached to this feature.',
+          'Use this path for Premium 2.0 or Elite 2.0 callers asking about Latin America travel coverage, talk, text, or high-speed data.',
+          'The app data stores the travel benefit as “20 Latin American countries” but does not store the exact official country list.',
+          'The phrase “coverage and data speeds vary” should stay attached to this coverage/travel issue.',
         ],
         verify: [
           'Plan: Premium 2.0 or Elite 2.0.',
@@ -832,29 +883,38 @@ function getDetailedSections(node) {
       },
       'international-day-pass': {
         focus: [
-          'Use this path when the customer asks about adding International Day Pass, destination support, pricing, or travel coverage outside the included plan features.',
+          'Use this path when the customer asks about adding International Day Pass, destination support, pricing, or travel coverage outside the included plan benefits.',
           'The app does not store exact IDP pricing or exact destination lists.',
-          'IDP should be treated as a verify-before-quote option, not an assumed feature.',
+          'IDP should be treated as a coverage/travel verification path, not an assumed account add.',
         ],
         verify: [
           'Destination support.',
           'Current pricing.',
           'Account eligibility.',
-          'Whether another included feature, such as Elite global data or Premium/Elite Latin America, applies first.',
+          'Whether another included travel benefit, such as Elite global data or Premium/Elite Latin America, applies first.',
         ],
         avoid: [
           'Do not quote IDP pricing from this app.',
           'Do not assume IDP is available for every destination or account.',
-          'Do not confuse IDP with Elite included international data or the Premium/Elite Latin America feature.',
+          'Do not confuse IDP with Elite included international data or the Premium/Elite Latin America travel benefit.',
         ],
       },
     }
-    const featureKey = Object.keys(featureDetails).find((key) => node.id.includes(key))
-    const detail = featureDetails[featureKey]
+    const travelIssueKey = Object.keys(travelIssueDetails).find((key) => node.id.includes(key))
+    const detail = travelIssueDetails[travelIssueKey]
 
     return [
       {
-        title: 'Feature Focus',
+        title: 'Account Type Lens',
+        items: [
+          `This is a ${accountGuidance.context} coverage/travel issue.`,
+          accountGuidance.authority,
+          accountGuidance.planRule,
+          accountGuidance.routing,
+        ],
+      },
+      {
+        title: 'Issue Focus',
         items: detail.focus,
       },
       {
@@ -869,8 +929,8 @@ function getDetailedSections(node) {
         title: 'Customer-Friendly Framing',
         items: [
           '“I want to match the destination, plan, device, and account before I set the expectation.”',
-          '“Some travel features are plan-included, and some require a separate verification path.”',
-          '“I can explain the feature, then verify whether it applies to your exact account and destination.”',
+          '“Some travel benefits are plan-included, and some require a separate verification path.”',
+          '“I can explain the coverage/travel item, then verify whether it applies to your exact account and destination.”',
         ],
       },
     ]

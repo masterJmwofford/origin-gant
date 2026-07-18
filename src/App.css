@@ -1612,7 +1612,8 @@ button {
   font-size: 11px;
 }
 
-.node-feature > .roadmap-node {
+.node-feature > .roadmap-node,
+.node-travel-issue > .roadmap-node {
   min-height: 46px;
   padding: 7px;
   border-left-color: #206c8f;
@@ -1620,11 +1621,13 @@ button {
     linear-gradient(180deg, #ffffff, #edf8fb);
 }
 
-.node-feature > .roadmap-node span {
+.node-feature > .roadmap-node span,
+.node-travel-issue > .roadmap-node span {
   display: none;
 }
 
-.node-feature > .roadmap-node strong {
+.node-feature > .roadmap-node strong,
+.node-travel-issue > .roadmap-node strong {
   color: #11445d;
   font-size: 10.5px;
 }

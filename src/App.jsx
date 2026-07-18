@@ -151,7 +151,7 @@ const eagleEyeSummaries = {
     title: 'HeatMap in plain words',
     points: [
       'Use this as a learning map, not as a live address-level coverage checker.',
-      'All listed individual FirstNet plans include First Priority language, but international features differ by plan.',
+      'All listed individual FirstNet plans include First Priority language, but coverage/travel benefits differ by plan.',
       '5G and International Day Pass both need verification before quoting: check the device, destination, location, and account details.',
     ],
   },

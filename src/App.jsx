@@ -14,6 +14,7 @@ import MesaBreaker from './components/MesaBreaker'
 import PavoCristatus from './components/PavoCristatus'
 import Plans from './components/Plans'
 import Quiz from './components/Quiz'
+import Roadmap from './components/Roadmap'
 import Search from './components/Search'
 import SelfServiceGame from './components/SelfServiceGame'
 import owlHero from './assets/owl-first-responder-shield.png'
@@ -58,6 +59,12 @@ const navItems = [
     label: 'Call Questions',
     theme: 'indigo',
     description: 'Essential questions by customer need',
+  },
+  {
+    id: 'roadmap',
+    label: 'Roadmap',
+    theme: 'coral',
+    description: 'Branching call paths by customer and account type',
   },
   {
     id: 'heatmap',
@@ -130,6 +137,14 @@ const eagleEyeSummaries = {
       'Start by identifying the caller need and account path before explaining anything account-specific.',
       'IRU and CRU calls are treated as Subscriber Paid and Agency Paid paths in this guide, so reps verify before applying billing, device, or eligibility guidance.',
       'Use the category questions to gather the right identifiers: account type, plan, device model, IMEI, ICCID, EID, destination, or support path.',
+    ],
+  },
+  roadmap: {
+    title: 'Roadmap in plain words',
+    points: [
+      'Start every call by separating new vs. existing customer, then identify the account path.',
+      'Subscriber Paid, Agency Paid, and FirstNet and Family/family-line calls branch into different verification and support paths.',
+      'Each issue path still needs official verification before quoting eligibility, pricing, device, billing, coverage, or travel answers.',
     ],
   },
   heatmap: {
@@ -388,6 +403,15 @@ function App() {
             {eagleEyeEnabled && <EagleEyeSummary summary={eagleEyeSummaries.questions} />}
             <section className="study-section" id="essential-questions">
               <EssentialQuestions />
+            </section>
+          </div>
+        )}
+
+        {activeTab === 'roadmap' && (
+          <div className="tab-panel">
+            {eagleEyeEnabled && <EagleEyeSummary summary={eagleEyeSummaries.roadmap} />}
+            <section className="study-section" id="roadmap">
+              <Roadmap />
             </section>
           </div>
         )}

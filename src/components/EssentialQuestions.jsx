@@ -291,10 +291,6 @@ export default function EssentialQuestions() {
             match the customer’s situation.
           </p>
         </div>
-        <div className="question-callout">
-          <strong>Call rule</strong>
-          <span>Ask, verify, then explain. Do not quote account-specific facts from memory.</span>
-        </div>
       </section>
 
       <div className="question-category-tabs" aria-label="Customer need categories">

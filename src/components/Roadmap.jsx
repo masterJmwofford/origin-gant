@@ -1114,10 +1114,6 @@ export default function Roadmap() {
             then move into the customer issue.
           </p>
         </div>
-        <div className="roadmap-guardrail">
-          <strong>Guardrail</strong>
-          <span>This is a training map based on app study data. Use official tools for account-specific answers.</span>
-        </div>
       </section>
 
       <section className="roadmap-verification-strip" aria-label="Core verification steps">

@@ -6014,6 +6014,27 @@ body {
   margin: 0;
 }
 
+.question-hero,
+.roadmap-hero {
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  text-align: center;
+}
+
+.question-hero > div,
+.roadmap-hero > div {
+  width: min(760px, 100%);
+}
+
+.question-hero p,
+.roadmap-hero p,
+.question-hero h2,
+.roadmap-hero h2 {
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+}
+
 #root,
 .page,
 .tab-shell,

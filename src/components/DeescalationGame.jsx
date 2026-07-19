@@ -110,6 +110,45 @@ const scriptCheckpoints = [
 
 const escalationWords = ['calm down', 'policy', 'wrong', 'obviously', 'just', 'you need to', 'not my fault']
 
+const responseIntentChecks = [
+  {
+    id: 'verification',
+    keywords: ['verify', 'verification', 'confirm', 'security', 'zip', 'callback', 'authorized'],
+  },
+  {
+    id: 'account',
+    keywords: ['account', 'line', 'device', 'plan', 'subscriber paid', 'agency paid', 'family line'],
+  },
+  {
+    id: 'billing',
+    keywords: ['bill', 'billing', 'autopay', 'paperless', 'discount', 'taxes', 'fees', 'price', 'charge'],
+  },
+  {
+    id: 'eligibility',
+    keywords: ['eligible', 'eligibility', 'qualify', 'first responder', 'verify eligibility'],
+  },
+  {
+    id: 'familyPriority',
+    keywords: ['family', 'spouse', 'commercial network', 'priority access', 'firstnet network'],
+  },
+  {
+    id: 'agencySetup',
+    keywords: ['agency', 'department', 'administrator', 'organization', 'employee', 'personnel'],
+  },
+  {
+    id: 'activation',
+    keywords: ['activate', 'activation', 'esim', 'sim', 'eid', 'iccid', 'imei'],
+  },
+  {
+    id: 'support',
+    keywords: ['firstnet assist', 'diagnostic', 'support', 'live chat', 'care', 'uplift'],
+  },
+  {
+    id: 'nextStep',
+    keywords: ['next step', 'walk through', 'review', 'summary', 'does that work', 'sound good'],
+  },
+]
+
 const customerScenarios = [
   {
     name: 'Mara',
@@ -122,6 +161,14 @@ const customerScenarios = [
     dummyInfo: {
       verification: 'Dummy verification: ZIP 80214, callback ending 4412, security word "Ladder".',
       account: 'Dummy account info: Subscriber Paid, one phone line, FirstNet Unlimited plan, AutoPay enrolled last bill cycle, paperless billing active.',
+    },
+    directAnswers: {
+      billing:
+        'On my side, the bill question is about AutoPay and paperless billing. I enrolled last bill cycle, so I need you to check whether the discount timing is still inside that two-bill window and whether taxes or fees explain the difference.',
+      account:
+        'This is my own Subscriber Paid FirstNet line. I am not calling about an agency account or family line.',
+      nextStep:
+        'The next step I need is a clear bill review: confirm my discount status, explain taxes and fees, and tell me what should happen by the next bill cycle.',
     },
     targetSkills: ['empathy', 'ownership', 'clarify', 'reassure'],
   },
@@ -137,11 +184,19 @@ const customerScenarios = [
       verification: 'Dummy verification: ZIP 60622, callback ending 1180, security word "Shift".',
       account: 'Dummy account info: Subscriber Paid user, one FirstNet line, two family lines being discussed for AT&T commercial network service.',
     },
+    directAnswers: {
+      familyPriority:
+        'That answers my main question: my FirstNet line is the one tied to FirstNet service, and the family lines would be AT&T commercial network service. I need help explaining that to my spouse without making it sound like the family lines get FirstNet priority.',
+      account:
+        'I am the Subscriber Paid FirstNet user. The two other lines would be family lines, not separate FirstNet responder lines.',
+      billing:
+        'For billing, I mainly need to understand how adding family lines changes the account conversation before we combine anything.',
+    },
     targetSkills: ['empathy', 'clarify', 'reassure', 'close'],
   },
   {
     name: 'Jules',
-    role: 'EMS captain and agency administrator',
+    role: 'EMS captain first responder and agency administrator',
     portrait: customerJules,
     concern:
       'Jules is upset because they do not know whether a department account should use Subscriber Paid or Agency Paid setup.',
@@ -149,7 +204,15 @@ const customerScenarios = [
       'Useful facts: Subscriber Paid is individual-paid service; agency plans are for public safety organizations providing service to employees or personnel.',
     dummyInfo: {
       verification: 'Dummy verification: agency contact email admin@example.test, department code 7321, callback ending 9055.',
-      account: 'Dummy account info: EMS agency account discussion, 18 potential responder lines, deciding between individual-paid and agency-paid setup.',
+      account: 'Dummy account info: EMS first responder agency account discussion, 18 potential responder lines, deciding between individual-paid and agency-paid setup.',
+    },
+    directAnswers: {
+      agencySetup:
+        'Yes, this is for our EMS department. We are comparing whether each responder should pay individually or whether the agency should manage the lines for the team.',
+      account:
+        'I am calling as the agency administrator for 18 responder lines, so I need the path that fits organization-managed service.',
+      eligibility:
+        'The eligibility question is about the department setup and responder lines, not just my personal eligibility.',
     },
     targetSkills: ['empathy', 'ownership', 'clarify', 'reassure'],
   },
@@ -165,6 +228,14 @@ const customerScenarios = [
       verification: 'Dummy verification: ZIP 30309, callback ending 7724, security word "Badge".',
       account: 'Dummy account info: New FirstNet paramedic user, compatible device, eSIM activation not completed yet, needs activation steps.',
     },
+    directAnswers: {
+      activation:
+        'Yes, this is eSIM activation. I have the compatible phone with me, but I do not know whether you need the EID, IMEI, or another activation step first.',
+      account:
+        'This is a new FirstNet phone setup for my own line. The service is not working yet because the eSIM activation is not complete.',
+      nextStep:
+        'The next step I need is for you to tell me which identifier to confirm and where the official activation path starts.',
+    },
     targetSkills: ['empathy', 'ownership', 'reassure', 'close'],
   },
   {
@@ -179,6 +250,14 @@ const customerScenarios = [
       verification: 'Dummy verification: supervisor ID FS-204, callback ending 6630, region code North.',
       account: 'Dummy account info: Search-and-rescue field supervisor, agency-supported team, multiple active devices, needs FirstNet Assist and device diagnostic guidance.',
     },
+    directAnswers: {
+      support:
+        'Yes, I need the support path during an active field problem. The team needs device diagnostics and a clear FirstNet Assist route, not a general answer.',
+      account:
+        'This is an agency-supported team issue with multiple devices in the field. I am trying to get personnel connected to the right help quickly.',
+      nextStep:
+        'The next step I need is a practical support route: diagnostics, dedicated care, chat or voice contact, and what to do if the issue affects field operations.',
+    },
     targetSkills: ['empathy', 'clarify', 'reassure', 'close'],
   },
   {
@@ -192,6 +271,14 @@ const customerScenarios = [
     dummyInfo: {
       verification: 'Dummy verification: ZIP 85004, callback ending 2901, volunteer organization "County Search Team".',
       account: 'Dummy account info: Volunteer responder, eligibility not completed, needs official FirstNet eligibility verification before plan guidance.',
+    },
+    directAnswers: {
+      eligibility:
+        'That is exactly my concern. I am a volunteer responder with County Search Team, but I need official eligibility verification before anyone tells me I qualify.',
+      account:
+        'I do not have completed FirstNet eligibility yet. I am trying to figure out the right verification path before choosing a plan.',
+      nextStep:
+        'The next step I need is the official eligibility path and a plain explanation that a role title alone does not complete verification.',
     },
     targetSkills: ['empathy', 'ownership', 'clarify', 'reassure'],
   },
@@ -255,17 +342,34 @@ function getMissingCheckpoints(result) {
 
 function getRequestedDummyInfo(response) {
   const normalized = response.toLowerCase()
-  const asksVerification = ['verify', 'verification', 'confirm', 'security', 'zip', 'callback'].some(
-    (word) => normalized.includes(word),
-  )
-  const asksAccount = ['account', 'line', 'device', 'plan', 'bill', 'eligibility', 'subscriber paid', 'agency paid'].some(
-    (word) => normalized.includes(word),
-  )
+  const intentIds = getResponseIntents(normalized)
+  const asksVerification = intentIds.includes('verification')
+  const asksAccount = intentIds.includes('account')
 
   return {
     asksVerification,
     asksAccount,
   }
+}
+
+function getResponseIntents(response) {
+  const normalized = response.toLowerCase()
+
+  return responseIntentChecks
+    .filter((intent) => intent.keywords.some((keyword) => normalized.includes(keyword)))
+    .map((intent) => intent.id)
+}
+
+function buildDirectCustomerAnswers(scenario, response) {
+  const intents = getResponseIntents(response)
+  const answers = intents
+    .map((intent) => scenario.directAnswers?.[intent])
+    .filter(Boolean)
+  const uniqueAnswers = [...new Set(answers)]
+
+  if (uniqueAnswers.length === 0) return ''
+
+  return ` ${uniqueAnswers.slice(0, 2).join(' ')}`
 }
 
 function buildAdvice(result, didResolve) {
@@ -285,7 +389,7 @@ function buildAdvice(result, didResolve) {
   return `Scenario coaching: Try again with the full call flow. ${missingCheckpoints.join(' ')}`
 }
 
-function buildCustomerReply(scenario, result, didResolve, nextDisposition, requestedInfo) {
+function buildCustomerReply(scenario, result, didResolve, nextDisposition, requestedInfo, response) {
   const missingCheckpoints = getMissingCheckpoints(result)
   const missingLabels = missingCheckpoints.map((checkpoint) => checkpoint.label)
   const matchedLabels = result.matchedGroups.map((group) => group.label)
@@ -295,28 +399,29 @@ function buildCustomerReply(scenario, result, didResolve, nextDisposition, reque
     requestedInfo.asksAccount ? scenario.dummyInfo.account : '',
   ].filter(Boolean)
   const detailText = details.length > 0 ? ` ${details.join(' ')}` : ''
+  const directAnswerText = buildDirectCustomerAnswers(scenario, response)
 
   if (didResolve) {
-    return `Okay, that finally makes sense. You acknowledged the issue, verified the right account path, tied the eligibility and billing details to my situation, and gave me a clear next step. I feel comfortable moving forward.${detailText}`
+    return `Okay, that finally makes sense. You answered what I asked, verified the right account path, tied the details to my situation, and gave me a clear next step. I feel comfortable moving forward.${directAnswerText}${detailText}`
   }
 
   if (result.matchedEscalators.length > 0) {
-    return `I still feel brushed off. Words like "${result.matchedEscalators[0]}" make this sound like my concern is being dismissed. Can you slow down, verify what applies to my FirstNet account, and explain the next step clearly?${detailText}`
+    return `I still feel brushed off. Words like "${result.matchedEscalators[0]}" make this sound like my concern is being dismissed. Can you slow down, verify what applies to my FirstNet account, and answer my specific question clearly?${directAnswerText}${detailText}`
   }
 
   if (result.reduction === 0) {
-    return `I am still frustrated because I do not hear a complete path yet. Please start by acknowledging the concern, then confirm the account or eligibility details before giving me a billing or plan answer.${detailText}`
+    return `I am still frustrated because I do not hear a complete path yet. Please start by acknowledging the concern, then confirm the account or eligibility details before giving me a direct answer.${directAnswerText}${detailText}`
   }
 
   if (nextDisposition.label === 'Tense') {
-    return `That helps a little, especially the ${matchedLabels.join(' and ') || 'calmer tone'}, but I am not settled yet. I still need you to cover ${firstMissing || 'the missing account details'} so I know this answer applies to my situation.${detailText}`
+    return `That helps a little, especially the ${matchedLabels.join(' and ') || 'calmer tone'}, but I am not settled yet. I still need you to cover ${firstMissing || 'the missing account details'} so I know this answer applies to my situation.${directAnswerText}${detailText}`
   }
 
   if (nextDisposition.label === 'Concerned') {
-    return `I am listening now. Before I agree, please connect this back to ${scenario.role.toLowerCase()} details and finish the part about ${firstMissing || 'the final next step'} in plain language.${detailText}`
+    return `I am listening now. Before I agree, please connect this back to ${scenario.role.toLowerCase()} details and finish the part about ${firstMissing || 'the final next step'} in plain language.${directAnswerText}${detailText}`
   }
 
-  return `I am closer to calm, but I need the last piece before we wrap up: ${firstMissing || 'a clear summary and agreement check'}.${detailText}`
+  return `I am closer to calm, but I need the last piece before we wrap up: ${firstMissing || 'a clear summary and agreement check'}.${directAnswerText}${detailText}`
 }
 
 export default function DeescalationGame() {
@@ -365,6 +470,7 @@ export default function DeescalationGame() {
       didResolve,
       dispositionLevels[displayedNextLevel],
       requestedInfo,
+      response,
     )
     const advice = buildAdvice(result, didResolve)
 

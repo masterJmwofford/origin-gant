@@ -6008,3 +6008,80 @@ textarea:focus,
     0 0 10px var(--lyceum-gold-2),
     0 0 22px rgba(215, 169, 40, 0.75);
 }
+
+/* Roadmap mobile stacking */
+body {
+  margin: 0;
+}
+
+#root,
+.page,
+.tab-shell,
+.tab-panel,
+.study-section,
+.call-roadmap {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+@media (max-width: 900px) {
+  .roadmap-verification-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .roadmap-verification-strip article {
+    grid-template-columns: 34px minmax(0, 1fr);
+    align-items: center;
+    width: 100%;
+    padding: 12px;
+  }
+
+  .roadmap-verification-strip span {
+    width: 30px;
+    height: 30px;
+  }
+
+  .roadmap-verification-strip p {
+    font-size: clamp(13px, 3.5vw, 15px);
+    line-height: 1.35;
+  }
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .tab-shell {
+    padding: 0;
+  }
+
+  .tab-panel .study-section {
+    margin-top: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
+    border-right: 0;
+    border-left: 0;
+    border-radius: 0;
+  }
+
+  .roadmap-hero,
+  .roadmap-tree-panel,
+  .roadmap-travel {
+    padding: 12px;
+  }
+
+  .roadmap-verification-strip {
+    gap: 8px;
+  }
+
+  .roadmap-verification-strip article {
+    gap: 10px;
+    border-radius: 8px;
+  }
+
+  .roadmap-hero h2 {
+    font-size: clamp(26px, 9vw, 36px);
+  }
+}

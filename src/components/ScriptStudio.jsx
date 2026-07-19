@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import pavoLogo from '../assets/pavo-logo.gif'
+import scriptSpecialist from '../assets/script-specialist.png'
 
 const sectionOrder = [
   'Greeting',
@@ -28,9 +28,9 @@ const sourceMeta = {
     label: 'SSO Options',
     className: 'source-sso',
   },
-  dovetalk: {
-    label: 'DoveTalk',
-    className: 'source-dovetalk',
+  resolveLab: {
+    label: 'ResolveLab',
+    className: 'source-resolvelab',
   },
 }
 
@@ -65,7 +65,7 @@ function buildGeneratedScript({ billingGuide, accountRoadmap, selfServiceGame, s
   return {
     Greeting: {
       title: 'Greeting',
-      source: 'dovetalk',
+      source: 'resolveLab',
       helper: 'Start the live interaction with acknowledgement, ownership, and permission to ask questions.',
       text:
         'Thank you for calling in today. I can help review your FirstNet options, explain what may fit your account, and make sure you have a clear next step before we finish. Before I make a recommendation, I will ask a few quick questions so I do not point you toward the wrong plan or support path.',
@@ -92,7 +92,7 @@ function buildGeneratedScript({ billingGuide, accountRoadmap, selfServiceGame, s
       title: 'Billing Suggestions',
       source: 'billing',
       helper: 'Offer grounded billing suggestions based on plan and account context.',
-      text: `For billing expectations, ${joinDetails(billingPriceRule)} If the customer wants a lower entry point, ${valuePlan.name} is listed at ${valuePlan.oneLinePrice} and includes ${valuePlan.headline.toLowerCase()} If they ask about hotspot, ${extraPlan.name} is listed at ${extraPlan.oneLinePrice} and includes ${extraPlan.headline.toLowerCase()} If international features matter, ${premiumPlan.name} adds ${premiumPlan.features[2].toLowerCase()} and ${elitePlan.name} adds ${elitePlan.features[3].toLowerCase()}`,
+      text: `For billing expectations, ${joinDetails(billingPriceRule)} If the customer wants a lower entry point, ${valuePlan.name} is listed at ${valuePlan.oneLinePrice} and includes ${valuePlan.headline.toLowerCase()} If they ask about hotspot, ${extraPlan.name} is listed at ${extraPlan.oneLinePrice} and includes ${extraPlan.headline.toLowerCase()} If coverage or travel benefits matter, ${premiumPlan.name} adds ${premiumPlan.features[2].toLowerCase()} and ${elitePlan.name} adds ${elitePlan.features[3].toLowerCase()}`,
     },
     SuggestiveTalkingPoints: {
       title: 'Suggestive Talking Points',
@@ -116,7 +116,7 @@ function getInitialDraft(scriptSections) {
   }, {})
 }
 
-export default function PavoCristatus({ billingGuide, accountRoadmap, selfServiceGame, studyNotes, terms }) {
+export default function ScriptStudio({ billingGuide, accountRoadmap, selfServiceGame, studyNotes, terms }) {
   const scriptSections = useMemo(
     () => buildGeneratedScript({ billingGuide, accountRoadmap, selfServiceGame, studyNotes, terms }),
     [accountRoadmap, billingGuide, selfServiceGame, studyNotes, terms],
@@ -147,26 +147,26 @@ export default function PavoCristatus({ billingGuide, accountRoadmap, selfServic
   const activeSource = activeSectionData ? sourceMeta[activeSectionData.source] : null
 
   return (
-    <div className="pavo-cristatus">
-      <section className="pavo-generated-layout" aria-label="PavoCristatus generated script">
-        <aside className="pavo-center">
-          <img className="pavo-logo" src={pavoLogo} alt="Peacock logo for PavoCristatus" />
+    <div className="script-studio">
+      <section className="script-generated-layout" aria-label="Generated customer script">
+        <aside className="script-studio-center">
+          <img className="script-specialist-avatar" src={scriptSpecialist} alt="Professional script specialist" />
           <div>
-            <p className="eyebrow">Pavo cristatus</p>
+            <p className="eyebrow">Script Studio</p>
             <h3>Collaborative Script</h3>
             <p>Generated first. Editable by section. Color tags show the source tab.</p>
           </div>
         </aside>
 
-        <div className="pavo-script-editor">
+        <div className="script-section-editor">
           {sectionOrder.map((key) => {
             const section = scriptSections[key]
             const meta = sourceMeta[section.source]
             const preview = draft[key].length > 170 ? `${draft[key].slice(0, 170)}...` : draft[key]
 
             return (
-              <article className={`pavo-script-section ${meta.className}`} key={key}>
-                <div className="pavo-section-heading">
+              <article className={`customer-script-section ${meta.className}`} key={key}>
+                <div className="script-section-heading">
                   <div>
                     <p className="eyebrow">{section.title}</p>
                     <h3>{section.title}</h3>
@@ -174,13 +174,13 @@ export default function PavoCristatus({ billingGuide, accountRoadmap, selfServic
                   <span>{meta.label}</span>
                 </div>
                 <p>{section.helper}</p>
-                <p className="pavo-section-preview">{preview}</p>
+                <p className="script-section-preview">{preview}</p>
                 <textarea
                   aria-label={`Edit ${section.title}`}
                   value={draft[key]}
                   onChange={(event) => updateSection(key, event.target.value)}
                 />
-                <div className="pavo-section-actions">
+                <div className="script-section-actions">
                   <button type="button" onClick={() => setActiveSection(key)}>
                     Edit section
                   </button>
@@ -194,27 +194,27 @@ export default function PavoCristatus({ billingGuide, accountRoadmap, selfServic
         </div>
       </section>
 
-      <section className="pavo-script-panel">
+      <section className="customer-script-panel">
         <div className="section-heading compact">
           <p className="eyebrow">Full Script</p>
           <h3>Current customer-facing script</h3>
         </div>
-        <pre className="pavo-full-script">{combinedScript}</pre>
+        <pre className="customer-full-script">{combinedScript}</pre>
       </section>
 
       {activeSectionData && (
-        <div className="pavo-modal-backdrop" role="presentation" onMouseDown={closeModal}>
+        <div className="script-modal-backdrop" role="presentation" onMouseDown={closeModal}>
           <section
-            className={`pavo-edit-modal ${activeSource.className}`}
+            className={`script-edit-modal ${activeSource.className}`}
             role="dialog"
             aria-modal="true"
-            aria-labelledby="pavo-edit-title"
+            aria-labelledby="script-edit-title"
             onMouseDown={(event) => event.stopPropagation()}
           >
-            <div className="pavo-modal-heading">
+            <div className="script-modal-heading">
               <div>
                 <p className="eyebrow">{activeSectionData.title}</p>
-                <h3 id="pavo-edit-title">Edit script section</h3>
+                <h3 id="script-edit-title">Edit script section</h3>
               </div>
               <span>{activeSource.label}</span>
             </div>
@@ -224,7 +224,7 @@ export default function PavoCristatus({ billingGuide, accountRoadmap, selfServic
               value={draft[activeSection]}
               onChange={(event) => updateSection(activeSection, event.target.value)}
             />
-            <div className="pavo-modal-actions">
+            <div className="script-modal-actions">
               <button type="button" onClick={() => resetSection(activeSection)}>
                 Reset section
               </button>

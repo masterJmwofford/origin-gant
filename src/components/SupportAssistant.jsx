@@ -29,13 +29,13 @@ const routingRules = [
     tab: 'mesa-breaker',
     keywords: ['mesa', 'breaker', 'brick', 'core', 'laser', 'game'],
     reply:
-      'I opened MESA Breaker. Pilot the owl and fire CORE shots to clear every MESA brick.',
+      'I opened MESA Breaker. Pilot the launcher and fire CORE shots to clear every MESA brick.',
   },
   {
     tab: 'deescalation',
-    keywords: ['dovetalk', 'deescalation', 'de-escalation', 'calm', 'angry', 'customer', 'call', 'center', 'dove'],
+    keywords: ['resolvelab', 'resolve', 'deescalation', 'de-escalation', 'calm', 'angry', 'customer', 'call', 'center'],
     reply:
-      'I opened DoveTalk. Help the dove coach calm the customer with empathy, ownership, and a clear next step.',
+      'I opened ResolveLab. Help the customer stabilize with empathy, ownership, and a clear next step.',
   },
 ]
 
@@ -47,10 +47,10 @@ function findRoute(message) {
   )
 }
 
-export default function OwlAssistant({ activeTab, navItems, onNavigate }) {
+export default function SupportAssistant({ activeTab, navItems, onNavigate }) {
   const [message, setMessage] = useState('')
   const [assistantReply, setAssistantReply] = useState(
-    'Ask me where to study next. I can open Billing, Eligibility, Index Cards, SSO Options, MESA Breaker, or DoveTalk.',
+    'Ask me where to study next. I can open Billing, Eligibility, Index Cards, SSO Options, MESA Breaker, or ResolveLab.',
   )
 
   function submitMessage(event) {
@@ -64,7 +64,7 @@ export default function OwlAssistant({ activeTab, navItems, onNavigate }) {
 
     if (!route) {
       setAssistantReply(
-        'I can route you to Billing, Eligibility, Index Cards, SSO Options, MESA Breaker, or DoveTalk. Try asking for one of those sections.',
+        'I can route you to Billing, Eligibility, Index Cards, SSO Options, MESA Breaker, or ResolveLab. Try asking for one of those sections.',
       )
       setMessage('')
       return
@@ -76,26 +76,28 @@ export default function OwlAssistant({ activeTab, navItems, onNavigate }) {
   }
 
   return (
-    <aside className="owl-assistant">
-    <img src="https://i.pinimg.com/originals/a2/7c/76/a27c768c469972cec4cd4b1500a13c23.gif" alt="" className="owlAvi" />
-      <div className="owl-assistant-copy">
-        <p className="eyebrow">Owl AI Guide</p>
-        <h2>Where should we fly next?</h2>
+    <aside className="support-assistant">
+      <div className="support-assistant-mark" aria-hidden="true">
+        <span />
+      </div>
+      <div className="support-assistant-copy">
+        <p className="eyebrow">Support Guide</p>
+        <h2>Where should we go next?</h2>
         <p>{assistantReply}</p>
       </div>
 
-      <form className="owl-form" onSubmit={submitMessage}>
+      <form className="support-form" onSubmit={submitMessage}>
         <input
           type="text"
           value={message}
           onChange={(event) => setMessage(event.target.value)}
-          placeholder="Try: show me billing, DoveTalk, MESA breaker..."
-          aria-label="Ask the owl guide where to navigate"
+          placeholder="Try: show me billing, ResolveLab, MESA breaker..."
+          aria-label="Ask the support guide where to navigate"
         />
         <button type="submit">Go</button>
       </form>
 
-      <div className="owl-shortcuts">
+      <div className="support-shortcuts">
         {navItems.map((item) => (
           <button
             className={activeTab === item.id ? 'active' : ''}

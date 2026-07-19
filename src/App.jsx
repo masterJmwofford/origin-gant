@@ -11,13 +11,13 @@ import EssentialQuestions from './components/EssentialQuestions'
 import FlashCardGrid from './components/FlashCardGrid'
 import HeatMap from './components/HeatMap'
 import MesaBreaker from './components/MesaBreaker'
-import PavoCristatus from './components/PavoCristatus'
+import ScriptStudio from './components/ScriptStudio'
 import Plans from './components/Plans'
 import Quiz from './components/Quiz'
 import Roadmap from './components/Roadmap'
 import Search from './components/Search'
 import SelfServiceGame from './components/SelfServiceGame'
-import owlHero from './assets/owl-first-responder-shield.png'
+import professionalHero from './assets/professional-hero.png'
 import {
   accountRoadmap,
   billingEligibilityGuide,
@@ -82,19 +82,19 @@ const navItems = [
     id: 'mesa-breaker',
     label: 'MESA Breaker',
     theme: 'green',
-    description: 'Owl CORE laser brick-breaker game',
+    description: 'CORE launcher brick-breaker game',
   },
   {
     id: 'deescalation',
-    label: 'DoveTalk',
-    theme: 'dove',
+    label: 'ResolveLab',
+    theme: 'service',
     description: 'Call-center customer calming simulator',
   },
   {
-    id: 'pavo',
-    label: 'Pavo Scripts',
-    theme: 'peacock',
-    description: 'Customer script builder with source-colored feathers',
+    id: 'script-studio',
+    label: 'Script Studio',
+    theme: 'script',
+    description: 'Customer script builder with source-colored sections',
   },
 ]
 
@@ -166,24 +166,24 @@ const eagleEyeSummaries = {
   'mesa-breaker': {
     title: 'MESA Breaker in plain words',
     points: [
-      'Move the owl left and right, then fire CORE shots to clear the MESA bricks.',
+      'Move the launcher left and right, then fire CORE shots to clear the MESA bricks.',
       'The game is practice and energy between study sections, not customer policy information.',
       'Clear all bricks to reset the board and start the next round.',
     ],
   },
   deescalation: {
-    title: 'DoveTalk in plain words',
+    title: 'ResolveLab in plain words',
     points: [
       'Start by acknowledging the customer concern before explaining facts.',
       'Take ownership, then clarify the FirstNet topic: bill, plan, device, eligibility, or support path.',
       'Give a clear next step and check agreement so the customer ends calmer than they started.',
     ],
   },
-  pavo: {
-    title: 'Pavo Scripts in plain words',
+  'script-studio': {
+    title: 'Script Studio in plain words',
     points: [
       'Each script section is built from existing app data instead of invented plan claims.',
-      'The colored source badges show whether a line came from Billing, Eligibility, Index Cards, SSO, or DoveTalk.',
+      'The colored source badges show whether a line came from Billing, Eligibility, Index Cards, SSO, or ResolveLab.',
       'Use the text boxes to adjust tone, but verify facts before quoting prices or eligibility to a customer.',
     ],
   },
@@ -278,8 +278,8 @@ function App() {
     <main className={`page theme-${activeNavItem.theme} ${eagleEyeEnabled ? 'eagle-eye-on' : ''}`}>
       <section className="hero">
         <div>
-          <p className="eyebrow">FirstNet learning guide</p>
-          <h1>Owl Path</h1>
+          <p className="eyebrow">FirstNet professional learning guide</p>
+          <h1>Lyceum</h1>
           <p style={{ textAlign: 'right', color: 'gold' }}>created by Jordan Wofford</p>
           <p>
             A guided FirstNet study workspace for billing, eligibility, index cards,
@@ -287,13 +287,11 @@ function App() {
           </p>
         </div>
         <div className="hero-media">
-          <img src={owlHero} alt="Owl landing on an AT&T-style globe mark" />
+          <img src={professionalHero} alt="Professional call center training team" />
         </div>
       </section>
 
       <DashBoard stats={stats} />
-
-      {/* <OwlAssistant activeTab={activeTab} navItems={navItems} onNavigate={setActiveTab} /> */}
 
       <div ref={navAnchorRef} className="nav-scroll-anchor" aria-hidden="true" />
       <nav className={`study-nav ${navCompact ? 'is-compact' : ''}`} aria-label="Study sections">
@@ -452,15 +450,15 @@ function App() {
           </div>
         )}
 
-        {activeTab === 'pavo' && (
+        {activeTab === 'script-studio' && (
           <div className="tab-panel">
-            {eagleEyeEnabled && <EagleEyeSummary summary={eagleEyeSummaries.pavo} />}
-            <section className="study-section" id="pavo-cristatus">
+            {eagleEyeEnabled && <EagleEyeSummary summary={eagleEyeSummaries['script-studio']} />}
+            <section className="study-section" id="customer-script-studio">
               <div className="section-heading">
                 <p className="eyebrow">Script Builder</p>
-                <h2>PavoCristatus Customer Script Studio</h2>
+                <h2>Customer Script Studio</h2>
               </div>
-              <PavoCristatus
+              <ScriptStudio
                 accountRoadmap={accountRoadmap}
                 billingGuide={billingEligibilityGuide}
                 selfServiceGame={selfServiceGame}

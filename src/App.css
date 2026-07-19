@@ -89,7 +89,7 @@ img {
   --theme-ring: rgba(19, 165, 56, 0.28);
 }
 
-.page.theme-dove {
+.page.theme-service {
   --theme: #0f8a9d;
   --theme-dark: #075567;
   --theme-soft: #e6f7f8;
@@ -97,7 +97,7 @@ img {
   --theme-ring: rgba(15, 138, 157, 0.28);
 }
 
-.page.theme-peacock {
+.page.theme-script {
   --theme: #0b7f76;
   --theme-dark: #07524d;
   --theme-soft: #e9f8f5;
@@ -372,12 +372,12 @@ button {
   --nav-soft: #e9f8ed;
 }
 
-.nav-dove {
+.nav-service {
   --nav-theme: #0f8a9d;
   --nav-soft: #e6f7f8;
 }
 
-.nav-peacock {
+.nav-script {
   --nav-theme: #0b7f76;
   --nav-soft: #e9f8f5;
 }
@@ -591,7 +591,7 @@ button {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
-  .pavo-generated-layout {
+  .script-generated-layout {
     grid-template-columns: 1fr;
   }
 
@@ -735,7 +735,7 @@ button {
   color: #566174;
 }
 
-.owl-assistant {
+.support-assistant {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   gap: 16px;
@@ -750,49 +750,49 @@ button {
   box-shadow: 0 14px 38px rgba(23, 32, 51, 0.1);
 }
 
-.owl-avatar {
+.support-assistant-mark {
   display: grid;
   place-items: center;
-  width: 72px;
-  height: 72px;
+  width: 78px;
+  height: 78px;
   border: 3px solid #172033;
-  border-radius: 50% 50% 44% 44%;
+  border-radius: 18px;
   background:
-    radial-gradient(circle at 34% 38%, #ffffff 0 11px, #172033 12px 15px, transparent 16px),
-    radial-gradient(circle at 66% 38%, #ffffff 0 11px, #172033 12px 15px, transparent 16px),
-    linear-gradient(145deg, #f5c35d, #b97923);
+    linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(232, 248, 251, 0.92)),
+    var(--theme);
   box-shadow: 0 10px 24px rgba(23, 32, 51, 0.2);
 }
 
-.owl-eyes {
-  color: transparent;
+.support-assistant-mark span {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background:
+    linear-gradient(135deg, var(--theme), var(--theme-dark));
+  box-shadow: inset 0 0 0 5px rgba(255, 255, 255, 0.22);
 }
-.owlAvi{
-  width:90px;
-  height:90px;
-}
-.owl-assistant-copy {
+.support-assistant-copy {
   min-width: 0;
 }
 
-.owl-assistant-copy h2 {
+.support-assistant-copy h2 {
   margin: 4px 0 6px;
   color: #172033;
   font-size: 22px;
 }
 
-.owl-assistant-copy p:not(.eyebrow) {
+.support-assistant-copy p:not(.eyebrow) {
   color: #566174;
 }
 
-.owl-form {
+.support-form {
   grid-column: 2;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 10px;
 }
 
-.owl-form input {
+.support-form input {
   min-height: 46px;
   padding: 12px 14px;
   border: 1px solid #cfd7e6;
@@ -801,13 +801,13 @@ button {
   color: #172033;
 }
 
-.owl-form input:focus {
+.support-form input:focus {
   border-color: var(--theme);
   outline: 3px solid var(--theme-ring);
 }
 
-.owl-form button,
-.owl-shortcuts button {
+.support-form button,
+.support-shortcuts button {
   border: 1px solid color-mix(in srgb, var(--theme) 34%, #cfd7e6);
   border-radius: 8px;
   background: #ffffff;
@@ -815,27 +815,27 @@ button {
   font-weight: 900;
 }
 
-.owl-form button {
+.support-form button {
   min-height: 46px;
   padding: 0 18px;
   background: var(--theme);
   color: #ffffff;
 }
 
-.owl-shortcuts {
+.support-shortcuts {
   grid-column: 2;
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
 
-.owl-shortcuts button {
+.support-shortcuts button {
   min-height: 36px;
   padding: 7px 10px;
 }
 
-.owl-shortcuts button:hover,
-.owl-shortcuts button.active {
+.support-shortcuts button:hover,
+.support-shortcuts button.active {
   background: var(--theme-soft);
 }
 
@@ -2410,19 +2410,31 @@ button {
     0 0 22px rgba(57, 255, 116, 0.75);
 }
 
-.mesa-owl {
+.mesa-launcher {
   position: absolute;
   bottom: 18px;
+  display: grid;
+  place-items: center;
   width: 78px;
   height: 78px;
   border-radius: 50%;
-  object-fit: cover;
   border: 3px solid #39ff74;
-  background: #ffffff;
+  background:
+    radial-gradient(circle at 50% 38%, #39ff74 0 8px, transparent 9px),
+    linear-gradient(145deg, #ffffff 0 34%, #d8f8e0 35% 62%, #0a3017 63% 100%);
   box-shadow:
     0 0 0 6px rgba(57, 255, 116, 0.14),
     0 0 24px rgba(57, 255, 116, 0.55);
   user-select: none;
+}
+
+.mesa-launcher span {
+  width: 34px;
+  height: 42px;
+  border-radius: 18px 18px 8px 8px;
+  background:
+    linear-gradient(180deg, #39ff74, #08772b);
+  box-shadow: 0 -16px 20px rgba(57, 255, 116, 0.45);
 }
 
 .mesa-win {
@@ -2521,7 +2533,7 @@ button {
   gap: 18px;
 }
 
-.dove-panel,
+.coach-panel,
 .customer-panel,
 .response-panel {
   padding: 22px;
@@ -2531,14 +2543,14 @@ button {
   box-shadow: 0 8px 24px rgba(23, 32, 51, 0.05);
 }
 
-.dove-panel {
+.coach-panel {
   display: grid;
   justify-items: center;
   gap: 12px;
   text-align: center;
 }
 
-.dove-panel h3,
+.coach-panel h3,
 .customer-header h3,
 .customer-concern h4,
 .customer-context h4 {
@@ -2546,7 +2558,7 @@ button {
   color: #172033;
 }
 
-.dove-avatar {
+.coach-avatar {
   width: 190px;
   height: 190px;
   border-radius: 50%;
@@ -2556,8 +2568,8 @@ button {
     0 0 0 8px rgba(15, 138, 157, 0.1),
     0 16px 36px rgba(15, 138, 157, 0.18);
   animation:
-    dove-float 3.4s ease-in-out infinite,
-    dove-glow 2.8s ease-in-out infinite;
+    coach-float 3.4s ease-in-out infinite,
+    coach-glow 2.8s ease-in-out infinite;
   transform-origin: center bottom;
   will-change: transform, box-shadow;
 }
@@ -2579,7 +2591,7 @@ button {
   font-weight: 900;
 }
 
-.pavo-call-flow {
+.script-call-flow {
   display: grid;
   gap: 7px;
   width: 100%;
@@ -2590,11 +2602,11 @@ button {
   text-align: left;
 }
 
-.pavo-call-flow strong {
+.script-call-flow strong {
   color: #172033;
 }
 
-.pavo-call-flow span {
+.script-call-flow span {
   padding: 7px 9px;
   border-radius: 8px;
   background: #ffffff;
@@ -2788,7 +2800,7 @@ button {
   align-items: center;
 }
 
-.pavo-targets {
+.script-targets {
   padding: 12px;
   border: 1px solid #cae8ed;
   border-radius: 8px;
@@ -2885,7 +2897,7 @@ button {
   justify-self: start;
 }
 
-.dove-advice-popover {
+.coach-advice-popover {
   position: fixed;
   right: max(18px, calc((100vw - 1120px) / 2 + 18px));
   bottom: 22px;
@@ -2904,10 +2916,10 @@ button {
   box-shadow:
     0 22px 70px rgba(23, 32, 51, 0.24),
     0 0 0 8px rgba(15, 138, 157, 0.08);
-  animation: dove-swoop-in 0.55s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  animation: coach-slide-in 0.55s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
 
-.dove-popover-avatar {
+.coach-popover-avatar {
   width: 96px;
   height: 96px;
   border: 4px solid #ffffff;
@@ -2916,20 +2928,20 @@ button {
   box-shadow:
     0 0 0 7px rgba(15, 138, 157, 0.12),
     0 12px 28px rgba(15, 138, 157, 0.2);
-  animation: dove-popover-flutter 1.8s ease-in-out infinite;
+  animation: coach-popover-pulse 1.8s ease-in-out infinite;
 }
 
-.dove-advice-popover h3 {
+.coach-advice-popover h3 {
   margin: 4px 0 8px;
   color: #172033;
   font-size: 22px;
 }
 
-.dove-advice-popover p:not(.eyebrow) {
+.coach-advice-popover p:not(.eyebrow) {
   color: #566174;
 }
 
-.dove-popover-close {
+.coach-popover-close {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -2943,7 +2955,7 @@ button {
   line-height: 1;
 }
 
-.dove-popover-close:hover {
+.coach-popover-close:hover {
   background: #e6f7f8;
 }
 
@@ -4601,7 +4613,7 @@ button {
   margin-top: 6px;
 }
 
-@keyframes dove-swoop-in {
+@keyframes coach-slide-in {
   0% {
     opacity: 0;
     transform: translate(120px, -80px) rotate(10deg) scale(0.72);
@@ -4618,7 +4630,7 @@ button {
   }
 }
 
-@keyframes dove-popover-flutter {
+@keyframes coach-popover-pulse {
   0%,
   100% {
     transform: translateY(0) rotate(-1deg);
@@ -4629,7 +4641,7 @@ button {
   }
 }
 
-@keyframes dove-float {
+@keyframes coach-float {
   0%,
   100% {
     transform: translateY(0) rotate(-1deg) scale(1);
@@ -4640,7 +4652,7 @@ button {
   }
 }
 
-@keyframes dove-glow {
+@keyframes coach-glow {
   0%,
   100% {
     box-shadow:
@@ -4871,27 +4883,27 @@ button {
   color: #566174;
 }
 
-.pavo-cristatus {
+.script-studio {
   display: grid;
   gap: 20px;
 }
 
-.pavo-generated-layout {
+.script-generated-layout {
   display: grid;
   grid-template-columns: 1fr;
   gap: 18px;
   align-items: start;
 }
 
-.pavo-center,
-.pavo-script-panel {
+.script-studio-center,
+.customer-script-panel {
   border: 1px solid color-mix(in srgb, var(--theme) 22%, #dce4f0);
   border-radius: 8px;
   background: #ffffff;
   box-shadow: 0 10px 26px rgba(23, 32, 51, 0.06);
 }
 
-.pavo-center {
+.script-studio-center {
   position: relative;
   display: flex;
   gap: 18px;
@@ -4902,7 +4914,7 @@ button {
   overflow: hidden;
 }
 
-.pavo-center::before {
+.script-studio-center::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -4912,7 +4924,7 @@ button {
     linear-gradient(90deg, rgba(233, 248, 245, 0.98), rgba(255, 255, 255, 0.78));
 }
 
-.pavo-logo {
+.script-specialist-avatar {
   flex: 0 0 auto;
   position: relative;
   z-index: 1;
@@ -4924,7 +4936,7 @@ button {
   filter: drop-shadow(0 16px 26px rgba(7, 82, 77, 0.2));
 }
 
-.pavo-center h3 {
+.script-studio-center h3 {
   position: relative;
   z-index: 1;
   margin: 4px 0 6px;
@@ -4932,83 +4944,83 @@ button {
   font-size: 24px;
 }
 
-.pavo-center p:not(.eyebrow) {
+.script-studio-center p:not(.eyebrow) {
   position: relative;
   z-index: 1;
   margin: 0;
   color: #566174;
 }
 
-.pavo-script-panel {
+.customer-script-panel {
   padding: 20px;
 }
 
-.pavo-script-editor {
+.script-section-editor {
   display: grid;
   gap: 14px;
 }
 
-.pavo-script-section {
+.customer-script-section {
   display: grid;
   gap: 12px;
   min-width: 0;
   padding: 18px;
-  border: 1px solid var(--feather-border, #dce4f0);
-  border-left: 6px solid var(--feather, var(--theme));
+  border: 1px solid var(--section-accent-border, #dce4f0);
+  border-left: 6px solid var(--section-accent, var(--theme));
   border-radius: 8px;
   background:
-    linear-gradient(135deg, var(--feather-soft, #f8fafc), #ffffff 76%),
+    linear-gradient(135deg, var(--section-accent-soft, #f8fafc), #ffffff 76%),
     #ffffff;
   box-shadow: 0 8px 22px rgba(23, 32, 51, 0.05);
 }
 
-.pavo-section-heading {
+.script-section-heading {
   display: flex;
   gap: 12px;
   align-items: start;
   justify-content: space-between;
 }
 
-.pavo-section-heading h3 {
+.script-section-heading h3 {
   margin: 4px 0 0;
   color: #172033;
   font-size: 21px;
 }
 
-.pavo-section-heading span {
+.script-section-heading span {
   display: inline-flex;
   align-items: center;
   width: fit-content;
   min-height: 26px;
   padding: 4px 9px;
   border-radius: 999px;
-  background: var(--feather);
+  background: var(--section-accent);
   color: #ffffff;
   font-size: 12px;
   font-weight: 900;
   white-space: nowrap;
 }
 
-.pavo-script-section p:not(.eyebrow) {
+.customer-script-section p:not(.eyebrow) {
   margin: 0;
   color: #566174;
 }
 
-.pavo-section-preview {
+.script-section-preview {
   display: none;
   padding: 12px;
-  border: 1px solid color-mix(in srgb, var(--feather) 18%, #dce4f0);
+  border: 1px solid color-mix(in srgb, var(--section-accent) 18%, #dce4f0);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.72);
   color: #364254;
   line-height: 1.45;
 }
 
-.pavo-script-section textarea {
+.customer-script-section textarea {
   width: 100%;
   min-height: 132px;
   padding: 12px;
-  border: 1px solid color-mix(in srgb, var(--feather) 28%, #cfd7e6);
+  border: 1px solid color-mix(in srgb, var(--section-accent) 28%, #cfd7e6);
   border-radius: 8px;
   background: #ffffff;
   color: #172033;
@@ -5016,13 +5028,13 @@ button {
   resize: vertical;
 }
 
-.pavo-script-section textarea:focus {
-  border-color: var(--feather);
-  outline: 3px solid color-mix(in srgb, var(--feather) 24%, transparent);
+.customer-script-section textarea:focus {
+  border-color: var(--section-accent);
+  outline: 3px solid color-mix(in srgb, var(--section-accent) 24%, transparent);
 }
 
-.pavo-section-actions,
-.pavo-modal-actions {
+.script-section-actions,
+.script-modal-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
@@ -5030,18 +5042,18 @@ button {
   justify-content: space-between;
 }
 
-.pavo-script-section button,
-.pavo-modal-actions button {
+.customer-script-section button,
+.script-modal-actions button {
   min-height: 38px;
   padding: 8px 11px;
-  border: 1px solid color-mix(in srgb, var(--feather) 32%, #cfd7e6);
+  border: 1px solid color-mix(in srgb, var(--section-accent) 32%, #cfd7e6);
   border-radius: 8px;
   background: #ffffff;
-  color: var(--feather);
+  color: var(--section-accent);
   font-weight: 900;
 }
 
-.pavo-modal-backdrop {
+.script-modal-backdrop {
   position: fixed;
   inset: 0;
   z-index: 20;
@@ -5051,85 +5063,85 @@ button {
   background: rgba(23, 32, 51, 0.48);
 }
 
-.pavo-edit-modal {
+.script-edit-modal {
   display: grid;
   gap: 14px;
   width: min(720px, 100%);
   max-height: calc(100dvh - 36px);
   overflow: auto;
   padding: 20px;
-  border: 1px solid var(--feather-border);
-  border-left: 6px solid var(--feather);
+  border: 1px solid var(--section-accent-border);
+  border-left: 6px solid var(--section-accent);
   border-radius: 8px;
   background: #ffffff;
   box-shadow: 0 24px 70px rgba(23, 32, 51, 0.24);
 }
 
-.pavo-modal-heading {
+.script-modal-heading {
   display: flex;
   gap: 12px;
   align-items: start;
   justify-content: space-between;
 }
 
-.pavo-modal-heading h3 {
+.script-modal-heading h3 {
   margin: 4px 0 0;
   color: #172033;
   font-size: 23px;
 }
 
-.pavo-modal-heading span {
+.script-modal-heading span {
   display: inline-flex;
   align-items: center;
   width: fit-content;
   min-height: 26px;
   padding: 4px 9px;
   border-radius: 999px;
-  background: var(--feather);
+  background: var(--section-accent);
   color: #ffffff;
   font-size: 12px;
   font-weight: 900;
   white-space: nowrap;
 }
 
-.pavo-edit-modal p:not(.eyebrow) {
+.script-edit-modal p:not(.eyebrow) {
   margin: 0;
   color: #566174;
 }
 
-.pavo-edit-modal textarea {
+.script-edit-modal textarea {
   min-height: 300px;
   padding: 12px;
-  border: 1px solid color-mix(in srgb, var(--feather) 28%, #cfd7e6);
+  border: 1px solid color-mix(in srgb, var(--section-accent) 28%, #cfd7e6);
   border-radius: 8px;
   color: #172033;
   line-height: 1.5;
   resize: vertical;
 }
 
-.pavo-edit-modal textarea:focus {
-  border-color: var(--feather);
-  outline: 3px solid color-mix(in srgb, var(--feather) 24%, transparent);
+.script-edit-modal textarea:focus {
+  border-color: var(--section-accent);
+  outline: 3px solid color-mix(in srgb, var(--section-accent) 24%, transparent);
 }
 
-.pavo-script {
+.customer-script-block {
   display: grid;
   gap: 12px;
 }
 
-.pavo-script p {
+.customer-script-block p {
   display: grid;
   gap: 8px;
   margin: 0;
   padding: 14px 16px;
-  border: 1px solid var(--feather-border, #dce4f0);
+  border: 1px solid var(--section-accent-border, #dce4f0);
   border-radius: 8px;
-  background: var(--feather-soft, #f8fafc);
+  background: var(--section-accent-soft, #f8fafc);
   color: #172033;
   line-height: 1.5;
 }
 
-.pavo-full-script {
+.customer-full-script {
   max-width: 100%;
   margin: 0;
   padding: 18px;
@@ -5143,33 +5155,33 @@ button {
 }
 
 .source-billing {
-  --feather: #087c8f;
-  --feather-border: #a9dce4;
-  --feather-soft: #e8f8fb;
+  --section-accent: #087c8f;
+  --section-accent-border: #a9dce4;
+  --section-accent-soft: #e8f8fb;
 }
 
 .source-eligibility {
-  --feather: #168557;
-  --feather-border: #b2dfca;
-  --feather-soft: #eaf8f1;
+  --section-accent: #168557;
+  --section-accent-border: #b2dfca;
+  --section-accent-soft: #eaf8f1;
 }
 
 .source-cards {
-  --feather: #a76200;
-  --feather-border: #edc98d;
-  --feather-soft: #fff4df;
+  --section-accent: #a76200;
+  --section-accent-border: #edc98d;
+  --section-accent-soft: #fff4df;
 }
 
 .source-sso {
-  --feather: #7554c7;
-  --feather-border: #c9bcf0;
-  --feather-soft: #f2edff;
+  --section-accent: #7554c7;
+  --section-accent-border: #c9bcf0;
+  --section-accent-soft: #f2edff;
 }
 
-.source-dovetalk {
-  --feather: #0f8a9d;
-  --feather-border: #a8dce3;
-  --feather-soft: #e6f7f8;
+.source-resolvelab {
+  --section-accent: #0f8a9d;
+  --section-accent-border: #a8dce3;
+  --section-accent-soft: #e6f7f8;
 }
 
 .source-section {
@@ -5224,16 +5236,16 @@ button {
     grid-template-columns: 1fr;
   }
 
-  .owl-assistant {
+  .support-assistant {
     grid-template-columns: 1fr;
   }
 
-  .owl-form,
-  .owl-shortcuts {
+  .support-form,
+  .support-shortcuts {
     grid-column: 1;
   }
 
-  .owl-form {
+  .support-form {
     grid-template-columns: 1fr;
   }
 
@@ -5268,96 +5280,96 @@ button {
     grid-template-columns: 1fr;
   }
 
-  .pavo-cristatus {
+  .script-studio {
     gap: 14px;
   }
 
-  .pavo-center {
+  .script-studio-center {
     flex-direction: column;
     align-items: flex-start;
     min-height: auto;
     padding: 16px;
   }
 
-  .pavo-center::before {
+  .script-studio-center::before {
     inset: 0;
   }
 
-  .pavo-logo {
+  .script-specialist-avatar {
     width: auto;
     height: 180px;
     max-width: 100%;
   }
 
-  .pavo-center h3 {
+  .script-studio-center h3 {
     font-size: 20px;
   }
 
-  .pavo-script-editor {
+  .script-section-editor {
     gap: 10px;
   }
 
-  .pavo-script-section {
+  .customer-script-section {
     gap: 10px;
     padding: 14px;
   }
 
-  .pavo-section-heading {
+  .script-section-heading {
     align-items: center;
   }
 
-  .pavo-section-heading h3 {
+  .script-section-heading h3 {
     font-size: 18px;
   }
 
-  .pavo-section-preview {
+  .script-section-preview {
     display: block;
   }
 
-  .pavo-script-section > textarea {
+  .customer-script-section > textarea {
     display: none;
   }
 
-  .pavo-section-actions {
+  .script-section-actions {
     justify-content: flex-start;
   }
 
-  .pavo-section-actions button:first-child {
-    background: var(--feather);
+  .script-section-actions button:first-child {
+    background: var(--section-accent);
     color: #ffffff;
   }
 
-  .pavo-script-panel {
+  .customer-script-panel {
     padding: 14px;
   }
 
-  .pavo-full-script {
+  .customer-full-script {
     max-height: 360px;
     overflow: auto;
     padding: 14px;
     font-size: 14px;
   }
 
-  .pavo-modal-backdrop {
+  .script-modal-backdrop {
     align-items: end;
     padding: 10px;
   }
 
-  .pavo-edit-modal {
+  .script-edit-modal {
     width: 100%;
     max-height: calc(100dvh - 20px);
     padding: 16px;
   }
 
-  .pavo-modal-heading {
+  .script-modal-heading {
     align-items: center;
   }
 
-  .pavo-modal-heading h3 {
+  .script-modal-heading h3 {
     font-size: 20px;
   }
 
-  .pavo-edit-modal textarea {
+  .script-edit-modal textarea {
     min-height: 45dvh;
   }
 
@@ -5514,14 +5526,14 @@ button {
     margin-left: 0;
   }
 
-  .dove-advice-popover {
+  .coach-advice-popover {
     grid-template-columns: 72px minmax(0, 1fr);
     right: 16px;
     bottom: 16px;
     padding: 14px 44px 14px 14px;
   }
 
-  .dove-popover-avatar {
+  .coach-popover-avatar {
     width: 72px;
     height: 72px;
   }

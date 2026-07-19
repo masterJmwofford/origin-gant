@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 
 const GAME_WIDTH = 760
 const GAME_HEIGHT = 460
-const OWL_WIDTH = 78
+const LAUNCHER_WIDTH = 78
 const BRICK_WIDTH = 18
 const BRICK_HEIGHT = 12
 const BRICK_GAP = 4
@@ -11,7 +11,6 @@ const LASER_WIDTH = 12
 const BRICK_DRIFT_LIMIT = 46
 const BRICK_DRIFT_SPEED = 2
 const BRICK_BOB_AMOUNT = 10
-const OWL_AVI = 'https://i.pinimg.com/originals/a2/7c/76/a27c768c469972cec4cd4b1500a13c23.gif'
 
 const letterMap = {
   M: ['10001', '11011', '10101', '10101', '10001', '10001', '10001'],
@@ -54,7 +53,7 @@ function createInitialGame(round = 1) {
   return {
     bricks: createMesaBricks(),
     lasers: [],
-    owlX: GAME_WIDTH / 2 - OWL_WIDTH / 2,
+    launcherX: GAME_WIDTH / 2 - LAUNCHER_WIDTH / 2,
     brickOffsetX: 0,
     brickOffsetY: 0,
     brickDirection: 1,
@@ -110,12 +109,12 @@ export default function MesaBreaker() {
     }
   }, [])
 
-  function moveOwl(direction) {
+  function moveLauncher(direction) {
     setGame((current) => ({
       ...current,
-      owlX: Math.min(
-        GAME_WIDTH - OWL_WIDTH - 16,
-        Math.max(16, current.owlX + direction * 36),
+      launcherX: Math.min(
+        GAME_WIDTH - LAUNCHER_WIDTH - 16,
+        Math.max(16, current.launcherX + direction * 36),
       ),
     }))
   }
@@ -130,7 +129,7 @@ export default function MesaBreaker() {
           ...current.lasers,
           {
             id: crypto.randomUUID(),
-            x: current.owlX + OWL_WIDTH / 2 - LASER_WIDTH / 2,
+            x: current.launcherX + LAUNCHER_WIDTH / 2 - LASER_WIDTH / 2,
             y: GAME_HEIGHT - 112,
           },
         ],
@@ -145,11 +144,11 @@ export default function MesaBreaker() {
   useEffect(() => {
     function handleKeyDown(event) {
       if (event.key === 'ArrowLeft' || event.key.toLowerCase() === 'a') {
-        moveOwl(-1)
+        moveLauncher(-1)
       }
 
       if (event.key === 'ArrowRight' || event.key.toLowerCase() === 'd') {
-        moveOwl(1)
+        moveLauncher(1)
       }
 
       if (event.key === ' ' || event.key === 'ArrowUp' || event.key.toLowerCase() === 'w') {
@@ -234,7 +233,7 @@ export default function MesaBreaker() {
           <p className="eyebrow">MESA Breaker</p>
           <h2>Blast the MESA bricks with CORE shots</h2>
           <p>
-            Move the owl with arrow keys or A/D. Fire with Space, W, Arrow Up, or the CORE
+            Move the launcher with arrow keys or A/D. Fire with Space, W, Arrow Up, or the CORE
             button. Clear every brick to reset the board.
           </p>
         </div>
@@ -284,13 +283,14 @@ export default function MesaBreaker() {
             </span>
           ))}
 
-          <img
-            className="mesa-owl"
-            src={OWL_AVI}
-            alt="Owl avatar ship"
-            draggable="false"
-            style={{ left: `${game.owlX}px` }}
-          />
+          <div
+            aria-label="CORE launcher"
+            className="mesa-launcher"
+            role="img"
+            style={{ left: `${game.launcherX}px` }}
+          >
+            <span />
+          </div>
 
           {game.won && (
             <div className="mesa-win">
@@ -302,13 +302,13 @@ export default function MesaBreaker() {
       </section>
 
       <div className="mesa-controls" aria-label="MESA Breaker controls">
-        <button type="button" onClick={() => moveOwl(-1)}>
+        <button type="button" onClick={() => moveLauncher(-1)}>
           Left
         </button>
         <button className="core-button" type="button" onClick={fireCore}>
           Fire CORE
         </button>
-        <button type="button" onClick={() => moveOwl(1)}>
+        <button type="button" onClick={() => moveLauncher(1)}>
           Right
         </button>
         <button type="button" onClick={resetGame}>

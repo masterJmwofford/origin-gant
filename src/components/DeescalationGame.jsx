@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import customerFace from '../assets/customer-face.png'
-import doveCoach from '../assets/dove-coach.png'
+import callCoach from '../assets/call-coach.png'
 
 const dispositionLevels = [
   {
@@ -58,7 +58,7 @@ const skillGroups = [
   },
 ]
 
-const pavoCheckpoints = [
+const scriptCheckpoints = [
   {
     id: 'greeting',
     label: 'Greeting',
@@ -213,13 +213,13 @@ function scanResponse(response, scenario) {
   const matchedGroups = skillGroups.filter((group) =>
     group.keywords.some((keyword) => normalized.includes(keyword)),
   )
-  const matchedCheckpoints = pavoCheckpoints.filter((checkpoint) =>
+  const matchedCheckpoints = scriptCheckpoints.filter((checkpoint) =>
     checkpoint.keywords.some((keyword) => normalized.includes(keyword)),
   )
   const matchedEscalators = escalationWords.filter((word) => normalized.includes(word))
   const targetMatches = matchedGroups.filter((group) => scenario.targetSkills.includes(group.id))
   const checkpointMatches = new Set(matchedCheckpoints.map((checkpoint) => checkpoint.id))
-  const requiredCheckpointCount = pavoCheckpoints.length
+  const requiredCheckpointCount = scriptCheckpoints.length
   const skillBonus = Math.min(2, targetMatches.length)
   const reduction = Math.max(
     0,
@@ -237,7 +237,7 @@ function scanResponse(response, scenario) {
 }
 
 function getMissingCheckpoints(result) {
-  return pavoCheckpoints.filter(
+  return scriptCheckpoints.filter(
     (checkpoint) => !result.matchedCheckpoints.some((match) => match.id === checkpoint.id),
   )
 }
@@ -264,14 +264,14 @@ function buildAdvice(result, didResolve) {
     .map((checkpoint) => checkpoint.coach)
 
   if (didResolve) {
-    return `DoveTalk advice: Complete call flow. You used ${matchedLabels.join(', ') || 'calming language'} and covered every Pavo checkpoint before closing.`
+    return `ResolveLab coaching: Complete call flow. You used ${matchedLabels.join(', ') || 'calming language'} and covered every script checkpoint before closing.`
   }
 
   if (result.reduction > 0) {
-    return `DoveTalk advice: Good progress, but the customer is not fully resolved until every Pavo checkpoint is covered. Next, add: ${missingCheckpoints.join(' ')}`
+    return `ResolveLab coaching: Good progress, but the customer is not fully resolved until every script checkpoint is covered. Next, add: ${missingCheckpoints.join(' ')}`
   }
 
-  return `DoveTalk advice: Try again with the full call flow. ${missingCheckpoints.join(' ')}`
+  return `ResolveLab coaching: Try again with the full call flow. ${missingCheckpoints.join(' ')}`
 }
 
 function buildCustomerReply(scenario, result, didResolve, nextDisposition, requestedInfo) {
@@ -381,7 +381,7 @@ export default function DeescalationGame() {
       advice,
       message:
         result.reduction > 0
-          ? 'Nice. That response lowered tension. Keep going until every Pavo checkpoint is covered.'
+          ? 'Nice. That response lowered tension. Keep going until every script checkpoint is covered.'
           : 'Try the full flow: greeting, verification, eligibility, account info, billing suggestion, talking point, and close.',
     })
 
@@ -422,7 +422,7 @@ export default function DeescalationGame() {
       <section className="deescalation-brief">
         <div>
           <p className="eyebrow">Call Center Practice</p>
-          <h2>DoveTalk Lab</h2>
+          <h2>ResolveLab</h2>
           <p>
             Type a response that validates the customer, takes ownership, clarifies the
             FirstNet issue, and gives a next step. Better language lowers the customer&apos;s
@@ -437,18 +437,18 @@ export default function DeescalationGame() {
       </section>
 
       <section className="deescalation-board">
-        <div className="dove-panel">
-          <img className="dove-avatar" src={doveCoach} alt="Dove coach avatar" />
-          <h3>Coach Dove-inity</h3>
+        <div className="coach-panel">
+          <img className="coach-avatar" src={callCoach} alt="Professional call coach portrait" />
+          <h3>Resolution Coach</h3>
           <p>Use calm language. Avoid blame, shortcuts, or “policy-only” replies.</p>
           <div className="skill-tags">
             {skillGroups.map((group) => (
               <span key={group.id}>{group.label}</span>
             ))}
           </div>
-          <div className="pavo-call-flow">
-            <strong>Pavo call flow</strong>
-            {pavoCheckpoints.map((checkpoint) => (
+          <div className="script-call-flow">
+            <strong>Script call flow</strong>
+            {scriptCheckpoints.map((checkpoint) => (
               <span key={checkpoint.id}>{checkpoint.label}</span>
             ))}
           </div>
@@ -477,7 +477,7 @@ export default function DeescalationGame() {
 
           <article className="customer-context">
             <h4>Simulation note</h4>
-            <p>Verification and account details in DoveTalk are fictional practice data only.</p>
+            <p>Verification and account details in ResolveLab are fictional practice data only.</p>
           </article>
 
           <div className="calm-meter" aria-label={`Customer disposition: ${disposition.label}`}>
@@ -494,7 +494,7 @@ export default function DeescalationGame() {
       </section>
 
       <section className="response-panel">
-        <article className="conversation-log" aria-label="Live DoveTalk conversation">
+        <article className="conversation-log" aria-label="Live ResolveLab conversation">
           <div className="conversation-log-header">
             <div>
               <p className="eyebrow">Live Interaction</p>
@@ -521,9 +521,9 @@ export default function DeescalationGame() {
           ))}
         </div>
 
-        <div className="target-skills pavo-targets">
-          <strong>Required Pavo checkpoints:</strong>
-          {pavoCheckpoints.map((checkpoint) => (
+        <div className="target-skills script-targets">
+          <strong>Required script checkpoints:</strong>
+          {scriptCheckpoints.map((checkpoint) => (
             <span key={checkpoint.id}>{checkpoint.label}</span>
           ))}
         </div>
@@ -551,7 +551,7 @@ export default function DeescalationGame() {
                 : 'No ideal de-escalation keywords yet'}
             </p>
             <div className="checkpoint-results">
-              {pavoCheckpoints.map((checkpoint) => {
+              {scriptCheckpoints.map((checkpoint) => {
                 const isMatched = feedback.matchedCheckpoints.some(
                   (match) => match.id === checkpoint.id,
                 )
@@ -568,7 +568,7 @@ export default function DeescalationGame() {
             )}
             {!feedback.didResolve && (
               <ul>
-                {pavoCheckpoints
+                {scriptCheckpoints
                   .filter((checkpoint) =>
                     !feedback.matchedCheckpoints.some((match) => match.id === checkpoint.id),
                   )
@@ -589,14 +589,14 @@ export default function DeescalationGame() {
       </section>
 
       {advicePopup && (
-        <div className="dove-advice-popover" role="dialog" aria-live="polite" aria-label="DoveTalk advice">
-          <button className="dove-popover-close" type="button" onClick={closeAdvice} aria-label="Close advice">
+        <div className="coach-advice-popover" role="dialog" aria-live="polite" aria-label="ResolveLab coaching">
+          <button className="coach-popover-close" type="button" onClick={closeAdvice} aria-label="Close advice">
             ×
           </button>
-          <img className="dove-popover-avatar" src={doveCoach} alt="Dove coach swooping in" />
+          <img className="coach-popover-avatar" src={callCoach} alt="Professional call coach" />
           <div>
-            <p className="eyebrow">DoveTalk Assist</p>
-            <h3>{advicePopup.didResolve ? 'Calm landing.' : 'Quick coaching swoop.'}</h3>
+            <p className="eyebrow">ResolveLab Assist</p>
+            <h3>{advicePopup.didResolve ? 'Customer stabilized.' : 'Quick coaching note.'}</h3>
             <p>{advicePopup.advice}</p>
           </div>
         </div>

@@ -56,7 +56,7 @@ const navItems = [
   },
   {
     id: 'questions',
-    label: 'Call Questions',
+    label: 'QA Essentials',
     theme: 'indigo',
     description: 'Essential questions by customer need',
   },
@@ -86,7 +86,7 @@ const navItems = [
   },
   {
     id: 'deescalation',
-    label: 'ResolveLab',
+    label: 'Scenario',
     theme: 'service',
     description: 'Call-center customer calming simulator',
   },
@@ -172,7 +172,7 @@ const eagleEyeSummaries = {
     ],
   },
   deescalation: {
-    title: 'ResolveLab in plain words',
+    title: 'Scenario in plain words',
     points: [
       'Start by acknowledging the customer concern before explaining facts.',
       'Take ownership, then clarify the FirstNet topic: bill, plan, device, eligibility, or support path.',
@@ -183,7 +183,7 @@ const eagleEyeSummaries = {
     title: 'Script Studio in plain words',
     points: [
       'Each script section is built from existing app data instead of invented plan claims.',
-      'The colored source badges show whether a line came from Billing, Eligibility, Index Cards, SSO, or ResolveLab.',
+      'The colored source badges show whether a line came from Billing, Eligibility, Index Cards, SSO, or Scenario.',
       'Use the text boxes to adjust tone, but verify facts before quoting prices or eligibility to a customer.',
     ],
   },
@@ -280,7 +280,7 @@ function App() {
         <div>
           <p className="eyebrow">FirstNet professional learning guide</p>
           <h1>Lyceum</h1>
-          <p style={{ textAlign: 'right', color: 'gold' }}>created by Jordan Wofford</p>
+          <p style={{ textAlign: 'right', color: 'gold' }}>powered by Jmwofford</p>
           <p>
             A guided FirstNet study workspace for billing, eligibility, index cards,
             self-service options, scenarios, and quizzes.

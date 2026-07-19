@@ -1,6 +1,11 @@
 import { useMemo, useState } from 'react'
-import customerFace from '../assets/customer-face.png'
 import callCoach from '../assets/call-coach.png'
+import customerAndre from '../assets/customer-andre.png'
+import customerCole from '../assets/customer-cole.png'
+import customerJules from '../assets/customer-jules.png'
+import customerMara from '../assets/customer-mara.png'
+import customerPriya from '../assets/customer-priya.png'
+import customerSam from '../assets/customer-sam.png'
 
 const dispositionLevels = [
   {
@@ -109,6 +114,7 @@ const customerScenarios = [
   {
     name: 'Mara',
     role: 'Subscriber Paid firefighter',
+    portrait: customerMara,
     concern:
       'Mara says her FirstNet bill looks higher than expected and she is angry because she thought AutoPay and paperless billing were already included.',
     context:
@@ -122,6 +128,7 @@ const customerScenarios = [
   {
     name: 'Andre',
     role: 'ER nurse',
+    portrait: customerAndre,
     concern:
       'Andre wants FirstNet and Family, but his spouse thinks every family line will get FirstNet priority access.',
     context:
@@ -135,6 +142,7 @@ const customerScenarios = [
   {
     name: 'Jules',
     role: 'Agency administrator',
+    portrait: customerJules,
     concern:
       'Jules is upset because they do not know whether a department account should use Subscriber Paid or Agency Paid setup.',
     context:
@@ -148,6 +156,7 @@ const customerScenarios = [
   {
     name: 'Priya',
     role: 'New FirstNet phone user',
+    portrait: customerPriya,
     concern:
       'Priya is frustrated because her compatible phone needs eSIM activation and she does not know where to start.',
     context:
@@ -161,6 +170,7 @@ const customerScenarios = [
   {
     name: 'Cole',
     role: 'Field supervisor',
+    portrait: customerCole,
     concern:
       'Cole is worried because personnel in the field need support and a device diagnostic path during an incident.',
     context:
@@ -174,6 +184,7 @@ const customerScenarios = [
   {
     name: 'Sam',
     role: 'Volunteer responder',
+    portrait: customerSam,
     concern:
       'Sam says eligibility feels confusing and does not know whether to trust a job title alone.',
     context:
@@ -264,14 +275,14 @@ function buildAdvice(result, didResolve) {
     .map((checkpoint) => checkpoint.coach)
 
   if (didResolve) {
-    return `ResolveLab coaching: Complete call flow. You used ${matchedLabels.join(', ') || 'calming language'} and covered every script checkpoint before closing.`
+    return `Scenario coaching: Complete call flow. You used ${matchedLabels.join(', ') || 'calming language'} and covered every script checkpoint before closing.`
   }
 
   if (result.reduction > 0) {
-    return `ResolveLab coaching: Good progress, but the customer is not fully resolved until every script checkpoint is covered. Next, add: ${missingCheckpoints.join(' ')}`
+    return `Scenario coaching: Good progress, but the customer is not fully resolved until every script checkpoint is covered. Next, add: ${missingCheckpoints.join(' ')}`
   }
 
-  return `ResolveLab coaching: Try again with the full call flow. ${missingCheckpoints.join(' ')}`
+  return `Scenario coaching: Try again with the full call flow. ${missingCheckpoints.join(' ')}`
 }
 
 function buildCustomerReply(scenario, result, didResolve, nextDisposition, requestedInfo) {
@@ -422,7 +433,7 @@ export default function DeescalationGame() {
       <section className="deescalation-brief">
         <div>
           <p className="eyebrow">Call Center Practice</p>
-          <h2>ResolveLab</h2>
+          <h2>Scenario</h2>
           <p>
             Type a response that validates the customer, takes ownership, clarifies the
             FirstNet issue, and gives a next step. Better language lowers the customer&apos;s
@@ -456,7 +467,12 @@ export default function DeescalationGame() {
 
         <div className={`customer-panel ${disposition.className}`}>
           <div className="customer-header">
-            <img className="customer-face" src={customerFace} alt={`${scenario.name} customer portrait`} />
+            <img
+              key={scenario.name}
+              className="customer-face"
+              src={scenario.portrait}
+              alt={`${scenario.name} customer portrait`}
+            />
             <div>
               <p className="eyebrow">Customer</p>
               <h3>{scenario.name}</h3>
@@ -477,7 +493,7 @@ export default function DeescalationGame() {
 
           <article className="customer-context">
             <h4>Simulation note</h4>
-            <p>Verification and account details in ResolveLab are fictional practice data only.</p>
+            <p>Verification and account details in Scenario are fictional practice data only.</p>
           </article>
 
           <div className="calm-meter" aria-label={`Customer disposition: ${disposition.label}`}>
@@ -494,7 +510,7 @@ export default function DeescalationGame() {
       </section>
 
       <section className="response-panel">
-        <article className="conversation-log" aria-label="Live ResolveLab conversation">
+        <article className="conversation-log" aria-label="Live Scenario conversation">
           <div className="conversation-log-header">
             <div>
               <p className="eyebrow">Live Interaction</p>
@@ -589,13 +605,13 @@ export default function DeescalationGame() {
       </section>
 
       {advicePopup && (
-        <div className="coach-advice-popover" role="dialog" aria-live="polite" aria-label="ResolveLab coaching">
+        <div className="coach-advice-popover" role="dialog" aria-live="polite" aria-label="Scenario coaching">
           <button className="coach-popover-close" type="button" onClick={closeAdvice} aria-label="Close advice">
             ×
           </button>
           <img className="coach-popover-avatar" src={callCoach} alt="Professional call coach" />
           <div>
-            <p className="eyebrow">ResolveLab Assist</p>
+            <p className="eyebrow">Scenario Assist</p>
             <h3>{advicePopup.didResolve ? 'Customer stabilized.' : 'Quick coaching note.'}</h3>
             <p>{advicePopup.advice}</p>
           </div>

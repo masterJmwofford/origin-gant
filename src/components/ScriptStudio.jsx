@@ -29,7 +29,7 @@ const sourceMeta = {
     className: 'source-sso',
   },
   resolveLab: {
-    label: 'ResolveLab',
+    label: 'Scenario',
     className: 'source-resolvelab',
   },
 }
@@ -150,7 +150,7 @@ export default function ScriptStudio({ billingGuide, accountRoadmap, selfService
     <div className="script-studio">
       <section className="script-generated-layout" aria-label="Generated customer script">
         <aside className="script-studio-center">
-          <img className="script-specialist-avatar" src={scriptSpecialist} alt="Professional script specialist" />
+          <img className="script-specialist-avatar" src={scriptSpecialist} alt="Arab woman script specialist" />
           <div>
             <p className="eyebrow">Script Studio</p>
             <h3>Collaborative Script</h3>

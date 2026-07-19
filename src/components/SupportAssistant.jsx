@@ -35,7 +35,7 @@ const routingRules = [
     tab: 'deescalation',
     keywords: ['resolvelab', 'resolve', 'deescalation', 'de-escalation', 'calm', 'angry', 'customer', 'call', 'center'],
     reply:
-      'I opened ResolveLab. Help the customer stabilize with empathy, ownership, and a clear next step.',
+      'I opened Scenario. Help the customer stabilize with empathy, ownership, and a clear next step.',
   },
 ]
 
@@ -50,7 +50,7 @@ function findRoute(message) {
 export default function SupportAssistant({ activeTab, navItems, onNavigate }) {
   const [message, setMessage] = useState('')
   const [assistantReply, setAssistantReply] = useState(
-    'Ask me where to study next. I can open Billing, Eligibility, Index Cards, SSO Options, MESA Breaker, or ResolveLab.',
+    'Ask me where to study next. I can open Billing, Eligibility, Index Cards, SSO Options, MESA Breaker, or Scenario.',
   )
 
   function submitMessage(event) {
@@ -64,7 +64,7 @@ export default function SupportAssistant({ activeTab, navItems, onNavigate }) {
 
     if (!route) {
       setAssistantReply(
-        'I can route you to Billing, Eligibility, Index Cards, SSO Options, MESA Breaker, or ResolveLab. Try asking for one of those sections.',
+        'I can route you to Billing, Eligibility, Index Cards, SSO Options, MESA Breaker, or Scenario. Try asking for one of those sections.',
       )
       setMessage('')
       return
@@ -91,7 +91,7 @@ export default function SupportAssistant({ activeTab, navItems, onNavigate }) {
           type="text"
           value={message}
           onChange={(event) => setMessage(event.target.value)}
-          placeholder="Try: show me billing, ResolveLab, MESA breaker..."
+          placeholder="Try: show me billing, Scenario, MESA breaker..."
           aria-label="Ask the support guide where to navigate"
         />
         <button type="submit">Go</button>

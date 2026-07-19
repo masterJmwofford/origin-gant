@@ -113,7 +113,7 @@ const escalationWords = ['calm down', 'policy', 'wrong', 'obviously', 'just', 'y
 const customerScenarios = [
   {
     name: 'Mara',
-    role: 'Subscriber Paid firefighter',
+    role: 'Firefighter first responder',
     portrait: customerMara,
     concern:
       'Mara says her FirstNet bill looks higher than expected and she is angry because she thought AutoPay and paperless billing were already included.',
@@ -127,7 +127,7 @@ const customerScenarios = [
   },
   {
     name: 'Andre',
-    role: 'ER nurse',
+    role: 'Emergency department nurse first responder',
     portrait: customerAndre,
     concern:
       'Andre wants FirstNet and Family, but his spouse thinks every family line will get FirstNet priority access.',
@@ -141,7 +141,7 @@ const customerScenarios = [
   },
   {
     name: 'Jules',
-    role: 'Agency administrator',
+    role: 'EMS captain and agency administrator',
     portrait: customerJules,
     concern:
       'Jules is upset because they do not know whether a department account should use Subscriber Paid or Agency Paid setup.',
@@ -149,13 +149,13 @@ const customerScenarios = [
       'Useful facts: Subscriber Paid is individual-paid service; agency plans are for public safety organizations providing service to employees or personnel.',
     dummyInfo: {
       verification: 'Dummy verification: agency contact email admin@example.test, department code 7321, callback ending 9055.',
-      account: 'Dummy account info: Public safety agency account discussion, 18 potential employee lines, deciding between individual-paid and agency-paid setup.',
+      account: 'Dummy account info: EMS agency account discussion, 18 potential responder lines, deciding between individual-paid and agency-paid setup.',
     },
     targetSkills: ['empathy', 'ownership', 'clarify', 'reassure'],
   },
   {
     name: 'Priya',
-    role: 'New FirstNet phone user',
+    role: 'Paramedic first responder',
     portrait: customerPriya,
     concern:
       'Priya is frustrated because her compatible phone needs eSIM activation and she does not know where to start.',
@@ -163,13 +163,13 @@ const customerScenarios = [
       'Useful facts: FirstNet Help has Activate eSIM resources, including device-specific activation tutorials.',
     dummyInfo: {
       verification: 'Dummy verification: ZIP 30309, callback ending 7724, security word "Badge".',
-      account: 'Dummy account info: New FirstNet phone user, compatible device, eSIM activation not completed yet, needs activation steps.',
+      account: 'Dummy account info: New FirstNet paramedic user, compatible device, eSIM activation not completed yet, needs activation steps.',
     },
     targetSkills: ['empathy', 'ownership', 'reassure', 'close'],
   },
   {
     name: 'Cole',
-    role: 'Field supervisor',
+    role: 'Search-and-rescue field supervisor',
     portrait: customerCole,
     concern:
       'Cole is worried because personnel in the field need support and a device diagnostic path during an incident.',
@@ -177,13 +177,13 @@ const customerScenarios = [
       'Useful facts: FirstNet Assist provides dedicated care, live chat text, one-button voice contact, device diagnostics, and uplift workflows.',
     dummyInfo: {
       verification: 'Dummy verification: supervisor ID FS-204, callback ending 6630, region code North.',
-      account: 'Dummy account info: Field supervisor, agency-supported team, multiple active devices, needs FirstNet Assist and device diagnostic guidance.',
+      account: 'Dummy account info: Search-and-rescue field supervisor, agency-supported team, multiple active devices, needs FirstNet Assist and device diagnostic guidance.',
     },
     targetSkills: ['empathy', 'clarify', 'reassure', 'close'],
   },
   {
     name: 'Sam',
-    role: 'Volunteer responder',
+    role: 'Volunteer search-and-rescue responder',
     portrait: customerSam,
     concern:
       'Sam says eligibility feels confusing and does not know whether to trust a job title alone.',

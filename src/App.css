@@ -14,7 +14,6 @@ body {
   min-height: 100vh;
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(245, 247, 251, 0.9)),
-    repeating-linear-gradient(135deg, rgba(23, 32, 51, 0.035) 0 1px, transparent 1px 18px),
     #f5f7fb;
   color: #172033;
 }
@@ -148,8 +147,7 @@ button {
   content: "";
   background:
     linear-gradient(110deg, color-mix(in srgb, var(--theme) 11%, transparent), transparent 36%),
-    linear-gradient(250deg, color-mix(in srgb, var(--theme-dark) 10%, transparent), transparent 42%),
-    repeating-linear-gradient(90deg, transparent 0 38px, color-mix(in srgb, var(--theme) 4%, transparent) 38px 39px);
+    linear-gradient(250deg, color-mix(in srgb, var(--theme-dark) 10%, transparent), transparent 42%);
   pointer-events: none;
 }
 
@@ -409,7 +407,7 @@ button {
   height: 54px;
   content: "";
   background:
-    repeating-linear-gradient(135deg, color-mix(in srgb, var(--nav-theme) 18%, transparent) 0 8px, transparent 8px 16px);
+    radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--nav-theme) 20%, transparent), transparent 68%);
   transform: rotate(-12deg);
   opacity: 0.5;
   pointer-events: none;
@@ -451,7 +449,7 @@ button {
   background:
     radial-gradient(circle at 24% 74%, rgba(255, 151, 72, 0.48) 0 10px, transparent 11px),
     radial-gradient(circle at 58% 72%, rgba(255, 220, 130, 0.38) 0 8px, transparent 9px),
-    repeating-linear-gradient(135deg, color-mix(in srgb, var(--nav-theme) 20%, transparent) 0 8px, transparent 8px 16px);
+    linear-gradient(135deg, color-mix(in srgb, var(--nav-theme) 14%, transparent), transparent 70%);
   opacity: 0.78;
 }
 
@@ -708,7 +706,7 @@ button {
   height: 82px;
   content: "";
   background:
-    repeating-linear-gradient(135deg, color-mix(in srgb, var(--theme) 12%, transparent) 0 7px, transparent 7px 14px);
+    radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--theme) 12%, transparent), transparent 68%);
   transform: rotate(-8deg);
   pointer-events: none;
 }
@@ -1421,8 +1419,8 @@ button {
   inset: 0;
   content: "";
   background:
-    linear-gradient(90deg, transparent 0 49%, color-mix(in srgb, var(--theme) 5%, transparent) 49% 51%, transparent 51%),
-    repeating-linear-gradient(0deg, transparent 0 26px, color-mix(in srgb, var(--theme) 5%, transparent) 26px 27px);
+    radial-gradient(circle at 50% 18%, color-mix(in srgb, var(--theme) 8%, transparent), transparent 42%),
+    linear-gradient(180deg, transparent, color-mix(in srgb, var(--theme) 4%, transparent));
   pointer-events: none;
 }
 
@@ -1775,7 +1773,7 @@ button {
   height: 130px;
   content: "";
   background:
-    repeating-linear-gradient(135deg, color-mix(in srgb, var(--theme) 9%, transparent) 0 10px, transparent 10px 20px);
+    radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--theme) 10%, transparent), transparent 68%);
   transform: rotate(8deg);
   pointer-events: none;
 }
@@ -3099,7 +3097,6 @@ button {
   border-radius: 8px;
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.58), rgba(223, 243, 248, 0.72)),
-    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.18) 0 18px, transparent 18px 38px),
     #dff3f8;
 }
 
@@ -5565,10 +5562,9 @@ button {
 
 body {
   background:
-    linear-gradient(180deg, rgba(7, 22, 47, 0.08), rgba(255, 255, 255, 0.88) 34%),
-    linear-gradient(135deg, rgba(215, 169, 40, 0.12), transparent 32%),
-    repeating-linear-gradient(135deg, rgba(7, 22, 47, 0.045) 0 1px, transparent 1px 22px),
-    #f4f7fb;
+    radial-gradient(circle at 18% 0%, rgba(215, 169, 40, 0.18), transparent 34%),
+    radial-gradient(circle at 90% 8%, rgba(7, 22, 47, 0.12), transparent 30%),
+    linear-gradient(180deg, #f8fafc 0%, #eef3f8 48%, #f8fafc 100%);
   color: var(--lyceum-ink);
 }
 
@@ -5595,9 +5591,9 @@ body {
 
 .page::before {
   background:
-    linear-gradient(110deg, rgba(7, 22, 47, 0.12), transparent 38%),
-    linear-gradient(250deg, rgba(215, 169, 40, 0.12), transparent 44%),
-    repeating-linear-gradient(90deg, transparent 0 42px, rgba(7, 22, 47, 0.035) 42px 43px);
+    radial-gradient(circle at 12% 12%, rgba(215, 169, 40, 0.12), transparent 30%),
+    radial-gradient(circle at 88% 18%, rgba(7, 22, 47, 0.1), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.48), rgba(255, 255, 255, 0));
 }
 
 .hero {
@@ -5708,7 +5704,7 @@ body {
 
 .nav-tab::after {
   background:
-    repeating-linear-gradient(135deg, rgba(215, 169, 40, 0.14) 0 8px, transparent 8px 16px);
+    radial-gradient(circle at 58% 48%, rgba(215, 169, 40, 0.22), transparent 62%);
 }
 
 .nav-tab:hover,
@@ -5780,7 +5776,7 @@ body {
 .roadmap-tree-panel::before,
 .roadmap-travel::before {
   background:
-    repeating-linear-gradient(135deg, rgba(215, 169, 40, 0.11) 0 10px, transparent 10px 20px);
+    linear-gradient(135deg, rgba(215, 169, 40, 0.1), transparent 72%);
 }
 
 .section-heading h2,
@@ -5922,8 +5918,8 @@ textarea:focus,
 
 .script-studio-center::before {
   background:
-    linear-gradient(90deg, rgba(255, 246, 216, 0.95), rgba(255, 255, 255, 0.82)),
-    repeating-linear-gradient(90deg, rgba(7, 22, 47, 0.035) 0 1px, transparent 1px 18px);
+    radial-gradient(circle at 8% 50%, rgba(215, 169, 40, 0.2), transparent 34%),
+    linear-gradient(90deg, rgba(255, 246, 216, 0.95), rgba(255, 255, 255, 0.82));
 }
 
 .coach-avatar,

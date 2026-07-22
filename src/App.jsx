@@ -189,6 +189,162 @@ const eagleEyeSummaries = {
   },
 }
 
+const tutorialSteps = [
+  {
+    tab: 'billing',
+    spotlight: 'nav',
+    title: 'Navigation: Billing',
+    component: 'Billing tab',
+    summary: 'The active nav button controls which training workspace is visible.',
+    features: ['Billing opens the plan/payment guide.', 'The app keeps quizzes near the related study content.', 'The tab color updates the page theme.'],
+    demo: 'Use Next to move from the Billing nav target into the Billing content area.',
+  },
+  {
+    tab: 'billing',
+    spotlight: 'content',
+    title: 'Billing Guide',
+    component: 'Billing, Plan, and Payment Details',
+    summary: 'This component presents billing and plan guidance already stored in the app data.',
+    features: ['Review plan and billing sections first.', 'Use Eagle Eye separately for plain-language summaries.', 'Use the paired quiz after reading the billing guide.'],
+    demo: 'Open the visible guide sections, then scroll to the billing quiz underneath.',
+  },
+  {
+    tab: 'eligibility',
+    spotlight: 'nav',
+    title: 'Navigation: Eligibility',
+    component: 'Eligibility tab',
+    summary: 'Eligibility groups account type, plan notes, activation notes, and the Subscriber Paid vs Agency Paid comparison.',
+    features: ['Subscriber Paid and Agency Paid are separated.', 'FirstNet and Family is treated as its own path.', 'Activation notes stay with eligibility and plans.'],
+    demo: 'Next opens the actual Eligibility workspace so you can review the notes.',
+  },
+  {
+    tab: 'eligibility',
+    spotlight: 'content',
+    title: 'Eligibility Notes',
+    component: 'Eligibility, Plans, and Activation Notes',
+    summary: 'This section is for reading account and plan concepts before practicing with scenarios.',
+    features: ['Expandable notes support quick review.', 'Account type language is kept visible.', 'The paired roadmap helps compare ownership and responsibility.'],
+    demo: 'Read the notes, then use the Subscriber Paid vs Agency Paid activity below.',
+  },
+  {
+    tab: 'index-cards',
+    spotlight: 'content',
+    title: 'Index Card Workflow',
+    component: 'Search, flashcards, and quiz',
+    summary: 'Index Cards combine filtering, flashcards, and recall testing.',
+    features: ['Search narrows the card list.', 'Flashcards support term-by-term review.', 'The quiz uses the currently visible study set when search filters are active.'],
+    demo: 'Try searching a term, flip cards, then answer quiz questions below the card grid.',
+  },
+  {
+    tab: 'sso',
+    spotlight: 'content',
+    title: 'SSO Matching Activity',
+    component: 'SSO Options matching game',
+    summary: 'This game teaches which self-service path fits a customer need.',
+    features: ['Scenarios describe the customer need.', 'Options represent support paths already used in the app.', 'Matching creates quick recall for live-call routing.'],
+    demo: 'Read the customer prompt and match it to the correct self-service option.',
+  },
+  {
+    tab: 'questions',
+    spotlight: 'content',
+    title: 'QA Essentials Categories',
+    component: 'Essential customer questions',
+    summary: 'QA Essentials gives call-path questions by customer need.',
+    features: ['Category buttons change the question set.', 'Opening questions help identify account path.', 'Verification notes prevent account-specific guessing.'],
+    demo: 'Click a need category such as Devices, Activations, or Coverage / Travel and use the displayed questions as a call guide.',
+  },
+  {
+    tab: 'roadmap',
+    spotlight: 'nav',
+    title: 'Navigation: Roadmap',
+    component: 'Roadmap tab',
+    summary: 'Roadmap is the branching call path map for managers and agents.',
+    features: ['The tab is visually emphasized as a key training area.', 'The section starts with call-in triage.', 'The tree separates customer status, account type, verification, and issue path.'],
+    demo: 'Next focuses the Roadmap component itself.',
+  },
+  {
+    tab: 'roadmap',
+    spotlight: 'content',
+    title: 'Roadmap Tree',
+    component: 'Branching call path tree',
+    summary: 'The tree shows how a call progresses from call-in to specific customer issue.',
+    features: ['Click a node to open detailed questions and steps.', 'Use the four verification cards before account-specific guidance.', 'Coverage/travel appears as an issue path tied to account type.'],
+    demo: 'Click any node in the tree to open the detailed modal for that point in the call.',
+  },
+  {
+    tab: 'roadmap',
+    spotlight: 'content',
+    title: 'Roadmap Travel Mode',
+    component: 'Progressive Coaching',
+    summary: 'Travel mode turns the Roadmap into a step-by-step guided path.',
+    features: ['Travel Path starts the guided journey.', 'Each choice personalizes the next branch.', 'Progress buttons let users revisit earlier decisions.'],
+    demo: 'Click Travel Path, answer each progressive choice, and watch the call journey narrow.',
+  },
+  {
+    tab: 'heatmap',
+    spotlight: 'content',
+    title: 'HeatMap Coverage Concepts',
+    component: 'Coverage and travel guide',
+    summary: 'HeatMap organizes coverage and travel learning concepts already present in the app.',
+    features: ['Coverage and travel concepts are separated by buttons/lists.', 'International Day Pass is treated as verify-before-quote.', 'This is not presented as a live address-level coverage checker.'],
+    demo: 'Switch between layers to compare coverage, travel, 5G, and plan-specific concepts.',
+  },
+  {
+    tab: 'device-upgrades',
+    spotlight: 'content',
+    title: 'D-Vice Academy',
+    component: 'Device upgrade learning aid',
+    summary: 'D-Vice teaches terminology and requirements before the card game.',
+    features: ['Academy carousel explains device terminology.', 'Dealer briefing frames the upgrade scenario.', 'Cards train matching requirements to device offers.'],
+    demo: 'Move through the academy carousel first, then play one requirement card to the dealer table.',
+  },
+  {
+    tab: 'mesa-breaker',
+    spotlight: 'content',
+    title: 'MESA Breaker',
+    component: 'Practice game',
+    summary: 'MESA Breaker is a short engagement game separate from customer policy guidance.',
+    features: ['Move the launcher.', 'Fire CORE shots.', 'Clear the MESA bricks to reset the round.'],
+    demo: 'Use the game controls to clear the board when you need an energy break between study sections.',
+  },
+  {
+    tab: 'deescalation',
+    spotlight: 'content',
+    title: 'Scenario Simulator',
+    component: 'Customer interaction practice',
+    summary: 'Scenario lets the user type a response and receive a customer reply after scanning.',
+    features: ['Each round uses a different first-responder profile.', 'The customer reply reacts to the response content.', 'The simulator checks de-escalation skills and script checkpoints.'],
+    demo: 'Type a response that acknowledges, verifies, answers the direct concern, and gives a next step.',
+  },
+  {
+    tab: 'script-studio',
+    spotlight: 'content',
+    title: 'Script Studio',
+    component: 'Editable customer script builder',
+    summary: 'Script Studio organizes script sections for live customer interaction.',
+    features: ['Script parts are separated into editable blocks.', 'Source colors show where each snippet came from.', 'The combined script can be refined for real-time calls.'],
+    demo: 'Edit a section, then review the combined script panel for flow.',
+  },
+  {
+    tab: 'billing',
+    spotlight: 'eagle',
+    title: 'Eagle Eye Toggle',
+    component: 'Plain-language summary control',
+    summary: 'Eagle Eye is the app-wide simplifier for high-value information.',
+    features: ['Toggle it on to show plain-language highlights.', 'The summary changes by active tab.', 'It is useful when users need the gist quickly.'],
+    demo: 'Toggle Eagle Eye while this tutorial is open to see how the current tab summary changes.',
+  },
+  {
+    tab: 'billing',
+    spotlight: 'sources',
+    title: 'Source Area',
+    component: 'Sources section',
+    summary: 'The Sources area keeps verification links visible at the bottom of the application.',
+    features: ['Use it to verify claims outside the training flow.', 'The app content should be treated as study guidance.', 'Account-specific answers still require official tools.'],
+    demo: 'Close the tutorial and scroll to Sources when you need to verify the training material.',
+  },
+]
+
 function matchesSearch(item, query) {
   return JSON.stringify(item).toLowerCase().includes(query.toLowerCase())
 }
@@ -199,9 +355,12 @@ function App() {
   const [navCompact, setNavCompact] = useState(false)
   const [eagleEyeEnabled, setEagleEyeEnabled] = useState(false)
   const [siteViews, setSiteViews] = useState(0)
+  const [tutorialOpen, setTutorialOpen] = useState(false)
+  const [tutorialStep, setTutorialStep] = useState(0)
   const navAnchorRef = useRef(null)
   const viewTrackedRef = useRef(false)
   const activeNavItem = navItems.find((item) => item.id === activeTab)
+  const currentTutorial = tutorialSteps[tutorialStep]
 
   const filteredTerms = terms.filter((term) => matchesSearch(term, query))
   const filteredPlans = studyNotes.filter((plan) => matchesSearch(plan, query))
@@ -274,8 +433,53 @@ function App() {
     }
   }, [])
 
+  function showTutorialStep(nextStep) {
+    const boundedStep = Math.min(Math.max(nextStep, 0), tutorialSteps.length - 1)
+    const step = tutorialSteps[boundedStep]
+
+    setTutorialStep(boundedStep)
+    setActiveTab(step.tab)
+    window.setTimeout(() => {
+      const targetSelector =
+        {
+          nav: '.study-nav',
+          content: '.tab-shell',
+          eagle: '.eagle-eye-toggle',
+          sources: '.source-section',
+        }[step.spotlight] ?? '.tab-shell'
+
+      document.querySelector(targetSelector)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }, 80)
+  }
+
+  function startTutorial() {
+    setTutorialOpen(true)
+    showTutorialStep(0)
+  }
+
+  function closeTutorial() {
+    setTutorialOpen(false)
+  }
+
+  function goToPreviousTutorialStep() {
+    showTutorialStep(tutorialStep - 1)
+  }
+
+  function goToNextTutorialStep() {
+    if (tutorialStep === tutorialSteps.length - 1) {
+      closeTutorial()
+      return
+    }
+
+    showTutorialStep(tutorialStep + 1)
+  }
+
   return (
-    <main className={`page theme-${activeNavItem.theme} ${eagleEyeEnabled ? 'eagle-eye-on' : ''}`}>
+    <main
+      className={`page theme-${activeNavItem.theme} ${eagleEyeEnabled ? 'eagle-eye-on' : ''} ${
+        tutorialOpen ? 'tutorial-running' : ''
+      } ${tutorialOpen ? `tutorial-spotlight-${currentTutorial.spotlight}` : ''}`}
+    >
       <section className="hero">
         <div>
           <p className="eyebrow">FirstNet professional learning guide</p>
@@ -290,6 +494,10 @@ function App() {
           <img src={professionalHero} alt="Professional call center training team" />
         </div>
       </section>
+
+      <button className="tutorial-launch" type="button" onClick={startTutorial}>
+        Start tutorial
+      </button>
 
       <DashBoard stats={stats} />
 
@@ -485,6 +693,64 @@ function App() {
           ))}
         </ul>
       </section>
+
+      {tutorialOpen && (
+        <aside className="tutorial-overlay" role="dialog" aria-modal="true" aria-label="Application tutorial">
+          <div className="tutorial-backdrop" />
+          <section className="tutorial-card">
+            <div className="tutorial-card-header">
+              <div>
+                <p className="eyebrow">
+                  Tutorial {tutorialStep + 1} of {tutorialSteps.length}
+                </p>
+                <h2>{currentTutorial.title}</h2>
+              </div>
+              <button type="button" onClick={closeTutorial} aria-label="Close tutorial">
+                ×
+              </button>
+            </div>
+
+            <div className="tutorial-progress" aria-hidden="true">
+              {tutorialSteps.map((step, index) => (
+                <span className={index <= tutorialStep ? 'active' : ''} key={step.title} />
+              ))}
+            </div>
+
+            <article className="tutorial-demo-card">
+              <span>{currentTutorial.component}</span>
+              <p>{currentTutorial.summary}</p>
+              <ul>
+                {currentTutorial.features.map((feature) => (
+                  <li key={feature}>{feature}</li>
+                ))}
+              </ul>
+              <strong>{currentTutorial.demo}</strong>
+            </article>
+
+            <div className="tutorial-step-tabs" aria-label="Jump to tutorial step">
+              {tutorialSteps.map((step, index) => (
+                <button
+                  className={index === tutorialStep ? 'active' : ''}
+                  key={step.title}
+                  type="button"
+                  onClick={() => showTutorialStep(index)}
+                >
+                  {index + 1}
+                </button>
+              ))}
+            </div>
+
+            <div className="tutorial-actions">
+              <button type="button" onClick={goToPreviousTutorialStep} disabled={tutorialStep === 0}>
+                Previous
+              </button>
+              <button className="primary" type="button" onClick={goToNextTutorialStep}>
+                {tutorialStep === tutorialSteps.length - 1 ? 'Finish' : 'Next'}
+              </button>
+            </div>
+          </section>
+        </aside>
+      )}
     </main>
   )
 }

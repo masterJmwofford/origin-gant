@@ -600,20 +600,20 @@ function App() {
         {activeTab === 'eligibility' && (
           <div className="tab-panel">
             {eagleEyeEnabled && <EagleEyeSummary summary={eagleEyeSummaries.eligibility} />}
-            <section className="study-section" id="notes">
-              <div className="section-heading">
-                <p className="eyebrow">Read</p>
-                <h2>Eligibility, Plans, and Activation Notes</h2>
-              </div>
-              <Plans eagleEye={eagleEyeEnabled} plans={filteredPlans} />
-            </section>
-
-            <section className="study-section paired-practice" id="account-roadmap">
+            <section className="study-section" id="account-roadmap">
               <div className="section-heading">
                 <p className="eyebrow">Scenario Roadmap</p>
                 <h2>Subscriber Paid vs. Agency Paid Accounts</h2>
               </div>
               <AccountRoadmap eagleEye={eagleEyeEnabled} roadmap={accountRoadmap} />
+            </section>
+
+            <section className="study-section paired-practice" id="notes">
+              <div className="section-heading">
+                <p className="eyebrow">Read</p>
+                <h2>Eligibility, Plans, and Activation Notes</h2>
+              </div>
+              <Plans eagleEye={eagleEyeEnabled} plans={filteredPlans} />
             </section>
           </div>
         )}

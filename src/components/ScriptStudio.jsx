@@ -68,43 +68,43 @@ function buildGeneratedScript({ billingGuide, accountRoadmap, selfServiceGame, s
       source: 'resolveLab',
       helper: 'Start the live interaction with acknowledgement, ownership, and permission to ask questions.',
       text:
-        'Thank you for calling in today. I can help review your FirstNet options, explain what may fit your account, and make sure you have a clear next step before we finish. Before I make a recommendation, I will ask a few quick questions so I do not point you toward the wrong plan or support path.',
+        'Thank you for calling in today. I can help with that. Before I recommend a plan, billing path, device step, or support option, I want to make sure I understand what you are trying to accomplish and confirm the right account path. That way I can give you the clearest next step instead of guessing.',
     },
     Verification: {
       title: 'Verification',
       source: 'sso',
       helper: 'Verify the customer and the service path before discussing account-specific information.',
-      text: `First, I want to verify the account path we should use. If we need bill or account details, ${billingOption.detail} If you need live FirstNet care, ${assistOption.detail} I will only discuss account-specific details after the correct account access or support path is confirmed.`,
+      text: `To get started, I would verify who I am speaking with, the line or service involved, and whether this is an individual FirstNet account, agency-managed service, or a family/commercial line connected to FirstNet and Family. If we need bill or account details, ${billingOption.detail} If the issue needs live FirstNet care, ${assistOption.detail} Once the correct access path is confirmed, I can safely discuss the account-specific details.`,
     },
     Eligibility: {
       title: 'Eligibility',
       source: 'eligibility',
       helper: 'Confirm Subscriber Paid, Agency Paid, or family-line context without guessing eligibility.',
-      text: `Next, I want to confirm eligibility and account type. ${accountRoadmap.buckets.subscriber.facts[0]} ${accountRoadmap.buckets.agency.facts[0]} ${accountRoadmap.buckets.shared.facts[5]} If this involves FirstNet and Family, ${familyAccess.details[0]} ${familyAccess.details[2]} ${familyAccess.details[3]}`,
+      text: `Next, I would confirm which eligibility path applies. ${accountRoadmap.buckets.subscriber.facts[0]} ${accountRoadmap.buckets.agency.facts[0]} ${accountRoadmap.buckets.shared.facts[5]} If family lines are part of the call, I would explain the boundary clearly: ${familyAccess.details[0]} ${familyAccess.details[2]} ${familyAccess.details[3]}`,
     },
     AccountInfo: {
       title: 'Account Info',
       source: 'billing',
       helper: 'Gather the customer context that determines which recommendation makes sense.',
-      text: `To narrow this down, I would ask whether you are reviewing a phone plan, adding family lines, activating a device, or trying to understand a bill. ${joinDetails(deviceRule)} ${joinDetails(activationNote)} If family lines are part of the conversation, ${familyAccess.details[1]} ${familyAccess.details[3]}`,
+      text: `After the account path is clear, I would narrow the need: are we reviewing a phone plan, adding family lines, activating a device, upgrading a device, checking eligibility, or explaining a bill? If a device is involved, ${joinDetails(deviceRule)} ${joinDetails(activationNote)} If family lines are part of the conversation, I would also confirm that ${familyAccess.details[1]} ${familyAccess.details[3]}`,
     },
     BillingSuggestions: {
       title: 'Billing Suggestions',
       source: 'billing',
       helper: 'Offer grounded billing suggestions based on plan and account context.',
-      text: `For billing expectations, ${joinDetails(billingPriceRule)} If the customer wants a lower entry point, ${valuePlan.name} is listed at ${valuePlan.oneLinePrice} and includes ${valuePlan.headline.toLowerCase()} If they ask about hotspot, ${extraPlan.name} is listed at ${extraPlan.oneLinePrice} and includes ${extraPlan.headline.toLowerCase()} If coverage or travel benefits matter, ${premiumPlan.name} adds ${premiumPlan.features[2].toLowerCase()} and ${elitePlan.name} adds ${elitePlan.features[3].toLowerCase()}`,
+      text: `Once I know what matters most, I would connect the recommendation to that need. For billing expectations, ${joinDetails(billingPriceRule)} If the customer wants a lower entry point, ${valuePlan.name} is listed at ${valuePlan.oneLinePrice} and includes ${valuePlan.headline.toLowerCase()} If hotspot is important, ${extraPlan.name} is listed at ${extraPlan.oneLinePrice} and includes ${extraPlan.headline.toLowerCase()} If coverage or travel benefits matter, ${premiumPlan.name} adds ${premiumPlan.features[2].toLowerCase()} and ${elitePlan.name} adds ${elitePlan.features[3].toLowerCase()}`,
     },
     SuggestiveTalkingPoints: {
       title: 'Suggestive Talking Points',
       source: 'cards',
       helper: 'Use these as optional, customer-specific talking points after the need is clear.',
-      text: `If reliability is the concern, explain that ${priorityDefinition} If public-safety network design matters, explain that ${coreDefinition} If the customer wants family savings, ${joinDetails(familyDiscounts)} If the customer needs one account experience, explain that FirstNet and Family can help organize eligible FirstNet service with AT&T family lines, while family members use AT&T commercial network service rather than the FirstNet network.`,
+      text: `From there, I would add only the talking points that match the customer’s concern. If reliability is the concern, I would explain that ${priorityDefinition} If public-safety network design matters, I would explain that ${coreDefinition} If family savings matter, ${joinDetails(familyDiscounts)} If the customer wants one account experience, I would explain that FirstNet and Family can help organize eligible FirstNet service with AT&T family lines, while family members use AT&T commercial network service rather than the FirstNet network.`,
     },
     NextStepAndClose: {
       title: 'Next Step and Close',
       source: 'sso',
       helper: 'Close with the action path, summary, and agreement check.',
-      text: `For the next step, ${billPayRule.details.join(' ')} I would summarize: we verified the account path, checked eligibility, reviewed account needs, and matched the billing or plan suggestion to what the customer asked for. Then I would ask: does this option sound like it fits what you need today, or should we compare one more plan before you decide?`,
+      text: `Before closing, I would summarize what we confirmed: the account path, eligibility context, customer need, and the plan, billing, device, or support recommendation that best matches the call. If the next step is billing or account access, ${billPayRule.details.join(' ')} Then I would ask: does this plan or support path sound like it fits what you need today, or would you like to compare one more option before we wrap up?`,
     },
   }
 }

@@ -11,6 +11,7 @@ const LASER_WIDTH = 12
 const BRICK_DRIFT_LIMIT = 46
 const BRICK_DRIFT_SPEED = 2
 const BRICK_BOB_AMOUNT = 10
+const MAX_DIFFICULTY_LEVEL = 8
 
 const letterMap = {
   M: ['10001', '11011', '10101', '10101', '10001', '10001', '10001'],
@@ -64,6 +65,21 @@ function createInitialGame(round = 1) {
   }
 }
 
+function getDifficulty(round) {
+  const level = Math.min(MAX_DIFFICULTY_LEVEL, round)
+  const speedBoost = level - 1
+
+  return {
+    level,
+    brickSpeed: BRICK_DRIFT_SPEED + speedBoost * 0.55,
+    bobAmount: BRICK_BOB_AMOUNT + speedBoost * 1.2,
+    bobRate: Math.max(6, 13 - speedBoost * 0.7),
+    laserSpeed: 16 + speedBoost * 0.8,
+    launcherStep: 36 + speedBoost * 1.5,
+    frameMs: Math.max(24, 45 - speedBoost * 2),
+  }
+}
+
 function laserHitsBrick(laser, brick, offsetX, offsetY) {
   const brickX = brick.x + offsetX
   const brickY = brick.y + offsetY
@@ -84,6 +100,7 @@ export default function MesaBreaker() {
     const total = createMesaBricks().length
     return Math.round(((total - game.bricks.length) / total) * 100)
   }, [game.bricks.length])
+  const difficulty = getDifficulty(game.round)
 
   useEffect(() => {
     function updateScale() {
@@ -114,7 +131,7 @@ export default function MesaBreaker() {
       ...current,
       launcherX: Math.min(
         GAME_WIDTH - LAUNCHER_WIDTH - 16,
-        Math.max(16, current.launcherX + direction * 36),
+        Math.max(16, current.launcherX + direction * getDifficulty(current.round).launcherStep),
       ),
     }))
   }
@@ -167,18 +184,19 @@ export default function MesaBreaker() {
       setGame((current) => {
         if (current.won) return current
 
+        const currentDifficulty = getDifficulty(current.round)
         const nextTick = current.tick + 1
         let nextDirection = current.brickDirection
-        let nextOffsetX = current.brickOffsetX + current.brickDirection * BRICK_DRIFT_SPEED
+        let nextOffsetX = current.brickOffsetX + current.brickDirection * currentDifficulty.brickSpeed
 
         if (Math.abs(nextOffsetX) >= BRICK_DRIFT_LIMIT) {
           nextDirection = current.brickDirection * -1
-          nextOffsetX = current.brickOffsetX + nextDirection * BRICK_DRIFT_SPEED
+          nextOffsetX = current.brickOffsetX + nextDirection * currentDifficulty.brickSpeed
         }
 
-        const nextOffsetY = Math.sin(nextTick / 13) * BRICK_BOB_AMOUNT
+        const nextOffsetY = Math.sin(nextTick / currentDifficulty.bobRate) * currentDifficulty.bobAmount
         const movedLasers = current.lasers
-          .map((laser) => ({ ...laser, y: laser.y - 16 }))
+          .map((laser) => ({ ...laser, y: laser.y - currentDifficulty.laserSpeed }))
           .filter((laser) => laser.y > -LASER_HEIGHT)
         const hitBrickIds = new Set()
         const usedLaserIds = new Set()
@@ -211,10 +229,10 @@ export default function MesaBreaker() {
           won,
         }
       })
-    }, 45)
+    }, difficulty.frameMs)
 
     return () => window.clearInterval(animation)
-  }, [])
+  }, [difficulty.frameMs])
 
   useEffect(() => {
     if (!game.won) return undefined
@@ -240,6 +258,8 @@ export default function MesaBreaker() {
         <div className="mesa-stats">
           <span>Score: {game.score}</span>
           <span>Round: {game.round}</span>
+          <span>Level: {difficulty.level}</span>
+          <span>Speed: {difficulty.brickSpeed.toFixed(1)}x</span>
           <span>Cleared: {progress}%</span>
         </div>
       </section>

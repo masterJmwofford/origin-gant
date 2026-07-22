@@ -15,7 +15,7 @@ function pickRandomIndex(length, currentIndex = -1) {
 export default function SelfServiceGame({ game }) {
   const [scenarioIndex, setScenarioIndex] = useState(() => pickRandomIndex(game.scenarios.length))
   const [selectedOptionId, setSelectedOptionId] = useState('')
-  const [draggedOptionId, setDraggedOptionId] = useState('')
+  const [previewOptionIndex, setPreviewOptionIndex] = useState(0)
   const [score, setScore] = useState(0)
   const [turns, setTurns] = useState(0)
   const scenario = game.scenarios[scenarioIndex]
@@ -27,6 +27,7 @@ export default function SelfServiceGame({ game }) {
     () => [...game.options].sort((a, b) => a.title.localeCompare(b.title)),
     [game.options],
   )
+  const previewOption = shuffledOptions[previewOptionIndex]
 
   function answer(optionId) {
     if (answered) return
@@ -41,16 +42,26 @@ export default function SelfServiceGame({ game }) {
 
   function nextScenario() {
     setSelectedOptionId('')
-    setDraggedOptionId('')
+    setPreviewOptionIndex(0)
     setScenarioIndex((index) => pickRandomIndex(game.scenarios.length, index))
   }
 
-  function dropOption(event) {
-    event.preventDefault()
+  function showPreviousOption() {
+    if (answered) return
 
-    if (draggedOptionId) {
-      answer(draggedOptionId)
-    }
+    setPreviewOptionIndex((index) => (index === 0 ? shuffledOptions.length - 1 : index - 1))
+  }
+
+  function showNextOption() {
+    if (answered) return
+
+    setPreviewOptionIndex((index) => (index === shuffledOptions.length - 1 ? 0 : index + 1))
+  }
+
+  function chooseOption(index) {
+    if (answered) return
+
+    setPreviewOptionIndex(index)
   }
 
   return (
@@ -74,18 +85,14 @@ export default function SelfServiceGame({ game }) {
             <p>{scenario.clue}</p>
           </article>
 
-          <div
-            className={`drop-zone ${answered ? 'answered' : ''}`}
-            onDragOver={(event) => event.preventDefault()}
-            onDrop={dropOption}
-          >
+          <div className={`drop-zone ${answered ? 'answered' : ''}`}>
             <strong>
-              {answered ? selectedOption.title : 'Drop the best self-service option here'}
+              {answered ? selectedOption.title : `Previewing: ${previewOption.title}`}
             </strong>
             <p>
               {answered
                 ? selectedOption.detail
-                : 'You can also click an option card below if drag-and-drop is awkward on your device.'}
+                : 'Toggle through the self-service options, compare the detail to the customer clue, then lock in the best match.'}
             </p>
           </div>
 
@@ -102,15 +109,36 @@ export default function SelfServiceGame({ game }) {
 
         <div className="sso-option-panel">
           <p className="eyebrow">Self-Service Options</p>
+          <article className="sso-option-preview">
+            <div className="sso-option-preview-top">
+              <button type="button" onClick={showPreviousOption} disabled={answered} aria-label="Show previous option">
+                Previous
+              </button>
+              <span>
+                {previewOptionIndex + 1} / {shuffledOptions.length}
+              </span>
+              <button type="button" onClick={showNextOption} disabled={answered} aria-label="Show next option">
+                Next
+              </button>
+            </div>
+            <div className="sso-option-preview-card">
+              <strong>{previewOption.title}</strong>
+              <p>{previewOption.detail}</p>
+            </div>
+            <button className="primary sso-lock-button" type="button" onClick={() => answer(previewOption.id)} disabled={answered}>
+              Lock in match
+            </button>
+          </article>
           <div className="sso-options">
-            {shuffledOptions.map((option) => (
+            {shuffledOptions.map((option, index) => (
               <button
-                className={`sso-option ${selectedOptionId === option.id ? 'selected' : ''}`}
-                draggable={!answered}
+                className={`sso-option ${
+                  previewOptionIndex === index || selectedOptionId === option.id ? 'selected' : ''
+                }`}
                 key={option.id}
                 type="button"
-                onClick={() => answer(option.id)}
-                onDragStart={() => setDraggedOptionId(option.id)}
+                onClick={() => chooseOption(index)}
+                disabled={answered}
               >
                 <strong>{option.title}</strong>
                 <span>{option.detail}</span>

@@ -587,6 +587,17 @@ export default function DeescalationGame() {
             </div>
           </div>
 
+          <div className="calm-meter" aria-label={`Customer disposition: ${disposition.label}`}>
+            {dispositionLevels.map((level, index) => (
+              <span
+                className={index <= calmLevel ? 'filled' : ''}
+                key={level.label}
+                title={level.label}
+              />
+            ))}
+          </div>
+          <p className="disposition-copy">{disposition.description}</p>
+
           <article className="customer-concern">
             <h4>Concern</h4>
             <p>{scenario.concern}</p>
@@ -601,17 +612,6 @@ export default function DeescalationGame() {
             <h4>Simulation note</h4>
             <p>Verification and account details in Scenario are fictional practice data only.</p>
           </article>
-
-          <div className="calm-meter" aria-label={`Customer disposition: ${disposition.label}`}>
-            {dispositionLevels.map((level, index) => (
-              <span
-                className={index <= calmLevel ? 'filled' : ''}
-                key={level.label}
-                title={level.label}
-              />
-            ))}
-          </div>
-          <p className="disposition-copy">{disposition.description}</p>
         </div>
       </section>
 

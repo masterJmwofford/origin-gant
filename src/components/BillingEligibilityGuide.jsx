@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import EagleHighlight from './EagleHighlight'
 import { getEagleHighlightScore } from '../utils/eagleHighlightScoring'
 
@@ -38,6 +39,23 @@ function BulletList({ items, eagleEye, compareWith = [] }) {
 }
 
 export default function BillingEligibilityGuide({ guide, eagleEye }) {
+  const [activePlanIndex, setActivePlanIndex] = useState(0)
+  const activePlan = guide.individualPlans[activePlanIndex]
+  const siblingPlans = guide.individualPlans.filter((_, planIndex) => planIndex !== activePlanIndex)
+  const siblingText = flattenText(siblingPlans)
+
+  function showPreviousPlan() {
+    setActivePlanIndex((currentIndex) =>
+      currentIndex === 0 ? guide.individualPlans.length - 1 : currentIndex - 1,
+    )
+  }
+
+  function showNextPlan() {
+    setActivePlanIndex((currentIndex) =>
+      currentIndex === guide.individualPlans.length - 1 ? 0 : currentIndex + 1,
+    )
+  }
+
   return (
     <div className="billing-guide">
       <div className="billing-guide-intro">
@@ -47,51 +65,67 @@ export default function BillingEligibilityGuide({ guide, eagleEye }) {
       </div>
 
       <section className="billing-panel">
-        <div className="section-heading compact">
-          <p className="eyebrow">Subscriber Paid</p>
-          <h3>Individual FirstNet Plan Matrix</h3>
+        <div className="plan-carousel-heading">
+          <div className="section-heading compact">
+            <p className="eyebrow">Subscriber Paid</p>
+            <h3>Individual FirstNet Plan Matrix</h3>
+          </div>
+          <div className="plan-carousel-controls" aria-label="Plan carousel controls">
+            <button type="button" onClick={showPreviousPlan} aria-label="Show previous individual plan">
+              Previous
+            </button>
+            <span>
+              {activePlanIndex + 1} / {guide.individualPlans.length}
+            </span>
+            <button type="button" onClick={showNextPlan} aria-label="Show next individual plan">
+              Next
+            </button>
+          </div>
         </div>
-        <div className="plan-table">
-          {guide.individualPlans.map((plan, index) => {
-            const siblingPlans = guide.individualPlans.filter((_, planIndex) => planIndex !== index)
-            const siblingText = flattenText(siblingPlans)
-
-            return (
-              <article className="plan-row" key={plan.name}>
-                <div className="plan-row-main">
-                  <h4>{plan.name}</h4>
-                  <strong>
-                    <EagleHighlight
-                      compareWith={guide.individualPlans
-                        .filter((_, planIndex) => planIndex !== index)
-                        .map((item) => item.oneLinePrice)}
-                      enabled={eagleEye}
-                      text={plan.oneLinePrice}
-                    />
-                  </strong>
-                  <p>
-                    <EagleHighlight compareWith={siblingText} enabled={eagleEye} text={plan.headline} />
-                  </p>
-                </div>
-                <div>
-                  <h5>Multi-line pricing</h5>
-                  <BulletList
-                    compareWith={siblingPlans.flatMap((item) => item.multiLinePricing)}
-                    eagleEye={eagleEye}
-                    items={plan.multiLinePricing}
-                  />
-                </div>
-                <div>
-                  <h5>Verified features</h5>
-                  <BulletList
-                    compareWith={siblingPlans.flatMap((item) => item.features)}
-                    eagleEye={eagleEye}
-                    items={plan.features}
-                  />
-                </div>
-              </article>
-            )
-          })}
+        <div className="plan-carousel">
+          <article className="plan-row plan-carousel-slide" key={activePlan.name}>
+            <div className="plan-row-main">
+              <p className="eyebrow">Current plan</p>
+              <h4>{activePlan.name}</h4>
+              <strong>
+                <EagleHighlight
+                  compareWith={siblingPlans.map((item) => item.oneLinePrice)}
+                  enabled={eagleEye}
+                  text={activePlan.oneLinePrice}
+                />
+              </strong>
+              <p>
+                <EagleHighlight compareWith={siblingText} enabled={eagleEye} text={activePlan.headline} />
+              </p>
+            </div>
+            <div>
+              <h5>Multi-line pricing</h5>
+              <BulletList
+                compareWith={siblingPlans.flatMap((item) => item.multiLinePricing)}
+                eagleEye={eagleEye}
+                items={activePlan.multiLinePricing}
+              />
+            </div>
+            <div>
+              <h5>Verified features</h5>
+              <BulletList
+                compareWith={siblingPlans.flatMap((item) => item.features)}
+                eagleEye={eagleEye}
+                items={activePlan.features}
+              />
+            </div>
+          </article>
+          <div className="plan-carousel-dots" aria-label="Choose individual plan">
+            {guide.individualPlans.map((plan, index) => (
+              <button
+                className={index === activePlanIndex ? 'active' : ''}
+                key={plan.name}
+                type="button"
+                onClick={() => setActivePlanIndex(index)}
+                aria-label={`Show ${plan.name}`}
+              />
+            ))}
+          </div>
         </div>
       </section>
 

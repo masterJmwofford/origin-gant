@@ -1862,6 +1862,73 @@ button {
   gap: 14px;
 }
 
+.plan-carousel-heading {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.plan-carousel-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px;
+  border: 1px solid color-mix(in srgb, var(--theme) 18%, #e1e6ef);
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.plan-carousel-controls button {
+  min-height: 34px;
+  padding: 7px 10px;
+  border: 1px solid color-mix(in srgb, var(--theme) 24%, #dce4f0);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--theme-soft) 68%, #ffffff);
+  color: var(--theme-dark);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.plan-carousel-controls span {
+  min-width: 42px;
+  color: var(--theme-dark);
+  font-size: 12px;
+  font-weight: 950;
+  text-align: center;
+}
+
+.plan-carousel {
+  display: grid;
+  gap: 12px;
+  overflow: hidden;
+}
+
+.plan-carousel-slide {
+  animation: plan-slide-in 0.22s ease;
+}
+
+.plan-carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.plan-carousel-dots button {
+  width: 12px;
+  height: 12px;
+  padding: 0;
+  border: 1px solid color-mix(in srgb, var(--theme) 36%, #dce4f0);
+  border-radius: 999px;
+  background: #ffffff;
+}
+
+.plan-carousel-dots button.active {
+  width: 28px;
+  background: var(--theme);
+}
+
 .plan-row {
   display: grid;
   grid-template-columns: minmax(180px, 0.75fr) minmax(180px, 0.6fr) minmax(280px, 1.3fr);
@@ -1872,6 +1939,18 @@ button {
   background:
     linear-gradient(90deg, color-mix(in srgb, var(--theme) 10%, transparent), transparent 120px),
     color-mix(in srgb, var(--theme-soft) 56%, #ffffff);
+}
+
+@keyframes plan-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .plan-row h4,
@@ -2285,6 +2364,69 @@ button {
   gap: 10px;
 }
 
+.sso-option-preview {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid color-mix(in srgb, var(--theme) 24%, #dce4f0);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--theme-soft) 74%, #ffffff), #ffffff);
+}
+
+.sso-option-preview-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+}
+
+.sso-option-preview-top button,
+.sso-lock-button {
+  min-height: 36px;
+  padding: 8px 10px;
+  border: 1px solid color-mix(in srgb, var(--theme) 26%, #dce4f0);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--theme-dark);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.sso-option-preview-top span {
+  color: var(--theme-dark);
+  font-size: 12px;
+  font-weight: 950;
+}
+
+.sso-option-preview-card {
+  display: grid;
+  gap: 7px;
+  min-height: 118px;
+  padding: 16px;
+  border: 1px solid color-mix(in srgb, var(--theme) 20%, #dce4f0);
+  border-left: 5px solid var(--theme);
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.sso-option-preview-card strong {
+  color: #172033;
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+.sso-option-preview-card p {
+  margin: 0;
+  color: #566174;
+  line-height: 1.35;
+}
+
+.sso-lock-button.primary {
+  background: var(--theme);
+  color: #ffffff;
+}
+
 .sso-option {
   display: grid;
   gap: 6px;
@@ -2301,6 +2443,11 @@ button {
 .sso-option.selected {
   border-color: var(--theme);
   background: var(--theme-soft);
+}
+
+.sso-option:disabled {
+  cursor: not-allowed;
+  opacity: 0.72;
 }
 
 .sso-option strong {
@@ -4581,6 +4728,37 @@ button {
   filter: drop-shadow(0 8px 12px rgba(23, 32, 51, 0.16));
 }
 
+.device-card-placeholder {
+  display: grid;
+  place-items: center;
+  justify-self: center;
+  width: min(150px, 72%);
+  aspect-ratio: 1;
+  margin: 6px 0 8px;
+  border: 1px solid rgba(215, 169, 40, 0.48);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 32% 26%, rgba(243, 207, 98, 0.42), transparent 28%),
+    linear-gradient(145deg, #ffffff, var(--lyceum-gold-soft));
+  color: var(--lyceum-navy);
+  font-size: clamp(26px, 5vw, 44px);
+  font-weight: 950;
+  box-shadow:
+    inset 0 0 0 6px rgba(255, 255, 255, 0.56),
+    0 12px 22px rgba(7, 22, 47, 0.16);
+}
+
+.device-source-note {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border: 1px solid rgba(215, 169, 40, 0.28);
+  border-radius: 8px;
+  background: rgba(255, 246, 216, 0.72);
+  color: #4f5d72;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
 .upgrade-card p {
   align-self: start;
 }
@@ -5311,6 +5489,20 @@ button {
   .sso-game-board,
   .sso-options {
     grid-template-columns: 1fr;
+  }
+
+  .plan-carousel-heading {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .plan-carousel-controls {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .plan-carousel-controls button {
+    flex: 1 1 0;
   }
 
   .script-studio {
@@ -6379,5 +6571,200 @@ body {
 
   .tutorial-actions button {
     flex: 1 1 130px;
+  }
+}
+
+/* QA Essentials responsive stacking */
+.essential-questions,
+.question-hero,
+.question-category-tabs,
+.question-workspace,
+.question-scenario,
+.question-stack,
+.question-panel,
+.essential-question-grid,
+.essential-question-grid article,
+.verification-panel {
+  min-width: 0;
+  max-width: 100%;
+}
+
+@media (max-width: 900px) {
+  .question-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .essential-question-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question-category-tabs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .question-category-tabs button {
+    width: 100%;
+    min-height: 38px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: 12px;
+    line-height: 1.12;
+    overflow-wrap: anywhere;
+    text-align: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .essential-questions {
+    gap: 10px;
+  }
+
+  .question-hero,
+  .question-workspace,
+  .question-scenario,
+  .question-panel,
+  .essential-question-grid article {
+    padding: 11px;
+    border-radius: 8px;
+  }
+
+  .question-hero h2 {
+    font-size: clamp(23px, 8vw, 32px);
+    line-height: 1.08;
+  }
+
+  .question-hero p:not(.eyebrow),
+  .question-scenario p,
+  .question-panel p,
+  .question-list li,
+  .verification-panel li,
+  .essential-question-grid p {
+    font-size: 13px;
+    line-height: 1.34;
+    overflow-wrap: anywhere;
+  }
+
+  .question-scenario h3 {
+    font-size: clamp(16px, 5vw, 20px);
+    line-height: 1.18;
+    overflow-wrap: anywhere;
+  }
+
+  .question-panel .section-heading h3 {
+    font-size: clamp(17px, 5.2vw, 21px);
+    line-height: 1.15;
+  }
+
+  .question-list,
+  .verification-panel ul {
+    gap: 7px;
+    padding-left: 18px;
+  }
+
+  .essential-question-grid article {
+    border-left-width: 4px;
+  }
+
+  .essential-question-grid strong {
+    font-size: 13.5px;
+    line-height: 1.22;
+    overflow-wrap: anywhere;
+  }
+}
+
+@media (max-width: 420px) {
+  .question-category-tabs {
+    grid-template-columns: 1fr;
+  }
+
+  .question-category-tabs button {
+    min-height: 34px;
+    padding: 7px 9px;
+  }
+
+  .question-hero,
+  .question-workspace,
+  .question-scenario,
+  .question-panel,
+  .essential-question-grid article {
+    padding: 10px;
+  }
+}
+
+/* SSO toggle matching responsive flow */
+@media (max-width: 900px) {
+  .sso-game-board {
+    grid-template-columns: 1fr;
+  }
+
+  .sso-options {
+    grid-template-columns: 1fr;
+  }
+
+  .sso-scenario-panel,
+  .sso-option-panel {
+    padding: 14px;
+  }
+}
+
+@media (max-width: 520px) {
+  .sso-scorebar,
+  .sso-option-preview-top {
+    grid-template-columns: 1fr;
+  }
+
+  .sso-scorebar {
+    display: grid;
+    gap: 6px;
+  }
+
+  .sso-option-preview-top button,
+  .sso-lock-button {
+    width: 100%;
+  }
+
+  .sso-customer-card,
+  .drop-zone,
+  .sso-option-preview,
+  .sso-option-preview-card,
+  .sso-option {
+    min-height: 0;
+    padding: 12px;
+  }
+
+  .sso-customer-card h3 {
+    font-size: 19px;
+  }
+
+  .sso-customer-card p,
+  .drop-zone p,
+  .sso-option-preview-card p,
+  .sso-option span {
+    font-size: 13px;
+    line-height: 1.34;
+    overflow-wrap: anywhere;
+  }
+}
+
+/* HeatMap responsive active-layer column */
+@media (max-width: 980px) {
+  .heatmap-board {
+    grid-template-columns: 1fr;
+  }
+
+  .heatmap-layer-card {
+    display: none;
+  }
+
+  .world-map-panel {
+    width: 100%;
+  }
+}
+
+@media (min-width: 981px) {
+  .heatmap-layer-card {
+    display: grid;
   }
 }

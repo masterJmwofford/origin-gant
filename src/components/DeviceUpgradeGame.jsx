@@ -3,6 +3,103 @@ import { useState } from 'react'
 const dealerAvatarImage =
   'https://static.vecteezy.com/system/resources/thumbnails/024/485/231/small_2x/woman-croupier-near-card-table-in-casino-offers-to-play-black-jack-or-preference-in-las-vegas-png.png'
 
+const deviceSourceNote =
+  'Scenario source: FirstNet public device pages list compatible/certified phones and devices. Current public offers can change, so any device without a specific offer in this game should be treated as verify-before-quote.'
+
+const categoryNotes = {
+  apple:
+    'The official FirstNet phones page lists this Apple model under certified phones and devices compatible with the FirstNet Evolved Packet Core.',
+  google:
+    'The official FirstNet phones page lists this Google Pixel model under certified phones and devices compatible with the FirstNet Evolved Packet Core.',
+  samsung:
+    'The official FirstNet phones page lists this Samsung model under certified phones and devices compatible with the FirstNet Evolved Packet Core.',
+  motorola:
+    'The official FirstNet phones page lists this Motorola model under certified phones and devices compatible with the FirstNet Evolved Packet Core.',
+  rugged:
+    'The official FirstNet phones page lists this rugged or specialty model under certified phones and devices compatible with the FirstNet Evolved Packet Core.',
+  enterprise:
+    'The official FirstNet phones page lists this enterprise or mobile-computer model under certified phones and devices compatible with the FirstNet Evolved Packet Core.',
+  tablet:
+    'The official FirstNet devices page lists tablets and laptops as FirstNet device catalog categories.',
+  wearable:
+    'The official FirstNet devices page lists watches as a FirstNet device catalog category.',
+  connected:
+    'The official FirstNet devices page lists connected devices such as routers, modems, and mobile connectivity equipment.',
+}
+
+const offerTypes = {
+  verify: {
+    offer: 'No specific public promo is stored for this D-Vice card.',
+    pricingNote:
+      'Because this game has no current device-specific promo for this model, the correct play is to verify current pricing before quoting.',
+    correctRequirement:
+      'Verify current offer before quoting price. Confirm account type, eligible plan, device compatibility, and SIM or eSIM path.',
+  },
+  iphone17Pro: {
+    offer: 'Get iPhone 17 Pro for $0.',
+    pricingNote:
+      'The FirstNet individual offers page lists this as a published promotional offer, so the requirement card matters before quoting it.',
+    correctRequirement:
+      'Trade-in of $290 or more, installment plan, and FirstNet Extra 2.0 plan or higher, minimum $68/mo.',
+  },
+  s26Ultra: {
+    offer: 'Get up to $1,100 off the Samsung Galaxy S26 Ultra.',
+    pricingNote:
+      'The FirstNet individual offers page lists this as a published promotional offer, so pair it with the matching trade-in and plan requirement.',
+    correctRequirement: 'Trade-in of $95 or more in any condition and an eligible plan. Terms and restrictions apply.',
+  },
+  pixel10ProXl: {
+    offer: 'Get the Google Pixel 10 Pro XL FREE.',
+    pricingNote:
+      'The FirstNet individual offers page lists this as a published promotional offer with eligible trade-in and eligible plan requirements.',
+    correctRequirement:
+      'Eligible smartphone trade-in and eligible plan are required. Verify current offer details before quoting.',
+  },
+  cradlepointR980: {
+    offer: 'Receive up to $400 in bill credits with activation of Cradlepoint R980.',
+    pricingNote:
+      'The FirstNet agency plans page lists this as an agency/connected-device offer tied to activation on eligible FirstNet plans.',
+    correctRequirement:
+      'Activation of Cradlepoint R980 on eligible FirstNet plans. Verify agency account context and current offer details.',
+  },
+}
+
+const sharedWrongRequirements = [
+  'Quote the promo because every certified FirstNet device gets the same discount.',
+  'Use only the device brand name to decide compatibility and pricing.',
+  'Skip account type and SIM/eSIM verification because the model appears on the device list.',
+  'Apply a smartphone trade-in offer to a rugged, wearable, tablet, router, or mobile-computer device.',
+]
+
+function makeDeviceRound({
+  id,
+  device,
+  brand,
+  category,
+  categoryNote,
+  offerType = 'verify',
+  imageUrl = '',
+  wrongRequirements = [],
+}) {
+  const offer = offerTypes[offerType]
+
+  return {
+    id,
+    device,
+    imageUrl,
+    category,
+    categoryNote: categoryNote ?? categoryNotes[brand],
+    offer: offer.offer,
+    pricingNote: offer.pricingNote,
+    correctRequirement: offer.correctRequirement,
+    wrongRequirements: [...wrongRequirements, ...sharedWrongRequirements].slice(0, 4),
+    dealer:
+      offerType === 'verify'
+        ? `Upgrade handled safely: ${device} is listed in the device catalog, but current pricing must be verified before quoting.`
+        : `Upgrade processed: ${device} matched the published offer and its required conditions.`,
+  }
+}
+
 const upgradeRounds = [
   {
     id: 'iphone-17-pro',
@@ -45,48 +142,208 @@ const upgradeRounds = [
     dealer:
       'Upgrade processed: Galaxy S26 Ultra, up to $1,100 off, trade-in $95+, and eligible plan are together.',
   },
-  {
+  makeDeviceRound({
     id: 'pixel-10-pro-xl',
     device: 'Google Pixel 10 Pro XL',
     imageUrl:
       'https://www.firstnet.com/content/dam/firstnet/images/image-and-text/image-text-firstnet-google-pixel-10-pro-xl-mt5.jpg',
+    brand: 'google',
     category: 'Certified smartphone',
-    categoryNote:
-      'The FirstNet phones page lists this device among certified phones/devices compatible with the FirstNet Evolved Packet Core.',
-    offer: 'No device-specific price offer was published on the FirstNet phones page used for this game.',
-    pricingNote:
-      'When no price offer is published in the source, the correct play is to verify current pricing before quoting.',
-    correctRequirement:
-      'Verify current offer before quoting price. FirstNet benefits require a FirstNet Ready device and FirstNet SIM card.',
+    offerType: 'pixel10ProXl',
     wrongRequirements: [
       'Trade-in of $95 or more and an eligible plan.',
       'Trade-in of $290 or more and FirstNet Extra 2.0 plan or higher.',
       'Quote the customer $0 because it is a certified smartphone.',
     ],
-    dealer:
-      'Upgrade processed safely: Pixel 10 Pro XL is certified, but current pricing must be verified before quoting.',
-  },
-  {
+  }),
+  makeDeviceRound({
     id: 'sonim-xp5-plus-5g',
     device: 'Sonim XP5+ 5G',
     imageUrl:
       'https://www.firstnet.com/content/dam/firstnet/images/image-and-text/6406251-FN-SonimOmega-knobs-image-text.jpg',
+    brand: 'rugged',
     category: 'Certified rugged / specialty device',
-    categoryNote:
-      'The FirstNet phones page lists this device among certified phones/devices compatible with the FirstNet Evolved Packet Core.',
-    offer: 'No device-specific price offer was published on the FirstNet phones page used for this game.',
-    pricingNote:
-      'Rugged or specialty devices still need offer verification when the source does not publish a specific promo.',
-    correctRequirement:
-      'Verify current offer before quoting price. FirstNet Ready devices may need a FirstNet SIM card and sometimes a software update.',
     wrongRequirements: [
       'Trade-in of $95 or more and an eligible plan.',
       'Trade-in of $290 or more and FirstNet Extra 2.0 plan or higher.',
       'Quote up to $1,100 off because it is a certified device.',
     ],
-    dealer:
-      'Upgrade processed safely: Sonim XP5+ 5G is certified, but the quote should wait until current pricing is verified.',
-  },
+  }),
+  ...[
+    'Apple iPhone 17',
+    'Apple iPhone 17e',
+    'Apple iPhone Air',
+    'Apple iPhone 17 Pro Max',
+    'Apple iPhone 16',
+    'Apple iPhone 16e',
+    'Apple iPhone 16 Plus',
+    'Apple iPhone 15',
+    'Apple iPhone 15 Plus',
+    'Apple iPhone 15 Pro',
+    'Apple iPhone 15 Pro Max',
+    'Apple iPhone 14',
+    'Apple iPhone 14 Plus',
+    'Apple iPhone 14 Pro',
+    'Apple iPhone 14 Pro Max',
+    'Apple iPhone SE 3rd Gen (2022)',
+  ].map((device) =>
+    makeDeviceRound({
+      id: device.toLowerCase().replaceAll(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+      device,
+      brand: 'apple',
+      category: 'Certified Apple smartphone',
+    }),
+  ),
+  ...[
+    'Google Pixel 10',
+    'Google Pixel 10a',
+    'Google Pixel 10 Pro',
+    'Google Pixel Fold',
+    'Google Pixel 9',
+    'Google Pixel 9a',
+    'Google Pixel 9 Pro',
+    'Google Pixel 9 Pro XL',
+    'Google Pixel 8a',
+  ].map((device) =>
+    makeDeviceRound({
+      id: device.toLowerCase().replaceAll(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+      device,
+      brand: 'google',
+      category: 'Certified Google smartphone',
+    }),
+  ),
+  ...[
+    'Samsung Galaxy A17 5G',
+    'Samsung Galaxy A16 5G',
+    'Samsung Galaxy A15 5G',
+    'Samsung Galaxy A37 5G',
+    'Samsung Galaxy A36 5G',
+    'Samsung Galaxy A35 5G',
+    'Samsung Galaxy S26+',
+    'Samsung Galaxy S26',
+    'Samsung Galaxy S25 FE',
+    'Samsung Galaxy S25',
+    'Samsung Galaxy S25+',
+    'Samsung Galaxy S25 Edge',
+    'Samsung Galaxy S25 Ultra',
+    'Samsung Galaxy S24 FE',
+    'Samsung Galaxy S24 Ultra',
+    'Samsung Galaxy S24 and S24+',
+    'Samsung Galaxy Z Flip7',
+    'Samsung Galaxy Z Flip6',
+    'Samsung Galaxy Z Flip5',
+    'Samsung Galaxy Z Fold7',
+    'Samsung Galaxy Z Fold6',
+    'Samsung Galaxy Z Fold5',
+  ].map((device) =>
+    makeDeviceRound({
+      id: device.toLowerCase().replaceAll(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+      device,
+      brand: 'samsung',
+      category: 'Certified Samsung smartphone',
+    }),
+  ),
+  ...[
+    'motorola razr+ 2026',
+    'motorola razr+ 2025',
+    'motorola razr+ 2024',
+    'motorola razr ultra 2025',
+    'moto g stylus 2025',
+    'moto g stylus 5G - 2024',
+  ].map((device) =>
+    makeDeviceRound({
+      id: device.toLowerCase().replaceAll(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+      device,
+      brand: 'motorola',
+      category: 'Certified Motorola smartphone',
+    }),
+  ),
+  ...[
+    'Crosscall CORE-P6',
+    'Siyata SD7',
+    'Sonim XP3plus 5G',
+    'Sonim XP5+ 5G (with knobs)',
+    'Sonim XP5+ 5G (without knobs)',
+    'Sonim XP5plus',
+    'Sonim XP Pro Thermal',
+    'Sonim XP Pro',
+    'Samsung Galaxy XCover7 Pro Enterprise Edition',
+  ].map((device) =>
+    makeDeviceRound({
+      id: device.toLowerCase().replaceAll(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+      device,
+      brand: 'rugged',
+      category: 'Certified rugged / specialty device',
+    }),
+  ),
+  ...[
+    'Zebra EC55',
+    'Zebra MC2700',
+    'Zebra TC58 Mobile Computer',
+    'Zebra TC57',
+    'Zebra TC57x',
+    'Zebra TC26',
+    'Zebra TC77',
+    'Zebra TC78 Mobile Computer',
+  ].map((device) =>
+    makeDeviceRound({
+      id: device.toLowerCase().replaceAll(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+      device,
+      brand: 'enterprise',
+      category: 'Certified enterprise / mobile-computer device',
+    }),
+  ),
+  ...[
+    'Apple iPad Pro 13-inch (M5) 2025',
+    'Apple iPad Air 11-inch (M4) 2026',
+    'Samsung Galaxy Tab A11+',
+    'Samsung Galaxy Tab Active5 Pro',
+    'Dell Latitude 7520',
+    'Zebra ET85 Rugged 2-in-1 Tablet',
+  ].map((device) =>
+    makeDeviceRound({
+      id: device.toLowerCase().replaceAll(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+      device,
+      brand: 'tablet',
+      category: 'Tablet / laptop device',
+    }),
+  ),
+  ...[
+    'Apple Watch Series 11',
+    'Samsung Galaxy Watch8 Classic',
+    'Google Pixel Watch 4',
+  ].map((device) =>
+    makeDeviceRound({
+      id: device.toLowerCase().replaceAll(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+      device,
+      brand: 'wearable',
+      category: 'Wearable device',
+    }),
+  ),
+  makeDeviceRound({
+    id: 'cradlepoint-r980',
+    device: 'Cradlepoint R980 Vehicle and IoT Router',
+    brand: 'connected',
+    category: 'Connected router / IoT device',
+    offerType: 'cradlepointR980',
+    wrongRequirements: [
+      'Trade-in of $290 or more and FirstNet Extra 2.0 plan or higher.',
+      'Eligible smartphone trade-in and eligible plan are required.',
+      'Treat it like a wearable NumberSync setup.',
+    ],
+  }),
+  ...[
+    'Sonim MegaConnect',
+    'Cradlepoint E300 Branch Router',
+    'Inseego Wavemaker FX4200',
+  ].map((device) =>
+    makeDeviceRound({
+      id: device.toLowerCase().replaceAll(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+      device,
+      brand: 'connected',
+      category: 'Connected device',
+    }),
+  ),
 ]
 
 const learningSteps = [
@@ -526,6 +783,7 @@ export default function DeviceUpgradeGame() {
             Upgrade conversations are easier when you separate the device, activation path,
             identifiers, capabilities, and pricing requirements.
           </p>
+          <p className="device-source-note">{deviceSourceNote}</p>
         </div>
         <div className="academy-carousel">
           <div className="academy-carousel-toolbar">
@@ -645,7 +903,17 @@ export default function DeviceUpgradeGame() {
                 <em>FN</em>
               </span>
               <span className="card-suit" aria-hidden="true">D</span>
-              <img className="device-card-image" src={game.round.imageUrl} alt={game.round.device} />
+              {game.round.imageUrl ? (
+                <img className="device-card-image" src={game.round.imageUrl} alt={game.round.device} />
+              ) : (
+                <span className="device-card-placeholder" aria-label={`${game.round.device} device card`}>
+                  {game.round.device
+                    .split(' ')
+                    .slice(0, 2)
+                    .map((word) => word.charAt(0))
+                    .join('')}
+                </span>
+              )}
               <span className="card-label">Device</span>
               <strong>{game.round.device}</strong>
               <p>{game.round.category}</p>

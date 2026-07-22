@@ -6053,10 +6053,6 @@ textarea:focus,
   position: fixed;
   inset: 0;
   z-index: 40;
-  display: grid;
-  align-items: end;
-  justify-items: center;
-  padding: 18px;
   pointer-events: none;
 }
 
@@ -6064,21 +6060,48 @@ textarea:focus,
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 50% 34%, rgba(243, 207, 98, 0.18), transparent 30%),
-    rgba(7, 22, 47, 0.42);
-  backdrop-filter: blur(2px);
+    radial-gradient(circle at 50% 34%, rgba(243, 207, 98, 0.16), transparent 30%),
+    rgba(7, 22, 47, 0.18);
   pointer-events: none;
 }
 
-.tutorial-card {
-  position: relative;
+.tutorial-coach-mark {
+  position: fixed;
   z-index: 1;
+  border: 3px solid var(--lyceum-gold-2);
+  border-radius: 10px;
+  box-shadow:
+    0 0 0 9999px rgba(7, 22, 47, 0.34),
+    0 0 0 8px rgba(243, 207, 98, 0.18),
+    0 16px 42px rgba(7, 22, 47, 0.28);
+  pointer-events: none;
+  transition:
+    top 0.2s ease,
+    left 0.2s ease,
+    width 0.2s ease,
+    height 0.2s ease;
+}
+
+.tutorial-coach-mark::after {
+  position: absolute;
+  right: 14px;
+  bottom: -13px;
+  width: 22px;
+  height: 22px;
+  content: "";
+  background: var(--lyceum-gold-2);
+  clip-path: polygon(50% 100%, 0 0, 100% 0);
+}
+
+.tutorial-card {
+  position: fixed;
+  z-index: 2;
   display: grid;
-  gap: 14px;
-  width: min(760px, 100%);
-  max-height: calc(100dvh - 36px);
+  gap: 9px;
+  width: min(380px, calc(100vw - 24px));
+  max-height: min(520px, calc(100dvh - 24px));
   overflow: auto;
-  padding: 18px;
+  padding: 13px;
   border: 1px solid rgba(243, 207, 98, 0.62);
   border-radius: 8px;
   background:
@@ -6093,38 +6116,38 @@ textarea:focus,
 
 .tutorial-card-header {
   display: flex;
-  gap: 14px;
+  gap: 10px;
   align-items: flex-start;
   justify-content: space-between;
 }
 
 .tutorial-card-header h2 {
-  margin: 4px 0 0;
+  margin: 2px 0 0;
   color: var(--lyceum-navy);
-  font-size: clamp(24px, 5vw, 36px);
-  line-height: 1.05;
+  font-size: clamp(19px, 3.8vw, 27px);
+  line-height: 1.08;
 }
 
 .tutorial-card-header button {
   flex: 0 0 auto;
-  width: 38px;
-  height: 38px;
+  width: 32px;
+  height: 32px;
   border: 1px solid rgba(7, 22, 47, 0.14);
   border-radius: 8px;
   background: #ffffff;
   color: var(--lyceum-navy);
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 800;
 }
 
 .tutorial-progress {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(18px, 1fr));
-  gap: 5px;
+  grid-template-columns: repeat(auto-fit, minmax(14px, 1fr));
+  gap: 4px;
 }
 
 .tutorial-progress span {
-  height: 7px;
+  height: 5px;
   border-radius: 999px;
   background: #d9e0ec;
 }
@@ -6136,8 +6159,8 @@ textarea:focus,
 
 .tutorial-demo-card {
   display: grid;
-  gap: 10px;
-  padding: 16px;
+  gap: 7px;
+  padding: 11px 12px;
   border: 1px solid rgba(215, 169, 40, 0.34);
   border-left: 6px solid var(--lyceum-gold);
   border-radius: 8px;
@@ -6147,7 +6170,7 @@ textarea:focus,
 
 .tutorial-demo-card span {
   color: #725300;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 950;
   letter-spacing: 0;
   text-transform: uppercase;
@@ -6155,37 +6178,48 @@ textarea:focus,
 
 .tutorial-demo-card p,
 .tutorial-demo-card strong,
-.tutorial-demo-card li {
+.tutorial-demo-card li,
+.tutorial-demo-card em {
   margin: 0;
   color: var(--lyceum-navy);
-  line-height: 1.42;
+  font-size: 12.5px;
+  line-height: 1.32;
 }
 
 .tutorial-demo-card ul {
   display: grid;
-  gap: 7px;
+  gap: 4px;
   margin: 0;
-  padding-left: 20px;
+  padding-left: 17px;
 }
 
 .tutorial-demo-card li {
   color: #344054;
 }
 
+.tutorial-demo-card em {
+  padding: 7px 8px;
+  border-radius: 8px;
+  background: rgba(7, 22, 47, 0.07);
+  color: #344054;
+  font-style: normal;
+  font-weight: 850;
+}
+
 .tutorial-step-tabs {
   display: flex;
   flex-wrap: wrap;
-  gap: 7px;
+  gap: 5px;
 }
 
 .tutorial-step-tabs button {
-  width: 34px;
-  height: 34px;
+  width: 27px;
+  height: 27px;
   border: 1px solid rgba(7, 22, 47, 0.14);
   border-radius: 50%;
   background: #ffffff;
   color: var(--lyceum-navy);
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 950;
 }
 
@@ -6197,18 +6231,19 @@ textarea:focus,
 .tutorial-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
   justify-content: space-between;
 }
 
 .tutorial-actions button {
-  min-height: 40px;
-  min-width: 124px;
-  padding: 9px 14px;
+  min-height: 34px;
+  min-width: 104px;
+  padding: 7px 11px;
   border: 1px solid rgba(7, 22, 47, 0.16);
   border-radius: 8px;
   background: #ffffff;
   color: var(--lyceum-navy);
+  font-size: 12px;
   font-weight: 950;
 }
 
@@ -6326,10 +6361,15 @@ body {
   }
 
   .tutorial-overlay {
-    padding: 10px;
+    inset: 0;
   }
 
   .tutorial-card {
+    right: 10px;
+    bottom: 10px;
+    left: 10px !important;
+    top: auto !important;
+    width: auto;
     padding: 14px;
   }
 

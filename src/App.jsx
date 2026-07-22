@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 import './App.css'
 import AccountRoadmap from './components/AccountRoadmap'
@@ -349,6 +349,17 @@ function matchesSearch(item, query) {
   return JSON.stringify(item).toLowerCase().includes(query.toLowerCase())
 }
 
+function getTutorialTargetSelector(step) {
+  return (
+    {
+      nav: '.study-nav .nav-tab.active',
+      content: '.tab-panel .study-section:first-child',
+      eagle: '.eagle-eye-toggle',
+      sources: '.source-section',
+    }[step.spotlight] ?? '.tab-shell'
+  )
+}
+
 function App() {
   const [query, setQuery] = useState('')
   const [activeTab, setActiveTab] = useState('billing')
@@ -357,6 +368,8 @@ function App() {
   const [siteViews, setSiteViews] = useState(0)
   const [tutorialOpen, setTutorialOpen] = useState(false)
   const [tutorialStep, setTutorialStep] = useState(0)
+  const [tutorialTarget, setTutorialTarget] = useState(null)
+  const [tutorialCardPlacement, setTutorialCardPlacement] = useState({ top: 18, left: 18 })
   const navAnchorRef = useRef(null)
   const viewTrackedRef = useRef(false)
   const activeNavItem = navItems.find((item) => item.id === activeTab)
@@ -433,6 +446,51 @@ function App() {
     }
   }, [])
 
+  const updateTutorialCoachMark = useCallback((step = currentTutorial) => {
+    if (!tutorialOpen || !step) return
+
+    const target = document.querySelector(getTutorialTargetSelector(step)) ?? document.querySelector('.tab-shell')
+
+    if (!target) return
+
+    const rect = target.getBoundingClientRect()
+    const padding = 10
+    const nextTarget = {
+      top: Math.max(8, rect.top - padding),
+      left: Math.max(8, rect.left - padding),
+      width: Math.min(window.innerWidth - 16, rect.width + padding * 2),
+      height: Math.min(window.innerHeight - 16, rect.height + padding * 2),
+    }
+    const cardWidth = Math.min(440, window.innerWidth - 24)
+    const belowTop = nextTarget.top + nextTarget.height + 14
+    const aboveTop = nextTarget.top - 330
+    const fitsBelow = belowTop + 300 < window.innerHeight
+    const top = fitsBelow ? belowTop : Math.max(12, aboveTop)
+    const left = Math.min(
+      Math.max(12, nextTarget.left + nextTarget.width / 2 - cardWidth / 2),
+      window.innerWidth - cardWidth - 12,
+    )
+
+    setTutorialTarget(nextTarget)
+    setTutorialCardPlacement({ top, left })
+  }, [currentTutorial, tutorialOpen])
+
+  useEffect(() => {
+    if (!tutorialOpen) return undefined
+
+    const update = () => updateTutorialCoachMark()
+    const timer = window.setTimeout(update, 120)
+
+    window.addEventListener('resize', update)
+    window.addEventListener('scroll', update, { passive: true })
+
+    return () => {
+      window.clearTimeout(timer)
+      window.removeEventListener('resize', update)
+      window.removeEventListener('scroll', update)
+    }
+  }, [tutorialOpen, tutorialStep, activeTab, updateTutorialCoachMark])
+
   function showTutorialStep(nextStep) {
     const boundedStep = Math.min(Math.max(nextStep, 0), tutorialSteps.length - 1)
     const step = tutorialSteps[boundedStep]
@@ -440,16 +498,12 @@ function App() {
     setTutorialStep(boundedStep)
     setActiveTab(step.tab)
     window.setTimeout(() => {
-      const targetSelector =
-        {
-          nav: '.study-nav',
-          content: '.tab-shell',
-          eagle: '.eagle-eye-toggle',
-          sources: '.source-section',
-        }[step.spotlight] ?? '.tab-shell'
-
-      document.querySelector(targetSelector)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      document
+        .querySelector(getTutorialTargetSelector(step))
+        ?.scrollIntoView({ behavior: 'smooth', block: 'center' })
     }, 80)
+
+    window.setTimeout(() => updateTutorialCoachMark(step), 420)
   }
 
   function startTutorial() {
@@ -459,6 +513,7 @@ function App() {
 
   function closeTutorial() {
     setTutorialOpen(false)
+    setTutorialTarget(null)
   }
 
   function goToPreviousTutorialStep() {
@@ -695,9 +750,27 @@ function App() {
       </section>
 
       {tutorialOpen && (
-        <aside className="tutorial-overlay" role="dialog" aria-modal="true" aria-label="Application tutorial">
+        <aside className="tutorial-overlay" role="dialog" aria-modal="false" aria-label="Application tutorial">
           <div className="tutorial-backdrop" />
-          <section className="tutorial-card">
+          {tutorialTarget && (
+            <div
+              className="tutorial-coach-mark"
+              aria-hidden="true"
+              style={{
+                top: `${tutorialTarget.top}px`,
+                left: `${tutorialTarget.left}px`,
+                width: `${tutorialTarget.width}px`,
+                height: `${tutorialTarget.height}px`,
+              }}
+            />
+          )}
+          <section
+            className="tutorial-card"
+            style={{
+              top: `${tutorialCardPlacement.top}px`,
+              left: `${tutorialCardPlacement.left}px`,
+            }}
+          >
             <div className="tutorial-card-header">
               <div>
                 <p className="eyebrow">
@@ -725,6 +798,7 @@ function App() {
                 ))}
               </ul>
               <strong>{currentTutorial.demo}</strong>
+              <em>Interact with the highlighted area, then continue the tour.</em>
             </article>
 
             <div className="tutorial-step-tabs" aria-label="Jump to tutorial step">

@@ -7098,3 +7098,1460 @@ body {
     text-align: center;
   }
 }
+
+/* App-wide dark mode */
+body.lyceum-dark {
+  background:
+    radial-gradient(circle at 14% 0%, rgba(243, 207, 98, 0.16), transparent 30%),
+    radial-gradient(circle at 88% 14%, rgba(215, 169, 40, 0.08), transparent 28%),
+    linear-gradient(180deg, #050608 0%, #0a0d12 48%, #030405 100%);
+  color: #f7e8b3;
+}
+
+.utility-toggles {
+  position: sticky;
+  top: 92px;
+  z-index: 4;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: stretch;
+  width: fit-content;
+  max-width: 100%;
+  margin-bottom: 8px;
+}
+
+.utility-toggles .eagle-eye-toggle {
+  position: relative;
+  top: auto;
+  margin-bottom: 0;
+}
+
+.dark-mode-toggle {
+  display: inline-grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  min-height: 54px;
+  padding: 10px 14px;
+  border: 1px solid rgba(215, 169, 40, 0.72);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, #ffffff, var(--lyceum-gold-soft));
+  color: var(--lyceum-navy);
+  box-shadow: 0 14px 34px rgba(7, 22, 47, 0.13);
+}
+
+.dark-mode-toggle strong,
+.dark-mode-toggle small {
+  display: block;
+  text-align: left;
+}
+
+.dark-mode-toggle small {
+  color: #725300;
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.dark-mode-orb {
+  width: 34px;
+  height: 34px;
+  border: 2px solid rgba(243, 207, 98, 0.82);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 66% 35%, #f3cf62 0 18%, transparent 19%),
+    linear-gradient(135deg, #050608, #17120a);
+  box-shadow:
+    inset 6px -6px 0 rgba(0, 0, 0, 0.48),
+    0 0 0 4px rgba(215, 169, 40, 0.18);
+}
+
+.dark-mode-toggle.active {
+  background:
+    linear-gradient(135deg, #050608, #17120a);
+  color: var(--lyceum-gold-2);
+  box-shadow:
+    0 16px 38px rgba(0, 0, 0, 0.34),
+    0 0 0 4px rgba(215, 169, 40, 0.18);
+}
+
+.dark-mode-toggle.active small {
+  color: rgba(247, 232, 179, 0.82);
+}
+
+.page.dark-mode,
+.page.dark-mode.theme-aqua,
+.page.dark-mode.theme-emerald,
+.page.dark-mode.theme-amber,
+.page.dark-mode.theme-violet,
+.page.dark-mode.theme-indigo,
+.page.dark-mode.theme-coral,
+.page.dark-mode.theme-green,
+.page.dark-mode.theme-service,
+.page.dark-mode.theme-script,
+.page.dark-mode.theme-map,
+.page.dark-mode.theme-steel {
+  --theme: #d7a928;
+  --theme-dark: #050608;
+  --theme-ink: #fff3c9;
+  --theme-soft: #191b22;
+  --theme-tint: rgba(243, 207, 98, 0.18);
+  --theme-ring: rgba(243, 207, 98, 0.34);
+  --theme-contrast: #050608;
+  --lyceum-panel: #151821;
+  --lyceum-panel-soft: #1d202a;
+  --lyceum-ink: #fff3c9;
+  --lyceum-muted: #eadcae;
+  --lyceum-line: rgba(243, 207, 98, 0.28);
+  color: #fff3c9;
+}
+
+.page.dark-mode::before {
+  background:
+    radial-gradient(circle at 12% 8%, rgba(243, 207, 98, 0.15), transparent 30%),
+    radial-gradient(circle at 90% 22%, rgba(215, 169, 40, 0.09), transparent 34%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.72));
+}
+
+.page.dark-mode .hero,
+.page.dark-mode .shipping-hero,
+.page.dark-mode .upgrade-game-hero,
+.page.dark-mode .heatmap-brief {
+  border-color: rgba(243, 207, 98, 0.5);
+  background:
+    linear-gradient(135deg, rgba(2, 3, 5, 0.98), rgba(16, 13, 8, 0.96) 56%, rgba(39, 31, 12, 0.92)),
+    #050608;
+  box-shadow:
+    0 30px 78px rgba(0, 0, 0, 0.48),
+    inset 0 1px 0 rgba(243, 207, 98, 0.18),
+    inset 0 -1px 0 rgba(243, 207, 98, 0.26);
+}
+
+.page.dark-mode .study-nav,
+.page.dark-mode .tutorial-card,
+.page.dark-mode .tutorial-demo-card,
+.page.dark-mode .tab-panel .study-section,
+.page.dark-mode .study-section,
+.page.dark-mode .card,
+.page.dark-mode .dashboard .card,
+.page.dark-mode .question-hero,
+.page.dark-mode .question-workspace,
+.page.dark-mode .question-scenario,
+.page.dark-mode .question-panel,
+.page.dark-mode .essential-question-grid article,
+.page.dark-mode .verification-panel,
+.page.dark-mode .roadmap-hero,
+.page.dark-mode .roadmap-tree-panel,
+.page.dark-mode .roadmap-verification-strip article,
+.page.dark-mode .roadmap-travel,
+.page.dark-mode .travel-card,
+.page.dark-mode .roadmap-modal,
+.page.dark-mode .customer-script-panel,
+.page.dark-mode .customer-script-section,
+.page.dark-mode .script-studio-center,
+.page.dark-mode .script-edit-modal,
+.page.dark-mode .deescalation-brief,
+.page.dark-mode .coach-panel,
+.page.dark-mode .customer-panel,
+.page.dark-mode .response-panel,
+.page.dark-mode .heatmap-shell,
+.page.dark-mode .heatmap-board,
+.page.dark-mode .heatmap-layer-card,
+.page.dark-mode .upgrade-learning-panel,
+.page.dark-mode .upgrade-game-table,
+.page.dark-mode .academy-term-card,
+.page.dark-mode .dealer-briefing,
+.page.dark-mode .quiz-card,
+.page.dark-mode .account-roadmap,
+.page.dark-mode .roadmap-detail,
+.page.dark-mode .decision-card,
+.page.dark-mode .scenario-card,
+.page.dark-mode .accordion-item,
+.page.dark-mode .shipping-policy-card,
+.page.dark-mode .shipping-account-paths,
+.page.dark-mode .shipping-estimator,
+.page.dark-mode .shipping-source-panel,
+.page.dark-mode .shipping-estimate-grid article,
+.page.dark-mode .shipping-path-list article,
+.page.dark-mode .location-result,
+.page.dark-mode .billing-panel,
+.page.dark-mode .billing-plan-card,
+.page.dark-mode .family-plan-card,
+.page.dark-mode .roadmap-venn-panel,
+.page.dark-mode .sso-scenario-panel,
+.page.dark-mode .sso-option-panel,
+.page.dark-mode .sso-customer-card,
+.page.dark-mode .sso-option-preview,
+.page.dark-mode .sso-option-preview-card,
+.page.dark-mode .sso-option,
+.page.dark-mode .drop-zone,
+.page.dark-mode .flashcard,
+.page.dark-mode .flash-front,
+.page.dark-mode .flash-back,
+.page.dark-mode .empty-state,
+.page.dark-mode .travel-question-panel,
+.page.dark-mode .roadmap-detail-grid article,
+.page.dark-mode .roadmap-modal-grid article,
+.page.dark-mode .coverage-plan-card,
+.page.dark-mode .coverage-country-list,
+.page.dark-mode .world-map-panel,
+.page.dark-mode .upgrade-rule-cards article,
+.page.dark-mode .dealer-card-row,
+.page.dark-mode .player-card-row,
+.page.dark-mode .upgrade-card,
+.page.dark-mode .mesa-game-panel,
+.page.dark-mode .mesa-scoreboard,
+.page.dark-mode .source-section {
+  border-color: rgba(243, 207, 98, 0.4);
+  background:
+    linear-gradient(180deg, rgba(31, 34, 44, 0.98), rgba(18, 20, 27, 0.98)),
+    #151821;
+  color: #fff3c9;
+  box-shadow:
+    0 18px 42px rgba(0, 0, 0, 0.42),
+    inset 0 1px 0 rgba(243, 207, 98, 0.14);
+}
+
+.page.dark-mode .tab-shell {
+  background:
+    linear-gradient(135deg, rgba(243, 207, 98, 0.18), transparent 34%),
+    linear-gradient(315deg, rgba(215, 169, 40, 0.12), transparent 42%),
+    rgba(0, 0, 0, 0.62);
+}
+
+.page.dark-mode .nav-tab {
+  border-color: rgba(243, 207, 98, 0.22);
+  background:
+    linear-gradient(180deg, #20232d, #11141b),
+    #151821;
+  color: #fff3c9;
+  box-shadow: inset 0 -2px 0 rgba(243, 207, 98, 0.08);
+}
+
+.page.dark-mode .nav-tab:hover,
+.page.dark-mode .nav-tab.active {
+  border-color: rgba(243, 207, 98, 0.72);
+  background:
+    linear-gradient(180deg, #241c08, #0d0f14);
+  color: var(--lyceum-gold-2);
+  box-shadow:
+    0 13px 28px rgba(0, 0, 0, 0.36),
+    0 0 0 3px rgba(215, 169, 40, 0.18);
+}
+
+.page.dark-mode .nav-tab.active span,
+.page.dark-mode .section-heading h2,
+.page.dark-mode .section-heading h3,
+.page.dark-mode h2,
+.page.dark-mode h3,
+.page.dark-mode h4,
+.page.dark-mode strong,
+.page.dark-mode .card h2,
+.page.dark-mode .card h3,
+.page.dark-mode .question-hero h2,
+.page.dark-mode .roadmap-hero h2,
+.page.dark-mode .customer-header h3,
+.page.dark-mode .upgrade-game-hero h2,
+.page.dark-mode .quiz-card h3,
+.page.dark-mode .shipping-policy-card h3,
+.page.dark-mode .shipping-estimator h3,
+.page.dark-mode .shipping-source-panel h3 {
+  color: #ffe08a;
+}
+
+.page.dark-mode p,
+.page.dark-mode li,
+.page.dark-mode small,
+.page.dark-mode label,
+.page.dark-mode .card p,
+.page.dark-mode .accordion-content p,
+.page.dark-mode .accordion-content li,
+.page.dark-mode .quiz-card p,
+.page.dark-mode .question-hero p:not(.eyebrow),
+.page.dark-mode .roadmap-hero p:not(.eyebrow),
+.page.dark-mode .travel-card p,
+.page.dark-mode .customer-concern p,
+.page.dark-mode .customer-context p,
+.page.dark-mode .customer-script-section p:not(.eyebrow),
+.page.dark-mode .script-studio-center p:not(.eyebrow),
+.page.dark-mode .deescalation-brief p:not(.eyebrow),
+.page.dark-mode .decision-card p,
+.page.dark-mode .academy-term-card p,
+.page.dark-mode .shipping-policy-card p,
+.page.dark-mode .shipping-account-paths p,
+.page.dark-mode .shipping-estimator p,
+.page.dark-mode .shipping-source-panel p,
+.page.dark-mode .shipping-policy-card li,
+.page.dark-mode .shipping-estimate-grid li {
+  color: #eadcae;
+}
+
+.page.dark-mode .tab-panel :where(p, li, span, small, label, dt, dd),
+.page.dark-mode .study-section :where(p, li, span, small, label, dt, dd),
+.page.dark-mode .roadmap-modal :where(p, li, span, small, label, dt, dd),
+.page.dark-mode .tutorial-card :where(p, li, span, small, label, dt, dd) {
+  color: #eadcae;
+}
+
+.page.dark-mode .tab-panel :where(h1, h2, h3, h4, h5, h6, strong),
+.page.dark-mode .study-section :where(h1, h2, h3, h4, h5, h6, strong),
+.page.dark-mode .roadmap-modal :where(h1, h2, h3, h4, h5, h6, strong),
+.page.dark-mode .tutorial-card :where(h1, h2, h3, h4, h5, h6, strong) {
+  color: #ffe08a;
+}
+
+.page.dark-mode .tab-panel .eyebrow,
+.page.dark-mode .study-section .eyebrow,
+.page.dark-mode .roadmap-modal .eyebrow,
+.page.dark-mode .tutorial-card .eyebrow,
+.page.dark-mode .card-label,
+.page.dark-mode .card-suit,
+.page.dark-mode .card-corner,
+.page.dark-mode .stat-value {
+  color: #f3cf62;
+}
+
+.page.dark-mode .flash-front,
+.page.dark-mode .flash-back,
+.page.dark-mode .upgrade-card {
+  background:
+    linear-gradient(145deg, #20232d, #11141b);
+}
+
+.page.dark-mode .flash-front *,
+.page.dark-mode .flash-back *,
+.page.dark-mode .upgrade-card * {
+  color: #fff3c9;
+}
+
+.page.dark-mode .eyebrow,
+.page.dark-mode .stat-value,
+.page.dark-mode .roadmap-toolbar span,
+.page.dark-mode .travel-level,
+.page.dark-mode .shipping-hero .eyebrow {
+  color: #f3cf62;
+}
+
+.page.dark-mode input,
+.page.dark-mode select,
+.page.dark-mode textarea,
+.page.dark-mode .search,
+.page.dark-mode .customer-script-section textarea,
+.page.dark-mode .script-edit-modal textarea,
+.page.dark-mode .deescalation-form textarea,
+.page.dark-mode .shipping-address-form input {
+  border-color: rgba(243, 207, 98, 0.3);
+  background: #0b0d12;
+  color: #fff3c9;
+  box-shadow: inset 0 1px 0 rgba(243, 207, 98, 0.08);
+}
+
+.page.dark-mode input::placeholder,
+.page.dark-mode textarea::placeholder {
+  color: rgba(199, 183, 124, 0.72);
+}
+
+.page.dark-mode button,
+.page.dark-mode .support-form button,
+.page.dark-mode .deescalation-form button,
+.page.dark-mode .quiz-card button,
+.page.dark-mode .roadmap-travel-toggle,
+.page.dark-mode .travel-actions button,
+.page.dark-mode .script-modal-actions button,
+.page.dark-mode .script-section-actions button,
+.page.dark-mode .upgrade-actions button,
+.page.dark-mode .mesa-controls button,
+.page.dark-mode .shipping-address-form button,
+.page.dark-mode .shipping-source-list a {
+  border-color: rgba(243, 207, 98, 0.48);
+  background:
+    linear-gradient(180deg, #221b08, #0b0d12);
+  color: #f3cf62;
+}
+
+.page.dark-mode .support-form button,
+.page.dark-mode .deescalation-form button,
+.page.dark-mode .roadmap-travel-toggle,
+.page.dark-mode .script-section-actions button:first-child,
+.page.dark-mode .script-modal-actions .primary,
+.page.dark-mode .upgrade-actions button.primary,
+.page.dark-mode .mesa-controls .core-button,
+.page.dark-mode .next-customer,
+.page.dark-mode .shipping-address-form button:not(.secondary),
+.page.dark-mode .tutorial-actions button.primary {
+  background:
+    linear-gradient(180deg, var(--lyceum-gold-2), var(--lyceum-gold));
+  color: #050608;
+  border-color: rgba(243, 207, 98, 0.82);
+}
+
+.page.dark-mode .eagle-eye-toggle,
+.page.dark-mode .dark-mode-toggle,
+.page.dark-mode .eagle-eye-summary {
+  border-color: rgba(243, 207, 98, 0.56);
+  background:
+    linear-gradient(135deg, #151820, #08090d);
+  color: #f3cf62;
+  box-shadow:
+    0 16px 38px rgba(0, 0, 0, 0.38),
+    0 0 0 4px rgba(215, 169, 40, 0.12);
+}
+
+.page.dark-mode .eagle-eye-toggle small,
+.page.dark-mode .dark-mode-toggle small,
+.page.dark-mode .eagle-eye-summary li {
+  color: #c7b77c;
+}
+
+.page.dark-mode .eagle-highlight {
+  background:
+    linear-gradient(180deg, transparent 8%, rgba(243, 207, 98, 0.48) 8%),
+    rgba(215, 169, 40, 0.24);
+  color: #fff4c5;
+}
+
+.page.dark-mode a {
+  color: #f3cf62;
+}
+
+.page.dark-mode .tutorial-backdrop {
+  background:
+    radial-gradient(circle at 50% 34%, rgba(243, 207, 98, 0.12), transparent 30%),
+    rgba(0, 0, 0, 0.45);
+}
+
+@media (max-width: 640px) {
+  .utility-toggles {
+    top: 74px;
+    width: 100%;
+    padding: 0 10px;
+  }
+
+  .utility-toggles .eagle-eye-toggle,
+  .dark-mode-toggle {
+    flex: 1 1 180px;
+  }
+}
+
+/* Dark mode contrast pass: preserve each tab accent and catch remaining component surfaces */
+.page.dark-mode.theme-aqua {
+  --theme: #28d7ed;
+  --theme-soft: #10292f;
+  --theme-tint: rgba(40, 215, 237, 0.18);
+  --theme-ring: rgba(40, 215, 237, 0.34);
+}
+
+.page.dark-mode.theme-emerald {
+  --theme: #38d989;
+  --theme-soft: #10291d;
+  --theme-tint: rgba(56, 217, 137, 0.18);
+  --theme-ring: rgba(56, 217, 137, 0.34);
+}
+
+.page.dark-mode.theme-amber {
+  --theme: #f0b84d;
+  --theme-soft: #30240e;
+  --theme-tint: rgba(240, 184, 77, 0.2);
+  --theme-ring: rgba(240, 184, 77, 0.34);
+}
+
+.page.dark-mode.theme-violet {
+  --theme: #a78bfa;
+  --theme-soft: #211936;
+  --theme-tint: rgba(167, 139, 250, 0.18);
+  --theme-ring: rgba(167, 139, 250, 0.34);
+}
+
+.page.dark-mode.theme-indigo {
+  --theme: #7aa2ff;
+  --theme-soft: #152143;
+  --theme-tint: rgba(122, 162, 255, 0.18);
+  --theme-ring: rgba(122, 162, 255, 0.34);
+}
+
+.page.dark-mode.theme-coral {
+  --theme: #ff8a65;
+  --theme-soft: #351910;
+  --theme-tint: rgba(255, 138, 101, 0.18);
+  --theme-ring: rgba(255, 138, 101, 0.34);
+}
+
+.page.dark-mode.theme-green {
+  --theme: #48d66f;
+  --theme-soft: #102915;
+  --theme-tint: rgba(72, 214, 111, 0.18);
+  --theme-ring: rgba(72, 214, 111, 0.34);
+}
+
+.page.dark-mode.theme-service {
+  --theme: #45c6d8;
+  --theme-soft: #10282d;
+  --theme-tint: rgba(69, 198, 216, 0.18);
+  --theme-ring: rgba(69, 198, 216, 0.34);
+}
+
+.page.dark-mode.theme-script {
+  --theme: #2ed3c2;
+  --theme-soft: #0f2825;
+  --theme-tint: rgba(46, 211, 194, 0.18);
+  --theme-ring: rgba(46, 211, 194, 0.34);
+}
+
+.page.dark-mode.theme-map {
+  --theme: #58b9e2;
+  --theme-soft: #102633;
+  --theme-tint: rgba(88, 185, 226, 0.18);
+  --theme-ring: rgba(88, 185, 226, 0.34);
+}
+
+.page.dark-mode.theme-steel {
+  --theme: #8fb7d5;
+  --theme-soft: #142634;
+  --theme-tint: rgba(143, 183, 213, 0.18);
+  --theme-ring: rgba(143, 183, 213, 0.34);
+}
+
+.page.dark-mode .nav-aqua {
+  --nav-theme: #28d7ed;
+  --nav-soft: #10292f;
+}
+
+.page.dark-mode .nav-emerald {
+  --nav-theme: #38d989;
+  --nav-soft: #10291d;
+}
+
+.page.dark-mode .nav-amber {
+  --nav-theme: #f0b84d;
+  --nav-soft: #30240e;
+}
+
+.page.dark-mode .nav-violet {
+  --nav-theme: #a78bfa;
+  --nav-soft: #211936;
+}
+
+.page.dark-mode .nav-indigo {
+  --nav-theme: #7aa2ff;
+  --nav-soft: #152143;
+}
+
+.page.dark-mode .nav-coral {
+  --nav-theme: #ff8a65;
+  --nav-soft: #351910;
+}
+
+.page.dark-mode .nav-green {
+  --nav-theme: #48d66f;
+  --nav-soft: #102915;
+}
+
+.page.dark-mode .nav-service {
+  --nav-theme: #45c6d8;
+  --nav-soft: #10282d;
+}
+
+.page.dark-mode .nav-script {
+  --nav-theme: #2ed3c2;
+  --nav-soft: #0f2825;
+}
+
+.page.dark-mode .nav-map {
+  --nav-theme: #58b9e2;
+  --nav-soft: #102633;
+}
+
+.page.dark-mode .nav-steel {
+  --nav-theme: #8fb7d5;
+  --nav-soft: #142634;
+}
+
+.page.dark-mode :where(article, section, aside, div, li, button)[class$="-panel"],
+.page.dark-mode :where(article, section, aside, div, li, button)[class*="-panel "],
+.page.dark-mode :where(article, section, aside, div, li, button)[class$="-card"],
+.page.dark-mode :where(article, section, aside, div, li, button)[class*="-card "],
+.page.dark-mode :where(article, section, aside, div, li, button)[class$="-block"],
+.page.dark-mode :where(article, section, aside, div, li, button)[class*="-block "],
+.page.dark-mode :where(article, section, aside, div, li, button)[class$="-item"],
+.page.dark-mode :where(article, section, aside, div, li, button)[class*="-item "],
+.page.dark-mode :where(article, section, aside, div, li, button)[class$="-board"],
+.page.dark-mode :where(article, section, aside, div, li, button)[class*="-board "],
+.page.dark-mode :where(article, section, aside, div, li, button)[class$="-shell"],
+.page.dark-mode :where(article, section, aside, div, li, button)[class*="-shell "],
+.page.dark-mode :where(article, section, aside, div, li, button)[class$="-workspace"],
+.page.dark-mode :where(article, section, aside, div, li, button)[class*="-workspace "],
+.page.dark-mode :where(article, section, aside, div, li, button)[class$="-brief"],
+.page.dark-mode :where(article, section, aside, div, li, button)[class*="-brief "],
+.page.dark-mode :where(article, section, aside, div, li, button)[class$="-detail"],
+.page.dark-mode :where(article, section, aside, div, li, button)[class*="-detail "],
+.page.dark-mode :where(article, section, aside, div, li, button)[class$="-summary"],
+.page.dark-mode :where(article, section, aside, div, li, button)[class*="-summary "],
+.page.dark-mode :where(article, section, aside, div, li, button)[class$="-row"],
+.page.dark-mode :where(article, section, aside, div, li, button)[class*="-row "],
+.page.dark-mode :where(article, section, aside, div, li, button)[class$="-table"],
+.page.dark-mode :where(article, section, aside, div, li, button)[class*="-table "],
+.page.dark-mode :where(article, section, aside, div, li, button)[class$="-list"],
+.page.dark-mode :where(article, section, aside, div, li, button)[class*="-list "],
+.page.dark-mode :where(article, section, aside, div, li, button)[class$="-grid"],
+.page.dark-mode :where(article, section, aside, div, li, button)[class*="-grid "],
+.page.dark-mode :where(article, section, aside, div, li, button)[class$="-option"],
+.page.dark-mode :where(article, section, aside, div, li, button)[class*="-option "],
+.page.dark-mode :where(article, section, aside, div, li, button)[class$="-choice"],
+.page.dark-mode :where(article, section, aside, div, li, button)[class*="-choice "] {
+  border-color: color-mix(in srgb, var(--theme) 42%, rgba(255, 255, 255, 0.1));
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--theme-soft) 32%, #20232d), #12151c),
+    #151821;
+  color: #fff3c9;
+}
+
+.page.dark-mode :where(.section-heading, .script-section-heading, .table-zone-heading, .roadmap-toolbar, .plan-carousel-heading, .academy-carousel-toolbar, .sso-scorebar, .mesa-stats, .upgrade-scoreboard, .card-corner, .card-suit, .card-label, .source-list, .roadmap-tree, .question-list, .place-chip-list, .options, .sso-options, .family-plan-options, .billing-grid, .roadmap-decision-grid, .essential-question-grid, .coverage-plan-grid, .shipping-policy-grid, .shipping-path-list, .shipping-estimate-grid) {
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+}
+
+.page.dark-mode .tab-panel :where(.plan-row, .fact-block, .family-plan-card, .roadmap-detail, .decision-card, .scenario-card, .sso-customer-card, .drop-zone, .sso-option-preview-card, .sso-option, .question-scenario, .question-panel, .verification-panel, .travel-card, .travel-question-panel, .roadmap-modal-grid article, .roadmap-detail-grid article, .coverage-plan-card, .coverage-country-list, .academy-term-card, .academy-support-goal, .dealer-script, .upgrade-rule-cards article, .upgrade-card, .customer-concern, .customer-context, .target-skills, .sort-feedback, .quiz-result, .shipping-policy-card, .shipping-path-list article, .shipping-estimate-grid article, .location-result) {
+  border-color: color-mix(in srgb, var(--theme) 46%, rgba(255, 255, 255, 0.12));
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--theme-soft) 36%, #242833), #151821);
+  color: #fff3c9;
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.page.dark-mode :where(.hero, .shipping-hero, .upgrade-game-hero, .heatmap-brief, .roadmap-hero, .question-hero, .deescalation-brief) {
+  border-color: color-mix(in srgb, var(--theme) 54%, rgba(255, 255, 255, 0.14));
+  background:
+    radial-gradient(circle at 12% 18%, color-mix(in srgb, var(--theme) 18%, transparent), transparent 34%),
+    linear-gradient(135deg, #11141b, color-mix(in srgb, var(--theme-soft) 44%, #171b24));
+}
+
+.page.dark-mode :where(.tab-panel, .study-section, .roadmap-modal, .tutorial-card) :where(p, li, span, small, label, dd, td) {
+  color: #efe3bd;
+}
+
+.page.dark-mode :where(.tab-panel, .study-section, .roadmap-modal, .tutorial-card) :where(h1, h2, h3, h4, h5, h6, strong, th) {
+  color: #fff4cc;
+}
+
+.page.dark-mode :where(.tab-panel, .study-section, .roadmap-modal, .tutorial-card) .eyebrow,
+.page.dark-mode :where(.tab-panel, .study-section, .roadmap-modal, .tutorial-card) :where(.stat-value, .travel-level, .card-label, .card-suit, .card-corner) {
+  color: var(--theme);
+}
+
+.page.dark-mode :where(.tab-panel, .study-section, .roadmap-modal, .tutorial-card) button:not(.primary):not(.active):not(.correct):not(.incorrect) {
+  border-color: color-mix(in srgb, var(--theme) 44%, rgba(255, 255, 255, 0.12));
+  background:
+    linear-gradient(180deg, #20242e, #141821);
+  color: #fff3c9;
+}
+
+.page.dark-mode :where(.tab-panel, .study-section, .roadmap-modal, .tutorial-card) :where(button.primary, button.active, .correct, .selected) {
+  border-color: color-mix(in srgb, var(--theme) 74%, rgba(255, 255, 255, 0.16));
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--theme) 62%, #ffffff), var(--theme));
+  color: #071016;
+}
+
+.page.dark-mode :where(.tab-panel, .study-section, .roadmap-modal, .tutorial-card) :where(input, select, textarea) {
+  border-color: color-mix(in srgb, var(--theme) 42%, rgba(255, 255, 255, 0.12));
+  background: #0b0e14;
+  color: #fff4cc;
+}
+
+/* Final dark mode sweep for custom high-content tools */
+.page.dark-mode {
+  color-scheme: dark;
+}
+
+.page.dark-mode :where(.billing-guide-intro, .heatmap-tool, .source-section, .device-terminology-casino, .upgrade-explainer, .upgrade-controls, .response-panel, .script-generated-layout) {
+  color: #fff4cc;
+}
+
+.page.dark-mode :where(.billing-guide-intro, .heatmap-warning, .coverage-place-list, .coverage-place-groups article, .coverage-plan-grid article, .source-list li, .terminology-marquee, .academy-slide, .academy-support-goal, .academy-term-card, .upgrade-explainer, .dealer-script, .upgrade-learning-board article, .dealer-message, .upgrade-controls, .conversation-log, .conversation-thread, .conversation-message, .target-skills, .deescalation-feedback, .checkpoint-results, .coach-advice-popover, .script-section-preview, .customer-full-script, .customer-script-block p) {
+  border-color: color-mix(in srgb, var(--theme) 44%, rgba(255, 255, 255, 0.12));
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--theme-soft) 38%, #222733), #12151d),
+    #151821;
+  color: #fff4cc;
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.page.dark-mode :where(.billing-guide-intro p, .billing-guide-intro li, .heatmap-tool p, .heatmap-tool li, .heatmap-tool span, .heatmap-tool small, .source-section p, .source-section li, .device-upgrade-game p, .device-upgrade-game li, .device-upgrade-game small, .script-studio p, .script-studio small, .deescalation-game p, .deescalation-game li, .deescalation-game small) {
+  color: #efe3bd;
+}
+
+.page.dark-mode :where(.billing-guide h2, .billing-guide h3, .billing-guide h4, .heatmap-tool h2, .heatmap-tool h3, .device-upgrade-game h2, .device-upgrade-game h3, .device-upgrade-game h4, .script-studio h2, .script-studio h3, .deescalation-game h2, .deescalation-game h3, .deescalation-game h4, .source-section h2, .source-section h3) {
+  color: #fff4cc;
+}
+
+.page.dark-mode :where(.billing-guide .eyebrow, .sso-game .eyebrow, .heatmap-tool .eyebrow, .device-upgrade-game .eyebrow, .script-studio .eyebrow, .deescalation-game .eyebrow, .source-section .eyebrow) {
+  color: var(--theme);
+}
+
+/* HeatMap */
+.page.dark-mode .heatmap-tool {
+  background:
+    linear-gradient(180deg, rgba(8, 11, 16, 0.86), rgba(8, 11, 16, 0.92)),
+    url("https://c8.alamy.com/comp/CWXNG5/international-business-background-with-flags-from-the-world-in-three-CWXNG5.jpg") center / cover no-repeat,
+    #0c1118;
+}
+
+.page.dark-mode .heatmap-tool::before {
+  background:
+    radial-gradient(circle at 18% 12%, color-mix(in srgb, var(--theme) 12%, transparent), transparent 32%),
+    linear-gradient(180deg, rgba(7, 10, 15, 0.5), rgba(7, 10, 15, 0.78));
+}
+
+.page.dark-mode .heatmap-tool::after {
+  opacity: 0.1;
+}
+
+.page.dark-mode .heatmap-layer-buttons button,
+.page.dark-mode .place-chip-list span,
+.page.dark-mode .coverage-plan-grid span,
+.page.dark-mode .map-disclaimer {
+  border-color: color-mix(in srgb, var(--theme) 38%, rgba(255, 255, 255, 0.12));
+  background: #111722;
+  color: #efe3bd;
+}
+
+.page.dark-mode .heatmap-layer-buttons button.active {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--theme) 68%, #ffffff), var(--theme));
+  color: #061016;
+}
+
+.page.dark-mode .world-map-panel {
+  border-color: color-mix(in srgb, var(--theme) 42%, rgba(255, 255, 255, 0.12));
+  background: linear-gradient(135deg, #0b1520, #102332);
+}
+
+.page.dark-mode .map-ocean {
+  fill: #0d1c29;
+}
+
+.page.dark-mode .map-country {
+  fill: #334155;
+  stroke: #0b111a;
+  opacity: 0.88;
+}
+
+.page.dark-mode .world-map-panel text {
+  fill: #dbeafe;
+}
+
+.page.dark-mode .active-domestic,
+.page.dark-mode .active-fiveg,
+.page.dark-mode .active-latin,
+.page.dark-mode .active-global,
+.page.dark-mode .active-idp {
+  filter: drop-shadow(0 0 8px color-mix(in srgb, var(--theme) 62%, transparent));
+}
+
+/* Billing and SSO */
+.page.dark-mode .plan-carousel-controls span,
+.page.dark-mode .sso-scorebar span,
+.page.dark-mode .sso-option-preview-top span {
+  border-color: color-mix(in srgb, var(--theme) 38%, rgba(255, 255, 255, 0.12));
+  background: #10151f;
+  color: #efe3bd;
+}
+
+.page.dark-mode .plan-carousel-dots button,
+.page.dark-mode .academy-dots button {
+  background: rgba(239, 227, 189, 0.28);
+}
+
+.page.dark-mode .plan-carousel-dots button.active,
+.page.dark-mode .academy-dots button.active {
+  background: var(--theme);
+}
+
+.page.dark-mode .sso-lock-button.primary,
+.page.dark-mode .sort-feedback.correct,
+.page.dark-mode .deescalation-feedback.won {
+  border-color: #38d989;
+  background: linear-gradient(180deg, rgba(56, 217, 137, 0.86), rgba(56, 217, 137, 0.62));
+  color: #071016;
+}
+
+.page.dark-mode .sort-feedback.incorrect {
+  border-color: #ff8a65;
+  background: rgba(255, 138, 101, 0.14);
+  color: #ffd2c4;
+}
+
+/* D-Vice */
+.page.dark-mode .device-terminology-casino,
+.page.dark-mode .upgrade-explainer {
+  border-color: rgba(209, 164, 45, 0.46);
+  background:
+    radial-gradient(circle at 12% 0%, rgba(209, 164, 45, 0.12), transparent 32%),
+    linear-gradient(180deg, #201b12, #12161f);
+}
+
+.page.dark-mode .terminology-marquee,
+.page.dark-mode .upgrade-table {
+  border-color: rgba(209, 164, 45, 0.56);
+  background:
+    radial-gradient(circle at 50% 12%, rgba(209, 164, 45, 0.18), transparent 30%),
+    linear-gradient(135deg, #071f18, #101421 58%, #090b10);
+}
+
+.page.dark-mode :where(.academy-term-card, .academy-support-goal, .upgrade-rule-cards article, .upgrade-learning-board article, .dealer-script, .dealer-message) {
+  border-color: rgba(209, 164, 45, 0.38);
+  background: linear-gradient(145deg, #242016, #151821);
+}
+
+.page.dark-mode .upgrade-card {
+  border-color: rgba(209, 164, 45, 0.58);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 227, 122, 0.12), transparent 32%),
+    linear-gradient(145deg, #222733, #141820);
+  box-shadow:
+    inset 0 0 0 7px #11141b,
+    inset 0 0 0 9px rgba(209, 164, 45, 0.72),
+    0 18px 22px rgba(0, 0, 0, 0.34);
+}
+
+.page.dark-mode .upgrade-card:hover,
+.page.dark-mode .upgrade-card.held,
+.page.dark-mode .upgrade-card.played-from-hand {
+  box-shadow:
+    inset 0 0 0 7px #11141b,
+    inset 0 0 0 9px rgba(255, 227, 122, 0.84),
+    0 0 0 5px rgba(255, 227, 122, 0.2),
+    0 28px 38px rgba(0, 0, 0, 0.38);
+}
+
+.page.dark-mode :where(.card-suit, .card-label, .card-corner, .device-card-placeholder) {
+  background: rgba(255, 227, 122, 0.12);
+  color: #ffe37a;
+}
+
+.page.dark-mode .device-card-image {
+  background: #e9eef6;
+}
+
+/* Script Studio */
+.page.dark-mode .script-studio-center::before {
+  background:
+    radial-gradient(circle at 9% 50%, color-mix(in srgb, var(--theme) 18%, transparent), transparent 30%),
+    linear-gradient(90deg, #111820, rgba(17, 24, 32, 0.72));
+}
+
+.page.dark-mode :where(.customer-script-section, .script-edit-modal) {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--section-accent, var(--theme)) 18%, #151821), #10141c);
+}
+
+.page.dark-mode :where(.customer-script-section textarea, .script-edit-modal textarea, .customer-full-script) {
+  border-color: color-mix(in srgb, var(--section-accent, var(--theme)) 42%, rgba(255, 255, 255, 0.12));
+  background: #0b0f16;
+  color: #fff4cc;
+  caret-color: var(--theme);
+}
+
+.page.dark-mode :where(.customer-script-section textarea:focus, .script-edit-modal textarea:focus) {
+  border-color: color-mix(in srgb, var(--section-accent, var(--theme)) 68%, rgba(255, 255, 255, 0.16));
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--section-accent, var(--theme)) 18%, transparent);
+}
+
+.page.dark-mode :where(.script-section-preview, .customer-script-block p) {
+  border-color: color-mix(in srgb, var(--section-accent, var(--theme)) 38%, rgba(255, 255, 255, 0.12));
+  background: rgba(11, 15, 22, 0.72);
+  color: #efe3bd;
+}
+
+.page.dark-mode .script-modal-backdrop {
+  background: rgba(0, 0, 0, 0.68);
+}
+
+/* Scenarios */
+.page.dark-mode :where(.deescalation-board, .coach-panel, .customer-panel, .response-panel, .conversation-thread, .conversation-message, .customer-concern, .customer-context, .target-skills, .script-call-flow span, .skill-tags span, .calm-meter span, .checkpoint-results span, .coach-advice-popover) {
+  border-color: color-mix(in srgb, var(--theme) 40%, rgba(255, 255, 255, 0.12));
+  background: #111722;
+  color: #efe3bd;
+}
+
+.page.dark-mode .conversation-message.customer {
+  background: color-mix(in srgb, var(--theme-soft) 50%, #111722);
+}
+
+.page.dark-mode .conversation-message.agent {
+  background: rgba(239, 227, 189, 0.08);
+}
+
+.page.dark-mode .calm-meter span.filled,
+.page.dark-mode .checkpoint-results span.hit {
+  background: #38d989;
+  color: #071016;
+}
+
+.page.dark-mode .checkpoint-results span.miss {
+  background: rgba(255, 138, 101, 0.18);
+  color: #ffd2c4;
+}
+
+.page.dark-mode .coach-popover-close {
+  background: #0b0e14;
+  color: #fff4cc;
+}
+
+/* Sources */
+.page.dark-mode .source-list {
+  display: grid;
+  gap: 10px;
+}
+
+.page.dark-mode .source-list li {
+  list-style-position: inside;
+}
+
+.page.dark-mode .source-list a {
+  display: inline-flex;
+  max-width: 100%;
+  padding: 9px 11px;
+  border: 1px solid color-mix(in srgb, var(--theme) 38%, rgba(255, 255, 255, 0.12));
+  border-radius: 999px;
+  background: #111722;
+  color: #fff4cc;
+  overflow-wrap: anywhere;
+}
+
+/* Missed dark mode interactive surfaces: Eligibility, MESA, and device controls */
+.page.dark-mode :where(.account-roadmap, .roadmap-venn-panel, .roadmap-venn, .roadmap-detail, .decision-card, .decision-columns div, .sort-activity, .scenario-card, .mesa-breaker, .mesa-info, .mesa-stage-wrap, .mesa-stage, .mesa-stats span, .mesa-controls, .device-upgrade-game, .upgrade-game-hero, .upgrade-scoreboard span, .academy-carousel-toolbar, .academy-carousel-toolbar div, .academy-slide, .device-source-note, .table-zone-heading, .dealer-card-row, .player-card-row) {
+  border-color: color-mix(in srgb, var(--theme) 44%, rgba(255, 255, 255, 0.12));
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--theme-soft) 34%, #20242e), #11151d),
+    #141821;
+  color: #fff4cc;
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.page.dark-mode :where(.account-roadmap p, .account-roadmap li, .account-roadmap span, .mesa-info p, .mesa-info span, .device-source-note, .academy-carousel-toolbar span, .table-zone-heading p, .upgrade-game-hero p:not(.eyebrow)) {
+  color: #efe3bd;
+}
+
+.page.dark-mode :where(.account-roadmap h2, .account-roadmap h3, .account-roadmap h4, .mesa-info h2, .device-upgrade-game h2, .device-upgrade-game h3, .device-upgrade-game h4, .academy-carousel-toolbar strong, .table-zone-heading h3) {
+  color: #fff4cc;
+  text-shadow: none;
+}
+
+.page.dark-mode :where(.roadmap-chip, .academy-term-card span, .upgrade-rule-cards span, .upgrade-learning-board span, .upgrade-scoreboard span, .mesa-stats span) {
+  border: 1px solid color-mix(in srgb, var(--theme) 38%, rgba(255, 255, 255, 0.12));
+  background: color-mix(in srgb, var(--theme-soft) 54%, #111722);
+  color: var(--theme);
+}
+
+.page.dark-mode :where(.venn-circle, .venn-overlap, .sort-button, .academy-carousel-toolbar button, .academy-dots button, .upgrade-actions button, .mesa-controls button, .plan-carousel-controls button, .heatmap-layer-buttons button, .sso-option-preview-top button, .sso-lock-button) {
+  border-color: color-mix(in srgb, var(--theme) 44%, rgba(255, 255, 255, 0.12));
+  background:
+    linear-gradient(180deg, #20242e, #12161f);
+  color: #fff4cc;
+}
+
+.page.dark-mode :where(.venn-circle:hover, .venn-circle.active, .venn-overlap:hover, .venn-overlap.active, .sort-button:hover, .sort-button.selected, .academy-carousel-toolbar button:hover, .academy-dots button.active, .upgrade-actions .primary, .upgrade-actions .ask-dealer, .mesa-controls .core-button, .plan-carousel-controls button:hover, .heatmap-layer-buttons button.active, .sso-lock-button.primary) {
+  border-color: color-mix(in srgb, var(--theme) 76%, rgba(255, 255, 255, 0.18));
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--theme) 66%, #ffffff), var(--theme));
+  color: #061016;
+  box-shadow:
+    0 12px 26px rgba(0, 0, 0, 0.32),
+    0 0 0 4px color-mix(in srgb, var(--theme) 18%, transparent);
+}
+
+.page.dark-mode .roadmap-venn {
+  background:
+    radial-gradient(circle at 34% 50%, rgba(88, 185, 226, 0.18), transparent 42%),
+    radial-gradient(circle at 66% 50%, rgba(56, 217, 137, 0.16), transparent 42%),
+    #101722;
+}
+
+.page.dark-mode .venn-subscriber {
+  background: rgba(88, 185, 226, 0.22);
+}
+
+.page.dark-mode .venn-agency {
+  background: rgba(56, 217, 137, 0.2);
+}
+
+.page.dark-mode .venn-overlap {
+  background: rgba(15, 20, 28, 0.92);
+}
+
+.page.dark-mode .scenario-card p {
+  color: #fff4cc;
+}
+
+.page.dark-mode .sort-feedback.correct {
+  border-color: #38d989;
+  background: rgba(56, 217, 137, 0.16);
+  color: #dcffe9;
+}
+
+.page.dark-mode .sort-feedback.incorrect {
+  border-color: #ff8a65;
+  background: rgba(255, 138, 101, 0.14);
+  color: #ffd2c4;
+}
+
+.page.dark-mode .sort-feedback .primary {
+  background: linear-gradient(180deg, #38d989, #25a766);
+  color: #061016;
+}
+
+.page.dark-mode .mesa-info {
+  background:
+    radial-gradient(circle at 10% 20%, rgba(57, 255, 116, 0.1), transparent 28%),
+    linear-gradient(135deg, #10251c, #101722);
+}
+
+.page.dark-mode .mesa-stage {
+  border-color: rgba(57, 255, 116, 0.46);
+  background:
+    radial-gradient(circle at 18% 18%, rgba(57, 255, 116, 0.16), transparent 22%),
+    radial-gradient(circle at 82% 28%, rgba(88, 185, 226, 0.14), transparent 26%),
+    linear-gradient(180deg, #071512, #0f1f2d 55%, #060d0f);
+}
+
+.page.dark-mode .mesa-controls .core-button {
+  background:
+    linear-gradient(180deg, #39ff74, #13a538);
+  color: #05270f;
+}
+
+.page.dark-mode .mesa-controls button:not(.core-button):hover {
+  border-color: rgba(57, 255, 116, 0.58);
+  background: #14251d;
+  color: #dcffe9;
+}
+
+.page.dark-mode .mesa-win {
+  background: rgba(2, 8, 8, 0.86);
+}
+
+.page.dark-mode .device-upgrade-game {
+  background:
+    radial-gradient(circle at 12% 0%, rgba(209, 164, 45, 0.12), transparent 32%),
+    linear-gradient(180deg, #0c1017, #090b10);
+}
+
+.page.dark-mode .upgrade-game-hero {
+  border-color: rgba(209, 164, 45, 0.48);
+  background:
+    radial-gradient(circle at 12% 10%, rgba(209, 164, 45, 0.16), transparent 30%),
+    linear-gradient(135deg, #151821, #201b12);
+}
+
+.page.dark-mode .academy-carousel-toolbar button {
+  display: grid;
+  place-items: center;
+}
+
+.page.dark-mode .device-source-note {
+  background: rgba(255, 227, 122, 0.1);
+  color: #efe3bd;
+}
+
+.page.dark-mode .dealer-message.approved {
+  border-color: #38d989;
+  background:
+    linear-gradient(135deg, rgba(56, 217, 137, 0.18), rgba(18, 21, 29, 0.96)),
+    #12151d;
+}
+
+.page.dark-mode .played-requirement-card {
+  border-color: var(--theme);
+  box-shadow:
+    inset 0 0 0 7px #11141b,
+    inset 0 0 0 9px color-mix(in srgb, var(--theme) 78%, #ffffff),
+    0 0 0 4px color-mix(in srgb, var(--theme) 18%, transparent),
+    0 24px 34px rgba(0, 0, 0, 0.38);
+}
+
+/* Scenario tab final dark mode polish */
+.page.dark-mode .deescalation-game {
+  background:
+    radial-gradient(circle at 14% 0%, rgba(69, 198, 216, 0.12), transparent 34%),
+    linear-gradient(180deg, #0b0f16, #080a0f);
+}
+
+.page.dark-mode :where(.deescalation-brief, .deescalation-board, .coach-panel, .customer-panel, .response-panel, .conversation-log, .script-targets) {
+  border-color: color-mix(in srgb, var(--theme) 46%, rgba(255, 255, 255, 0.12));
+  background:
+    radial-gradient(circle at 12% 10%, color-mix(in srgb, var(--theme) 10%, transparent), transparent 30%),
+    linear-gradient(180deg, #18202b, #10151d);
+  color: #fff4cc;
+  box-shadow:
+    0 16px 38px rgba(0, 0, 0, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.page.dark-mode .deescalation-score span,
+.page.dark-mode .conversation-log-header span,
+.page.dark-mode .skill-tags span,
+.page.dark-mode .target-skills span,
+.page.dark-mode .script-call-flow span {
+  border: 1px solid color-mix(in srgb, var(--theme) 42%, rgba(255, 255, 255, 0.12));
+  background: color-mix(in srgb, var(--theme-soft) 58%, #10151f);
+  color: #fff4cc;
+}
+
+.page.dark-mode :where(.coach-panel h3, .customer-header h3, .customer-concern h4, .customer-context h4, .conversation-log-header h3, .target-skills strong, .script-call-flow strong, .deescalation-feedback strong, .coach-advice-popover h3) {
+  color: #fff4cc;
+}
+
+.page.dark-mode :where(.deescalation-brief p:not(.eyebrow), .coach-panel p, .customer-concern p, .customer-context p, .disposition-copy, .conversation-message p, .deescalation-feedback p, .deescalation-feedback li, .coach-advice-popover p:not(.eyebrow)) {
+  color: #efe3bd;
+}
+
+.page.dark-mode .coach-avatar,
+.page.dark-mode .coach-popover-avatar {
+  border-color: color-mix(in srgb, var(--theme) 58%, rgba(255, 255, 255, 0.16));
+  box-shadow:
+    0 0 0 8px color-mix(in srgb, var(--theme) 14%, transparent),
+    0 18px 38px rgba(0, 0, 0, 0.34);
+}
+
+.page.dark-mode .customer-face {
+  border-color: #fff4cc;
+  box-shadow:
+    0 0 0 6px color-mix(in srgb, var(--theme) 16%, transparent),
+    0 14px 30px rgba(0, 0, 0, 0.3);
+}
+
+.page.dark-mode .level-escalated {
+  border-color: #ff8a65;
+  background:
+    radial-gradient(circle at 12% 16%, rgba(255, 138, 101, 0.16), transparent 34%),
+    linear-gradient(180deg, #251711, #11151d);
+}
+
+.page.dark-mode .level-escalated .customer-face {
+  border-color: #ff8a65;
+  box-shadow:
+    0 0 0 6px rgba(255, 138, 101, 0.16),
+    0 14px 30px rgba(0, 0, 0, 0.34);
+}
+
+.page.dark-mode .level-tense {
+  border-color: #f0b84d;
+  background:
+    radial-gradient(circle at 12% 16%, rgba(240, 184, 77, 0.14), transparent 34%),
+    linear-gradient(180deg, #241d10, #11151d);
+}
+
+.page.dark-mode .level-tense .customer-face {
+  border-color: #f0b84d;
+  box-shadow:
+    0 0 0 6px rgba(240, 184, 77, 0.16),
+    0 14px 30px rgba(0, 0, 0, 0.34);
+}
+
+.page.dark-mode .level-concerned {
+  border-color: #45c6d8;
+  background:
+    radial-gradient(circle at 12% 16%, rgba(69, 198, 216, 0.14), transparent 34%),
+    linear-gradient(180deg, #10232a, #11151d);
+}
+
+.page.dark-mode .level-concerned .customer-face {
+  border-color: #45c6d8;
+  box-shadow:
+    0 0 0 6px rgba(69, 198, 216, 0.15),
+    0 14px 30px rgba(0, 0, 0, 0.34);
+}
+
+.page.dark-mode .level-calm {
+  border-color: #38d989;
+  background:
+    radial-gradient(circle at 12% 16%, rgba(56, 217, 137, 0.14), transparent 34%),
+    linear-gradient(180deg, #10251b, #11151d);
+}
+
+.page.dark-mode .level-calm .customer-face {
+  border-color: #38d989;
+  box-shadow:
+    0 0 0 6px rgba(56, 217, 137, 0.15),
+    0 14px 30px rgba(0, 0, 0, 0.34);
+}
+
+.page.dark-mode .customer-concern,
+.page.dark-mode .customer-context {
+  border-color: color-mix(in srgb, var(--theme) 38%, rgba(255, 255, 255, 0.12));
+  background: rgba(7, 10, 15, 0.58);
+}
+
+.page.dark-mode .calm-meter span {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #222936;
+}
+
+.page.dark-mode .calm-meter span.filled {
+  background: linear-gradient(90deg, #ff8a65, #f0b84d, #45c6d8, #38d989);
+}
+
+.page.dark-mode .conversation-thread {
+  scrollbar-color: color-mix(in srgb, var(--theme) 54%, #475569) #0b0f16;
+}
+
+.page.dark-mode .conversation-message {
+  border-color: color-mix(in srgb, var(--theme) 34%, rgba(255, 255, 255, 0.12));
+  background: #101722;
+}
+
+.page.dark-mode .conversation-message strong {
+  color: var(--theme);
+}
+
+.page.dark-mode .conversation-message.customer {
+  border-color: rgba(240, 184, 77, 0.42);
+  background:
+    linear-gradient(180deg, rgba(240, 184, 77, 0.12), rgba(16, 23, 34, 0.96));
+}
+
+.page.dark-mode .conversation-message.agent {
+  border-color: rgba(56, 217, 137, 0.38);
+  background:
+    linear-gradient(180deg, rgba(56, 217, 137, 0.12), rgba(16, 23, 34, 0.96));
+}
+
+.page.dark-mode .deescalation-form textarea {
+  border-color: color-mix(in srgb, var(--theme) 44%, rgba(255, 255, 255, 0.12));
+  background: #090d13;
+  color: #fff4cc;
+  caret-color: var(--theme);
+}
+
+.page.dark-mode .deescalation-form textarea:focus {
+  border-color: color-mix(in srgb, var(--theme) 74%, rgba(255, 255, 255, 0.16));
+  outline: 3px solid color-mix(in srgb, var(--theme) 22%, transparent);
+}
+
+.page.dark-mode .deescalation-form button,
+.page.dark-mode .next-customer {
+  border: 1px solid color-mix(in srgb, var(--theme) 64%, rgba(255, 255, 255, 0.14));
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--theme) 70%, #ffffff), var(--theme));
+  color: #061016;
+}
+
+.page.dark-mode .deescalation-form button:disabled {
+  border-color: rgba(255, 255, 255, 0.12);
+  background: #1d2430;
+  color: #8b95a5;
+}
+
+.page.dark-mode .deescalation-feedback {
+  border-color: #f0b84d;
+  background:
+    linear-gradient(180deg, rgba(240, 184, 77, 0.14), rgba(16, 23, 34, 0.96));
+}
+
+.page.dark-mode .deescalation-feedback.won {
+  border-color: #38d989;
+  background:
+    linear-gradient(180deg, rgba(56, 217, 137, 0.16), rgba(16, 23, 34, 0.96));
+}
+
+.page.dark-mode .coach-advice-popover {
+  border-color: color-mix(in srgb, var(--theme) 58%, rgba(255, 255, 255, 0.16));
+  background:
+    radial-gradient(circle at 10% 20%, color-mix(in srgb, var(--theme) 16%, transparent), transparent 32%),
+    linear-gradient(135deg, #17202b, #0c1017);
+}
+
+/* Scenario header cleanup */
+.page.dark-mode .deescalation-brief h2 {
+  color: #fff4cc;
+  text-shadow: 0 0 18px color-mix(in srgb, var(--theme) 22%, transparent);
+}
+
+.page.dark-mode .deescalation-brief .eyebrow,
+.page.dark-mode .coach-panel .eyebrow,
+.page.dark-mode .customer-header .eyebrow,
+.page.dark-mode .conversation-log-header .eyebrow,
+.page.dark-mode .coach-advice-popover .eyebrow {
+  color: var(--theme);
+}
+
+.page.dark-mode .customer-header {
+  padding: 12px;
+  border: 1px solid color-mix(in srgb, var(--theme) 36%, rgba(255, 255, 255, 0.12));
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.04), color-mix(in srgb, var(--theme-soft) 34%, rgba(0, 0, 0, 0.18)));
+}
+
+.page.dark-mode .customer-header p:not(.eyebrow) {
+  color: #efe3bd;
+}
+
+.page.dark-mode .customer-header span,
+.page.dark-mode .conversation-log-header > span {
+  display: inline-flex;
+  width: fit-content;
+  margin-top: 6px;
+  padding: 7px 10px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.page.dark-mode .level-escalated .customer-header span,
+.page.dark-mode .level-escalated + .response-panel .conversation-log-header > span {
+  color: #ffb39d;
+}
+
+.page.dark-mode .level-tense .customer-header span,
+.page.dark-mode .level-tense + .response-panel .conversation-log-header > span {
+  color: #ffd78a;
+}
+
+.page.dark-mode .level-concerned .customer-header span,
+.page.dark-mode .level-concerned + .response-panel .conversation-log-header > span {
+  color: #9debf5;
+}
+
+.page.dark-mode .level-calm .customer-header span,
+.page.dark-mode .level-calm + .response-panel .conversation-log-header > span {
+  color: #9cf0c3;
+}
+
+.page.dark-mode .conversation-log-header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid color-mix(in srgb, var(--theme) 30%, rgba(255, 255, 255, 0.1));
+}
+
+.page.dark-mode .conversation-log-header h3 {
+  color: #fff4cc;
+}
+
+/* Scenario script flow and input final pass */
+.page.dark-mode .script-call-flow {
+  border-color: color-mix(in srgb, var(--theme) 42%, rgba(255, 255, 255, 0.12));
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--theme-soft) 48%, #141a24), #0d121a);
+  color: #fff4cc;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 10px 24px rgba(0, 0, 0, 0.24);
+}
+
+.page.dark-mode .script-call-flow strong {
+  color: #fff4cc;
+}
+
+.page.dark-mode .script-call-flow span {
+  border: 1px solid color-mix(in srgb, var(--theme) 46%, rgba(255, 255, 255, 0.12));
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--theme) 18%, #151b25), #0b1017);
+  color: #fff4cc;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.page.dark-mode .deescalation-form {
+  padding: 12px;
+  border: 1px solid color-mix(in srgb, var(--theme) 38%, rgba(255, 255, 255, 0.12));
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(0, 0, 0, 0.12)),
+    #0d121a;
+}
+
+.page.dark-mode .deescalation-form textarea {
+  border: 1px solid color-mix(in srgb, var(--theme) 52%, rgba(255, 255, 255, 0.12));
+  background:
+    linear-gradient(180deg, #080c12, #0b1017);
+  color: #fff4cc;
+  caret-color: var(--theme);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 0 0 1px rgba(0, 0, 0, 0.18);
+}
+
+.page.dark-mode .deescalation-form textarea::placeholder {
+  color: rgba(239, 227, 189, 0.58);
+}
+
+.page.dark-mode .deescalation-form textarea:focus {
+  border-color: color-mix(in srgb, var(--theme) 76%, #ffffff);
+  outline: none;
+  box-shadow:
+    0 0 0 4px color-mix(in srgb, var(--theme) 22%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.page.dark-mode .deescalation-form button {
+  border: 1px solid color-mix(in srgb, var(--theme) 74%, rgba(255, 255, 255, 0.16));
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--theme) 72%, #ffffff), var(--theme));
+  color: #061016;
+  box-shadow:
+    0 12px 26px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
+/* Final targeted misses: Scenario log header and HeatMap paragraphs */
+.page.dark-mode .conversation-log-header {
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--theme-soft) 42%, #111722), rgba(255, 255, 255, 0.035));
+  border: 1px solid color-mix(in srgb, var(--theme) 34%, rgba(255, 255, 255, 0.1));
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.page.dark-mode .conversation-log-header p,
+.page.dark-mode .conversation-log-header p.eyebrow {
+  color: var(--theme);
+}
+
+.page.dark-mode .conversation-log-header h3 {
+  color: #fff4cc;
+}
+
+.page.dark-mode .conversation-log-header > span {
+  border-color: color-mix(in srgb, var(--theme) 58%, rgba(255, 255, 255, 0.14));
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--theme) 20%, #111722), #0b1017);
+  color: #fff4cc;
+}
+
+.page.dark-mode .heatmap-tool p,
+.page.dark-mode .heatmap-brief p:not(.eyebrow),
+.page.dark-mode .heatmap-layer-card p,
+.page.dark-mode .coverage-place-list p,
+.page.dark-mode .coverage-place-list > p,
+.page.dark-mode .coverage-place-groups article p,
+.page.dark-mode .coverage-plan-grid article p,
+.page.dark-mode .coverage-plan-grid article small,
+.page.dark-mode .map-disclaimer {
+  color: #efe3bd;
+}
+
+.page.dark-mode .heatmap-warning span,
+.page.dark-mode .heatmap-layer-card strong {
+  color: #fff4cc;
+}
+
+.page.dark-mode .coverage-place-list > p {
+  border-left-color: var(--theme);
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--theme) 16%, #0d121a), #0d121a);
+  color: #fff4cc;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 10px 24px rgba(0, 0, 0, 0.2);
+}

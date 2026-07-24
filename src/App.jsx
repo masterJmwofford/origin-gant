@@ -389,6 +389,7 @@ function App() {
   const [activeTab, setActiveTab] = useState('billing')
   const [navCompact, setNavCompact] = useState(false)
   const [eagleEyeEnabled, setEagleEyeEnabled] = useState(false)
+  const [darkModeEnabled, setDarkModeEnabled] = useState(false)
   const [siteViews, setSiteViews] = useState(0)
   const [tutorialOpen, setTutorialOpen] = useState(false)
   const [tutorialStep, setTutorialStep] = useState(0)
@@ -452,6 +453,14 @@ function App() {
       isActive = false
     }
   }, [])
+
+  useEffect(() => {
+    document.body.classList.toggle('lyceum-dark', darkModeEnabled)
+
+    return () => {
+      document.body.classList.remove('lyceum-dark')
+    }
+  }, [darkModeEnabled])
 
   useEffect(() => {
     function updateNavState() {
@@ -556,8 +565,10 @@ function App() {
   return (
     <main
       className={`page theme-${activeNavItem.theme} ${eagleEyeEnabled ? 'eagle-eye-on' : ''} ${
-        tutorialOpen ? 'tutorial-running' : ''
-      } ${tutorialOpen ? `tutorial-spotlight-${currentTutorial.spotlight}` : ''}`}
+        darkModeEnabled ? 'dark-mode' : ''
+      } ${tutorialOpen ? 'tutorial-running' : ''} ${
+        tutorialOpen ? `tutorial-spotlight-${currentTutorial.spotlight}` : ''
+      }`}
     >
       <section className="hero">
         <div>
@@ -594,10 +605,24 @@ function App() {
         ))}
       </nav>
 
-      <EagleEye
-        enabled={eagleEyeEnabled}
-        onToggle={() => setEagleEyeEnabled((enabled) => !enabled)}
-      />
+      <div className="utility-toggles" aria-label="Display controls">
+        <EagleEye
+          enabled={eagleEyeEnabled}
+          onToggle={() => setEagleEyeEnabled((enabled) => !enabled)}
+        />
+        <button
+          className={`dark-mode-toggle ${darkModeEnabled ? 'active' : ''}`}
+          type="button"
+          onClick={() => setDarkModeEnabled((enabled) => !enabled)}
+          aria-pressed={darkModeEnabled}
+        >
+          <span className="dark-mode-orb" aria-hidden="true" />
+          <span>
+            <strong>Dark Mode</strong>
+            <small>{darkModeEnabled ? 'Black and gold is on' : 'Switch to black and gold'}</small>
+          </span>
+        </button>
+      </div>
 
       <section className="tab-shell">
         {activeTab === 'billing' && (

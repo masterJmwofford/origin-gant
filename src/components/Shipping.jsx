@@ -1,4 +1,15 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
+import { CircleMarker, MapContainer, Popup, TileLayer, useMap } from 'react-leaflet'
+import 'leaflet/dist/leaflet.css'
+import { findNearbyLocations, geocodeLocation } from '../utils/locationSearch'
+
+const defaultMapCenter = { latitude: 39.8283, longitude: -98.5795 }
+
+function RecenterMap({ center, zoom }) {
+  const map = useMap()
+  map.setView([center.latitude, center.longitude], zoom)
+  return null
+}
 
 const policySections = [
   {
@@ -196,7 +207,42 @@ function Shipping() {
   const [address, setAddress] = useState('')
   const [locationStatus, setLocationStatus] = useState('Location has not been requested.')
   const [coords, setCoords] = useState(null)
+  const [locations, setLocations] = useState([])
+  const [radiusMiles, setRadiusMiles] = useState(25)
+  const [locationFilter, setLocationFilter] = useState('all')
+  const [isSearching, setIsSearching] = useState(false)
+  const searchController = useRef(null)
   const estimate = useMemo(() => estimateShipping(address), [address])
+  const visibleLocations = useMemo(
+    () =>
+      locationFilter === 'all'
+        ? locations
+        : locations.filter((location) => location.category === locationFilter),
+    [locationFilter, locations],
+  )
+
+  async function loadNearbyLocations(origin, label = 'your location') {
+    searchController.current?.abort()
+    const controller = new AbortController()
+    searchController.current = controller
+    setIsSearching(true)
+    setLocationStatus(`Finding AT&T and shipping locations near ${label}...`)
+
+    try {
+      const results = await findNearbyLocations(origin, radiusMiles, controller.signal)
+      setCoords(origin)
+      setLocations(results)
+      const attCount = results.filter((location) => location.category === 'att').length
+      const shippingCount = results.length - attCount
+      setLocationStatus(
+        `Found ${attCount} AT&T and ${shippingCount} shipping locations within ${radiusMiles} miles.`,
+      )
+    } catch (error) {
+      if (error.name !== 'AbortError') setLocationStatus(error.message)
+    } finally {
+      if (searchController.current === controller) setIsSearching(false)
+    }
+  }
 
   function findLocation() {
     if (!navigator.geolocation) {
@@ -208,19 +254,40 @@ function Shipping() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const nextCoords = {
-          latitude: position.coords.latitude.toFixed(5),
-          longitude: position.coords.longitude.toFixed(5),
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
         }
-        setCoords(nextCoords)
-        setLocationStatus(
-          'Location found. Browser geolocation provides coordinates only; enter the street address or ZIP for a shipping estimate.',
-        )
+        loadNearbyLocations(nextCoords)
       },
       (error) => {
         setLocationStatus(`Location unavailable: ${error.message}`)
       },
       { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 },
     )
+  }
+
+  async function searchAddress(event) {
+    event.preventDefault()
+    if (!address.trim()) {
+      setLocationStatus('Enter a U.S. address, city/state, or ZIP code to search.')
+      return
+    }
+
+    searchController.current?.abort()
+    const controller = new AbortController()
+    searchController.current = controller
+    setIsSearching(true)
+    setLocationStatus('Locating the entered address...')
+
+    try {
+      const result = await geocodeLocation(address.trim(), controller.signal)
+      await loadNearbyLocations(result, result.label)
+    } catch (error) {
+      if (error.name !== 'AbortError') {
+        setLocationStatus(error.message)
+        setIsSearching(false)
+      }
+    }
   }
 
   return (
@@ -282,7 +349,7 @@ function Shipping() {
           </p>
         </div>
 
-        <form className="shipping-address-form" onSubmit={(event) => event.preventDefault()}>
+        <form className="shipping-address-form" onSubmit={searchAddress}>
           <label htmlFor="shipping-address">Customer shipping or return location</label>
           <div>
             <input
@@ -292,8 +359,10 @@ function Shipping() {
               onChange={(event) => setAddress(event.target.value)}
               placeholder="Enter ZIP, city/state, or full address"
             />
-            <button type="submit">Estimate</button>
-            <button className="secondary" type="button" onClick={findLocation}>
+            <button type="submit" disabled={isSearching}>
+              {isSearching ? 'Searching…' : 'Search Map'}
+            </button>
+            <button className="secondary" type="button" onClick={findLocation} disabled={isSearching}>
               Find My Location
             </button>
           </div>
@@ -332,10 +401,116 @@ function Shipping() {
           <p>{locationStatus}</p>
           {coords && (
             <p>
-              Coordinates: {coords.latitude}, {coords.longitude}
+              Coordinates: {coords.latitude.toFixed(5)}, {coords.longitude.toFixed(5)}
             </p>
           )}
         </aside>
+
+        <div className="shipping-map-toolbar" aria-label="Location map controls">
+          <label>
+            Search radius
+            <select value={radiusMiles} onChange={(event) => setRadiusMiles(Number(event.target.value))}>
+              <option value={10}>10 miles</option>
+              <option value={25}>25 miles</option>
+              <option value={50}>50 miles</option>
+            </select>
+          </label>
+          <div className="shipping-map-filters" role="group" aria-label="Location type">
+            {[
+              ['all', 'All'],
+              ['att', 'AT&T'],
+              ['shipping', 'Shipping'],
+            ].map(([value, label]) => (
+              <button
+                className={locationFilter === value ? 'active' : ''}
+                type="button"
+                key={value}
+                onClick={() => setLocationFilter(value)}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="shipping-map-layout">
+          <div className="shipping-map" aria-label="Nearby AT&T and shipping locations map">
+            <MapContainer
+              center={[defaultMapCenter.latitude, defaultMapCenter.longitude]}
+              zoom={4}
+              scrollWheelZoom
+            >
+              <TileLayer
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+              {coords && <RecenterMap center={coords} zoom={radiusMiles === 50 ? 9 : 11} />}
+              {coords && (
+                <CircleMarker
+                  center={[coords.latitude, coords.longitude]}
+                  radius={8}
+                  pathOptions={{ color: '#ffffff', fillColor: '#2563eb', fillOpacity: 1, weight: 3 }}
+                >
+                  <Popup>Search center</Popup>
+                </CircleMarker>
+              )}
+              {visibleLocations.map((location) => (
+                <CircleMarker
+                  key={location.id}
+                  center={[location.latitude, location.longitude]}
+                  radius={7}
+                  pathOptions={{
+                    color: '#ffffff',
+                    fillColor: location.category === 'att' ? '#00a8e0' : '#f97316',
+                    fillOpacity: 0.95,
+                    weight: 2,
+                  }}
+                >
+                  <Popup>
+                    <strong>{location.name}</strong>
+                    <br />
+                    {location.category === 'att' ? 'AT&T location' : 'Shipping location'}
+                    <br />
+                    {location.address || 'Address not supplied by OpenStreetMap'}
+                    <br />
+                    {location.distanceMiles.toFixed(1)} miles away
+                  </Popup>
+                </CircleMarker>
+              ))}
+            </MapContainer>
+          </div>
+
+          <div className="shipping-location-list" aria-live="polite">
+            <strong>{visibleLocations.length} mapped locations</strong>
+            {visibleLocations.length === 0 ? (
+              <p>Search an address or use your location to load nearby markers.</p>
+            ) : (
+              <ol>
+                {visibleLocations.map((location) => (
+                  <li key={location.id}>
+                    <span className={`location-dot ${location.category}`} aria-hidden="true" />
+                    <div>
+                      <strong>{location.name}</strong>
+                      <span>
+                        {location.distanceMiles.toFixed(1)} mi ·{' '}
+                        {location.category === 'att' ? 'AT&T' : 'Shipping'}
+                      </span>
+                      <p>{location.address || 'Address unavailable'}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            )}
+          </div>
+        </div>
+        <p className="shipping-map-note">
+          Locations are community-maintained OpenStreetMap data and may be incomplete or outdated.
+          Verify AT&T stores with the{' '}
+          <a href="https://www.att.com/stores/" target="_blank" rel="noreferrer">
+            official AT&T store locator
+          </a>{' '}
+          and confirm shipping services before sending a customer.
+        </p>
       </section>
 
       <section className="shipping-source-panel">

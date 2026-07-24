@@ -17,6 +17,7 @@ import Quiz from './components/Quiz'
 import Roadmap from './components/Roadmap'
 import Search from './components/Search'
 import SelfServiceGame from './components/SelfServiceGame'
+import Shipping from './components/Shipping'
 import professionalHero from './assets/professional-hero.png'
 import {
   accountRoadmap,
@@ -71,6 +72,12 @@ const navItems = [
     label: 'HeatMap',
     theme: 'map',
     description: 'Coverage and travel feature learning map',
+  },
+  {
+    id: 'shipping',
+    label: 'Shipping',
+    theme: 'steel',
+    description: 'Equipment shipping, returns, and lost-device workflows',
   },
   {
     id: 'device-upgrades',
@@ -153,6 +160,14 @@ const eagleEyeSummaries = {
       'Use this as a learning map, not as a live address-level coverage checker.',
       'All listed individual FirstNet plans include First Priority language, but coverage/travel benefits differ by plan.',
       '5G and International Day Pass both need verification before quoting: check the device, destination, location, and account details.',
+    ],
+  },
+  shipping: {
+    title: 'Shipping in plain words',
+    points: [
+      'Exact delivery and return dates must come from official tracking, return-label, order, or account tools.',
+      'Returns generally require the correct return period, like-new condition, original components, packaging, and proof of purchase.',
+      'Lost or stolen equipment starts with account protection: verify the caller, identify the device/line, then use official suspend, block, replacement, or recovery steps.',
     ],
   },
   'device-upgrades': {
@@ -288,6 +303,15 @@ const tutorialSteps = [
     summary: 'HeatMap organizes coverage and travel learning concepts already present in the app.',
     features: ['Coverage and travel concepts are separated by buttons/lists.', 'International Day Pass is treated as verify-before-quote.', 'This is not presented as a live address-level coverage checker.'],
     demo: 'Switch between layers to compare coverage, travel, 5G, and plan-specific concepts.',
+  },
+  {
+    tab: 'shipping',
+    spotlight: 'content',
+    title: 'Shipping Desk',
+    component: 'Equipment logistics guide',
+    summary: 'Shipping separates returns, outbound equipment, lost/stolen devices, and recovery steps.',
+    features: ['Policy cards explain each workflow.', 'The estimator provides planning ranges only.', 'Find My Location captures coordinates without pretending to know a street address.'],
+    demo: 'Enter a ZIP, city/state, or address to see a training estimate, then verify actual dates in official tools.',
   },
   {
     tab: 'device-upgrades',
@@ -682,6 +706,15 @@ function App() {
             {eagleEyeEnabled && <EagleEyeSummary summary={eagleEyeSummaries.heatmap} />}
             <section className="study-section" id="heatmap">
               <HeatMap />
+            </section>
+          </div>
+        )}
+
+        {activeTab === 'shipping' && (
+          <div className="tab-panel">
+            {eagleEyeEnabled && <EagleEyeSummary summary={eagleEyeSummaries.shipping} />}
+            <section className="study-section" id="shipping">
+              <Shipping />
             </section>
           </div>
         )}

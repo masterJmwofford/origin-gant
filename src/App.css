@@ -6768,3 +6768,333 @@ body {
     display: grid;
   }
 }
+
+/* Shipping logistics workspace */
+.shipping-tool {
+  display: grid;
+  gap: 18px;
+  width: 100%;
+  min-width: 0;
+}
+
+.shipping-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(240px, 0.6fr);
+  gap: 16px;
+  align-items: stretch;
+  padding: 18px;
+  border: 1px solid rgba(215, 169, 40, 0.34);
+  border-radius: 10px;
+  background:
+    linear-gradient(135deg, rgba(7, 22, 47, 0.96), rgba(18, 56, 100, 0.92)),
+    var(--lyceum-navy);
+  color: #ffffff;
+  box-shadow: 0 20px 42px rgba(7, 22, 47, 0.16);
+}
+
+.shipping-hero h2,
+.shipping-hero p {
+  margin-right: auto;
+  margin-left: auto;
+  color: inherit;
+}
+
+.shipping-hero h2 {
+  margin-top: 4px;
+  font-size: clamp(27px, 5vw, 46px);
+  line-height: 1.04;
+}
+
+.shipping-hero p:not(.eyebrow) {
+  max-width: 760px;
+  color: rgba(255, 255, 255, 0.84);
+}
+
+.shipping-hero .eyebrow {
+  color: var(--lyceum-gold-2);
+}
+
+.shipping-hero-card {
+  display: grid;
+  align-content: center;
+  gap: 10px;
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid rgba(243, 207, 98, 0.34);
+  border-radius: 10px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.06));
+}
+
+.shipping-hero-card span,
+.shipping-policy-card span,
+.shipping-estimate-grid span {
+  width: fit-content;
+  padding: 5px 8px;
+  border-radius: 999px;
+  background: rgba(243, 207, 98, 0.18);
+  color: var(--lyceum-gold-2);
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.shipping-hero-card strong {
+  color: #ffffff;
+  font-size: 22px;
+  line-height: 1.12;
+}
+
+.shipping-policy-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  min-width: 0;
+}
+
+.shipping-policy-card,
+.shipping-account-paths,
+.shipping-estimator,
+.shipping-source-panel {
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid rgba(7, 22, 47, 0.11);
+  border-radius: 10px;
+  background:
+    linear-gradient(180deg, #ffffff, #f8fafc);
+  box-shadow: 0 14px 28px rgba(7, 22, 47, 0.08);
+}
+
+.shipping-policy-card {
+  display: grid;
+  gap: 10px;
+  border-top: 4px solid var(--lyceum-gold);
+}
+
+.shipping-policy-card h3,
+.shipping-account-paths h3,
+.shipping-estimator h3,
+.shipping-source-panel h3 {
+  margin: 0;
+  color: var(--lyceum-navy);
+  font-size: clamp(20px, 3.6vw, 28px);
+  line-height: 1.1;
+}
+
+.shipping-policy-card p,
+.shipping-account-paths p,
+.shipping-estimator p,
+.shipping-source-panel p,
+.shipping-policy-card li,
+.shipping-estimate-grid li {
+  margin: 0;
+  color: #344054;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.shipping-policy-card ul,
+.shipping-estimate-grid ul {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+  padding-left: 18px;
+}
+
+.shipping-path-list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.shipping-path-list article {
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid rgba(215, 169, 40, 0.28);
+  border-radius: 8px;
+  background: var(--lyceum-gold-soft);
+}
+
+.shipping-path-list strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--lyceum-navy);
+  font-size: 14px;
+}
+
+.shipping-address-form {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.shipping-address-form label {
+  color: var(--lyceum-navy);
+  font-weight: 900;
+}
+
+.shipping-address-form div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 8px;
+  min-width: 0;
+}
+
+.shipping-address-form input {
+  min-width: 0;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid rgba(7, 22, 47, 0.16);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--lyceum-navy);
+  font: inherit;
+}
+
+.shipping-address-form button {
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 1px solid rgba(215, 169, 40, 0.68);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, var(--lyceum-gold-2), var(--lyceum-gold));
+  color: var(--lyceum-navy);
+  font-weight: 950;
+}
+
+.shipping-address-form button.secondary {
+  border-color: rgba(7, 22, 47, 0.16);
+  background: #ffffff;
+}
+
+.shipping-estimate-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.shipping-estimate-grid article {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  min-width: 0;
+  padding: 13px;
+  border: 1px solid rgba(7, 22, 47, 0.1);
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.shipping-estimate-grid h4 {
+  margin: 0;
+  color: var(--lyceum-navy);
+  font-size: 17px;
+}
+
+.shipping-estimate-grid strong {
+  color: #725300;
+  font-size: 13px;
+  line-height: 1.32;
+}
+
+.location-result {
+  display: grid;
+  gap: 4px;
+  margin-top: 12px;
+  padding: 12px;
+  border: 1px solid rgba(7, 22, 47, 0.1);
+  border-left: 5px solid var(--lyceum-gold);
+  border-radius: 8px;
+  background: rgba(243, 207, 98, 0.12);
+}
+
+.location-result strong {
+  color: var(--lyceum-navy);
+}
+
+.shipping-source-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.shipping-source-list a {
+  display: inline-flex;
+  padding: 9px 11px;
+  border: 1px solid rgba(7, 22, 47, 0.12);
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--lyceum-navy);
+  font-size: 13px;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+@media (max-width: 980px) {
+  .shipping-hero,
+  .shipping-policy-grid,
+  .shipping-path-list,
+  .shipping-estimate-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .shipping-hero {
+    text-align: center;
+  }
+
+  .shipping-hero-card {
+    justify-items: center;
+    text-align: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .shipping-tool {
+    gap: 12px;
+  }
+
+  .shipping-hero,
+  .shipping-policy-card,
+  .shipping-account-paths,
+  .shipping-estimator,
+  .shipping-source-panel {
+    padding: 12px;
+    border-radius: 8px;
+  }
+
+  .shipping-address-form div {
+    grid-template-columns: 1fr;
+  }
+
+  .shipping-address-form button {
+    width: 100%;
+  }
+
+  .shipping-policy-card p,
+  .shipping-account-paths p,
+  .shipping-estimator p,
+  .shipping-source-panel p,
+  .shipping-policy-card li,
+  .shipping-estimate-grid li,
+  .location-result p {
+    font-size: 13px;
+    line-height: 1.36;
+    overflow-wrap: anywhere;
+  }
+
+  .shipping-source-list {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .shipping-source-list a {
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+  }
+}

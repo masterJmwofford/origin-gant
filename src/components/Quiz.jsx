@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 
-export default function Quiz({ questions }) {
+export default function Quiz({ questions, quizId, onCorrectAnswer }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState("");
   const [score, setScore] = useState(0);
@@ -20,6 +20,7 @@ export default function Quiz({ questions }) {
 
     if (option === currentQuestion.answer) {
       setScore((currentScore) => currentScore + 1);
+      onCorrectAnswer?.(quizId, currentQuestion.prompt, option);
     }
   }
 
@@ -79,7 +80,7 @@ export default function Quiz({ questions }) {
         <div className="quiz-result">
           <p>
             {selectedAnswer === currentQuestion.answer
-              ? "Correct."
+              ? "Correct. Members earn 20 points the first time they answer this question correctly."
               : `Not quite. Correct answer: ${currentQuestion.answer}.`}
           </p>
           <button className="primary" type="button" onClick={nextQuestion}>

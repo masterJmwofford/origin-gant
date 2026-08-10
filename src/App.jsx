@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 import './App.css'
+import AccountPanel from './components/AccountPanel'
 import AccountRoadmap from './components/AccountRoadmap'
 import BillingEligibilityGuide from './components/BillingEligibilityGuide'
 import DashBoard from './components/DashBoard.jsx'
@@ -10,6 +11,7 @@ import EagleEye from './components/EagleEye'
 import EssentialQuestions from './components/EssentialQuestions'
 import FlashCardGrid from './components/FlashCardGrid'
 import HeatMap from './components/HeatMap'
+import Leaderboard from './components/Leaderboard'
 import MesaBreaker from './components/MesaBreaker'
 import ScriptStudio from './components/ScriptStudio'
 import Plans from './components/Plans'
@@ -18,6 +20,7 @@ import Roadmap from './components/Roadmap'
 import Search from './components/Search'
 import SelfServiceGame from './components/SelfServiceGame'
 import Shipping from './components/Shipping'
+import { useAuth } from './context/AuthContext'
 import professionalHero from './assets/professional-hero.png'
 import {
   accountRoadmap,
@@ -104,8 +107,6 @@ const navItems = [
     description: 'Customer script builder with source-colored sections',
   },
 ]
-
-const availableFeatureIds = new Set(['billing', 'eligibility', 'index-cards', 'mesa-breaker'])
 
 const eagleEyeSummaries = {
   billing: {
@@ -387,6 +388,7 @@ function getTutorialTargetSelector(step) {
 }
 
 function App() {
+  const { user, authLoading, awardQuiz, awardSection } = useAuth()
   const [query, setQuery] = useState('')
   const [activeTab, setActiveTab] = useState('billing')
   const [navCompact, setNavCompact] = useState(false)
@@ -397,9 +399,11 @@ function App() {
   const [tutorialStep, setTutorialStep] = useState(0)
   const [tutorialTarget, setTutorialTarget] = useState(null)
   const [tutorialCardPlacement, setTutorialCardPlacement] = useState({ top: 18, left: 18 })
-  const [lockedFeature, setLockedFeature] = useState(null)
+  const [accountOpen, setAccountOpen] = useState(false)
+  const [pointsNotice, setPointsNotice] = useState(null)
   const navAnchorRef = useRef(null)
   const viewTrackedRef = useRef(false)
+  const userId = user?.id
   const activeNavItem = navItems.find((item) => item.id === activeTab)
   const currentTutorial = tutorialSteps[tutorialStep]
 
@@ -407,6 +411,9 @@ function App() {
   const filteredPlans = studyNotes.filter((plan) => matchesSearch(plan, query))
   const filteredQuestions = quizQuestions.filter((question) => matchesSearch(question, query))
   const visibleQuestions = filteredQuestions.length > 0 ? filteredQuestions : quizQuestions
+  const completedSections = new Set(
+    user?.progress?.filter((event) => event.type === 'section_view').map((event) => event.section) ?? [],
+  )
   const stats = [
     {
       label: 'Terms',
@@ -464,6 +471,27 @@ function App() {
       document.body.classList.remove('lyceum-dark')
     }
   }, [darkModeEnabled])
+
+  useEffect(() => {
+    if (!userId) return undefined
+
+    let active = true
+    awardSection(activeTab)
+      .then((result) => {
+        if (active && result.awarded > 0) setPointsNotice(`+${result.awarded} points for exploring ${activeNavItem.label}`)
+      })
+      .catch(() => {})
+
+    return () => {
+      active = false
+    }
+  }, [activeNavItem.label, activeTab, awardSection, userId])
+
+  useEffect(() => {
+    if (!pointsNotice) return undefined
+    const timer = window.setTimeout(() => setPointsNotice(null), 3200)
+    return () => window.clearTimeout(timer)
+  }, [pointsNotice])
 
   useEffect(() => {
     function updateNavState() {
@@ -531,13 +559,6 @@ function App() {
     const boundedStep = Math.min(Math.max(nextStep, 0), tutorialSteps.length - 1)
     const step = tutorialSteps[boundedStep]
 
-    if (!availableFeatureIds.has(step.tab)) {
-      setTutorialOpen(false)
-      setTutorialTarget(null)
-      setLockedFeature(navItems.find((item) => item.id === step.tab) ?? { label: 'This feature' })
-      return
-    }
-
     setTutorialStep(boundedStep)
     setActiveTab(step.tab)
     window.setTimeout(() => {
@@ -572,13 +593,34 @@ function App() {
     showTutorialStep(tutorialStep + 1)
   }
 
-  function selectFeature(item) {
-    if (!availableFeatureIds.has(item.id)) {
-      setLockedFeature(item)
-      return
+  async function handleCorrectAnswer(quizId, questionId, answer) {
+    if (!user) return
+    try {
+      const result = await awardQuiz(quizId, questionId, answer)
+      if (result.awarded > 0) setPointsNotice(`+${result.awarded} points for a correct answer`)
+    } catch {
+      // Quiz interaction should continue if progress syncing is temporarily unavailable.
     }
+  }
 
-    setActiveTab(item.id)
+  if (authLoading) {
+    return (
+      <main className="auth-loading" aria-live="polite">
+        <div className="auth-loading-mark" aria-hidden="true">L</div>
+        <strong>Loading Lyceum…</strong>
+      </main>
+    )
+  }
+
+  if (!user) {
+    return (
+      <main className="auth-gate">
+        <div className="auth-gate-brand" aria-hidden="true">
+          <span>LYCEUM</span>
+        </div>
+        <AccountPanel required />
+      </main>
+    )
   }
 
   return (
@@ -615,21 +657,17 @@ function App() {
         {navItems.map((item) => (
           <button
             className={`nav-tab nav-${item.theme} ${activeTab === item.id ? 'active' : ''} ${
-              availableFeatureIds.has(item.id) ? '' : 'premium-locked'
+              completedSections.has(item.id) ? 'section-complete' : ''
             }`}
             key={item.id}
             type="button"
-            onClick={() => selectFeature(item)}
-            aria-haspopup={availableFeatureIds.has(item.id) ? undefined : 'dialog'}
-            aria-label={
-              availableFeatureIds.has(item.id) ? item.label : `${item.label}, premium feature locked`
-            }
+            onClick={() => setActiveTab(item.id)}
           >
             <span>{item.label}</span>
-            {!availableFeatureIds.has(item.id) && (
-              <span className="premium-lock-mark" aria-hidden="true">
-                <span />
-              </span>
+            {user && (
+              <small className="nav-point-badge">
+                {completedSections.has(item.id) ? '✓ 10 pts' : '+10 pts'}
+              </small>
             )}
           </button>
         ))}
@@ -652,7 +690,18 @@ function App() {
             <small>{darkModeEnabled ? 'Black and gold is on' : 'Switch to black and gold'}</small>
           </span>
         </button>
+        <button className="profile-toggle" type="button" onClick={() => setAccountOpen(true)}>
+          <span className="profile-avatar" aria-hidden="true">
+            {user ? user.displayName.slice(0, 1).toUpperCase() : '♙'}
+          </span>
+          <span>
+            <strong>{user ? user.displayName : 'Profile'}</strong>
+            <small>{user ? `${user.points} points` : 'Log in or sign up'}</small>
+          </span>
+        </button>
       </div>
+
+      <Leaderboard onOpenAccount={() => setAccountOpen(true)} />
 
       <section className="tab-shell">
         {activeTab === 'billing' && (
@@ -671,7 +720,11 @@ function App() {
                 <p className="eyebrow">Practice</p>
                 <h2>Billing and Eligibility Quiz</h2>
               </div>
-              <Quiz questions={billingEligibilityQuiz} />
+              <Quiz
+                questions={billingEligibilityQuiz}
+                quizId="billing-eligibility"
+                onCorrectAnswer={handleCorrectAnswer}
+              />
             </section>
           </div>
         )}
@@ -720,6 +773,8 @@ function App() {
               <Quiz
                 key={visibleQuestions.map((question) => question.prompt).join('|')}
                 questions={visibleQuestions}
+                quizId="index-cards"
+                onCorrectAnswer={handleCorrectAnswer}
               />
             </section>
           </div>
@@ -914,37 +969,8 @@ function App() {
         </aside>
       )}
 
-      {lockedFeature && (
-        <div
-          className="premium-lock-overlay"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="premium-lock-title"
-          onMouseDown={(event) => {
-            if (event.target === event.currentTarget) setLockedFeature(null)
-          }}
-        >
-          <section className="premium-lock-card">
-            <button
-              className="premium-lock-close"
-              type="button"
-              onClick={() => setLockedFeature(null)}
-              aria-label="Close premium feature message"
-            >
-              ×
-            </button>
-            <div className="premium-lock-icon" aria-hidden="true">
-              <span />
-            </div>
-            <p className="eyebrow">{lockedFeature.label}</p>
-            <h2 id="premium-lock-title">Premium member feature</h2>
-            <p>Premium member features will be available soon. Updates are in progress.</p>
-            <button className="premium-lock-action" type="button" onClick={() => setLockedFeature(null)}>
-              Got it
-            </button>
-          </section>
-        </div>
-      )}
+      {accountOpen && <AccountPanel onClose={() => setAccountOpen(false)} />}
+      {pointsNotice && <div className="points-toast" role="status">{pointsNotice}</div>}
     </main>
   )
 }

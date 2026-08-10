@@ -105,6 +105,8 @@ const navItems = [
   },
 ]
 
+const availableFeatureIds = new Set(['billing', 'eligibility', 'index-cards', 'mesa-breaker'])
+
 const eagleEyeSummaries = {
   billing: {
     title: 'Billing in plain words',
@@ -385,11 +387,6 @@ function getTutorialTargetSelector(step) {
 }
 
 function App() {
-  const [isUnlocked, setIsUnlocked] = useState(
-    () => window.sessionStorage.getItem('lyceum-access') === 'granted',
-  )
-  const [accessCode, setAccessCode] = useState('')
-  const [accessError, setAccessError] = useState('')
   const [query, setQuery] = useState('')
   const [activeTab, setActiveTab] = useState('billing')
   const [navCompact, setNavCompact] = useState(false)
@@ -400,6 +397,7 @@ function App() {
   const [tutorialStep, setTutorialStep] = useState(0)
   const [tutorialTarget, setTutorialTarget] = useState(null)
   const [tutorialCardPlacement, setTutorialCardPlacement] = useState({ top: 18, left: 18 })
+  const [lockedFeature, setLockedFeature] = useState(null)
   const navAnchorRef = useRef(null)
   const viewTrackedRef = useRef(false)
   const activeNavItem = navItems.find((item) => item.id === activeTab)
@@ -468,14 +466,6 @@ function App() {
   }, [darkModeEnabled])
 
   useEffect(() => {
-    document.body.classList.toggle('access-locked', !isUnlocked)
-
-    return () => {
-      document.body.classList.remove('access-locked')
-    }
-  }, [isUnlocked])
-
-  useEffect(() => {
     function updateNavState() {
       if (!navAnchorRef.current) return
 
@@ -541,6 +531,13 @@ function App() {
     const boundedStep = Math.min(Math.max(nextStep, 0), tutorialSteps.length - 1)
     const step = tutorialSteps[boundedStep]
 
+    if (!availableFeatureIds.has(step.tab)) {
+      setTutorialOpen(false)
+      setTutorialTarget(null)
+      setLockedFeature(navItems.find((item) => item.id === step.tab) ?? { label: 'This feature' })
+      return
+    }
+
     setTutorialStep(boundedStep)
     setActiveTab(step.tab)
     window.setTimeout(() => {
@@ -575,23 +572,18 @@ function App() {
     showTutorialStep(tutorialStep + 1)
   }
 
-  function submitAccessCode(event) {
-    event.preventDefault()
-
-    if (accessCode.trim() !== 'Melanie') {
-      setAccessError('That access code is incorrect. Please try again.')
+  function selectFeature(item) {
+    if (!availableFeatureIds.has(item.id)) {
+      setLockedFeature(item)
       return
     }
 
-    window.sessionStorage.setItem('lyceum-access', 'granted')
-    setAccessError('')
-    setIsUnlocked(true)
+    setActiveTab(item.id)
   }
 
   return (
-    <>
     <main
-      className={`page ${!isUnlocked ? 'app-content-locked' : ''} theme-${activeNavItem.theme} ${eagleEyeEnabled ? 'eagle-eye-on' : ''} ${
+      className={`page theme-${activeNavItem.theme} ${eagleEyeEnabled ? 'eagle-eye-on' : ''} ${
         darkModeEnabled ? 'dark-mode' : ''
       } ${tutorialOpen ? 'tutorial-running' : ''} ${
         tutorialOpen ? `tutorial-spotlight-${currentTutorial.spotlight}` : ''
@@ -622,12 +614,23 @@ function App() {
       <nav className={`study-nav ${navCompact ? 'is-compact' : ''}`} aria-label="Study sections">
         {navItems.map((item) => (
           <button
-            className={`nav-tab nav-${item.theme} ${activeTab === item.id ? 'active' : ''}`}
+            className={`nav-tab nav-${item.theme} ${activeTab === item.id ? 'active' : ''} ${
+              availableFeatureIds.has(item.id) ? '' : 'premium-locked'
+            }`}
             key={item.id}
             type="button"
-            onClick={() => setActiveTab(item.id)}
+            onClick={() => selectFeature(item)}
+            aria-haspopup={availableFeatureIds.has(item.id) ? undefined : 'dialog'}
+            aria-label={
+              availableFeatureIds.has(item.id) ? item.label : `${item.label}, premium feature locked`
+            }
           >
             <span>{item.label}</span>
+            {!availableFeatureIds.has(item.id) && (
+              <span className="premium-lock-mark" aria-hidden="true">
+                <span />
+              </span>
+            )}
           </button>
         ))}
       </nav>
@@ -910,43 +913,39 @@ function App() {
           </section>
         </aside>
       )}
-    </main>
-      {!isUnlocked && (
-        <div className="access-lock" role="dialog" aria-modal="true" aria-labelledby="access-lock-title">
-          <form className="access-lock-card" onSubmit={submitAccessCode}>
-            <div className="access-lock-icon" aria-hidden="true">
+
+      {lockedFeature && (
+        <div
+          className="premium-lock-overlay"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="premium-lock-title"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) setLockedFeature(null)
+          }}
+        >
+          <section className="premium-lock-card">
+            <button
+              className="premium-lock-close"
+              type="button"
+              onClick={() => setLockedFeature(null)}
+              aria-label="Close premium feature message"
+            >
+              ×
+            </button>
+            <div className="premium-lock-icon" aria-hidden="true">
               <span />
             </div>
-            <p className="eyebrow">Protected workspace</p>
-            <h1 id="access-lock-title">Enter access code</h1>
-            <p>
-              This learning workspace is locked. Contact Jordan Wofford to obtain the access code,
-              then enter it below to continue.
-            </p>
-            <label htmlFor="app-access-code">Access code</label>
-            <input
-              id="app-access-code"
-              type="password"
-              value={accessCode}
-              onChange={(event) => {
-                setAccessCode(event.target.value)
-                if (accessError) setAccessError('')
-              }}
-              autoComplete="current-password"
-              autoFocus
-              aria-invalid={Boolean(accessError)}
-              aria-describedby={accessError ? 'access-code-error' : undefined}
-            />
-            {accessError && (
-              <p className="access-lock-error" id="access-code-error" role="alert">
-                {accessError}
-              </p>
-            )}
-            <button type="submit">Unlock Lyceum</button>
-          </form>
+            <p className="eyebrow">{lockedFeature.label}</p>
+            <h2 id="premium-lock-title">Premium member feature</h2>
+            <p>Premium member features will be available soon. Updates are in progress.</p>
+            <button className="premium-lock-action" type="button" onClick={() => setLockedFeature(null)}>
+              Got it
+            </button>
+          </section>
         </div>
       )}
-    </>
+    </main>
   )
 }
 

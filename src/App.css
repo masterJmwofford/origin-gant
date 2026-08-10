@@ -8747,140 +8747,172 @@ body.lyceum-dark {
     0 10px 24px rgba(0, 0, 0, 0.2);
 }
 
-/* App access gate */
-body.access-locked {
-  overflow: hidden;
+/* Premium feature locks */
+.nav-tab.premium-locked {
+  position: relative;
+  padding-right: 38px;
+  opacity: 0.68;
 }
 
-.app-content-locked {
-  height: 100vh;
-  overflow: hidden;
-  filter: blur(14px);
-  pointer-events: none;
-  user-select: none;
-  transform: scale(1.015);
+.nav-tab.premium-locked:hover {
+  opacity: 1;
 }
 
-.access-lock {
+.premium-lock-mark {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  width: 14px;
+  height: 12px;
+  margin: 2px 0 0;
+  border-radius: 3px;
+  background: currentColor;
+  transform: translateY(-50%);
+}
+
+.premium-lock-mark::before {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: -8px;
+  width: 6px;
+  height: 8px;
+  border: 2px solid currentColor;
+  border-bottom: 0;
+  border-radius: 6px 6px 0 0;
+}
+
+.premium-lock-mark > span {
+  position: absolute;
+  left: 6px;
+  top: 4px;
+  width: 2px;
+  height: 5px;
+  border-radius: 2px;
+  background: #ffffff;
+}
+
+.premium-lock-overlay {
   position: fixed;
   z-index: 10000;
   inset: 0;
   display: grid;
   place-items: center;
   padding: 20px;
-  background: rgba(5, 10, 18, 0.48);
-  backdrop-filter: blur(2px);
+  background: rgba(5, 10, 18, 0.62);
+  backdrop-filter: blur(8px);
 }
 
-.access-lock-card {
-  width: min(100%, 420px);
-  padding: 34px;
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  border-radius: 22px;
-  background: rgba(255, 255, 255, 0.96);
-  color: #172033;
-  box-shadow: 0 30px 80px rgba(4, 11, 24, 0.42);
-}
-
-.access-lock-icon {
+.premium-lock-card {
   position: relative;
-  width: 52px;
-  height: 44px;
-  margin-bottom: 20px;
-  border-radius: 10px;
-  background: linear-gradient(145deg, #0f7898, #07536c);
-  box-shadow: 0 10px 24px rgba(15, 120, 152, 0.28);
+  width: min(100%, 430px);
+  padding: 34px;
+  border: 1px solid rgba(255, 255, 255, 0.74);
+  border-radius: 22px;
+  background: #ffffff;
+  color: #172033;
+  text-align: center;
+  box-shadow: 0 30px 80px rgba(4, 11, 24, 0.46);
 }
 
-.access-lock-icon::before {
+.premium-lock-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 50%;
+  background: #edf3f6;
+  color: #334155;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.premium-lock-icon {
+  position: relative;
+  width: 58px;
+  height: 48px;
+  margin: 16px auto 24px;
+  border-radius: 11px;
+  background: linear-gradient(145deg, #d6a927, #8f6800);
+  box-shadow: 0 12px 26px rgba(143, 104, 0, 0.28);
+}
+
+.premium-lock-icon::before {
   content: '';
   position: absolute;
-  left: 12px;
-  top: -19px;
+  left: 13px;
+  top: -21px;
   width: 24px;
-  height: 25px;
-  border: 5px solid #0f7898;
+  height: 27px;
+  border: 5px solid #d6a927;
   border-bottom: 0;
-  border-radius: 15px 15px 0 0;
+  border-radius: 16px 16px 0 0;
 }
 
-.access-lock-icon span {
+.premium-lock-icon span {
   position: absolute;
-  left: 23px;
-  top: 13px;
-  width: 7px;
-  height: 14px;
+  left: 25px;
+  top: 14px;
+  width: 8px;
+  height: 16px;
   border-radius: 999px;
   background: #ffffff;
 }
 
-.access-lock-card .eyebrow {
-  margin: 0 0 7px;
-  color: #0f7898;
+.premium-lock-card .eyebrow {
+  margin: 0 0 8px;
+  color: #8f6800;
 }
 
-.access-lock-card h1 {
+.premium-lock-card h2 {
   margin: 0;
-  font-size: clamp(1.65rem, 5vw, 2.25rem);
+  color: #172033;
 }
 
-.access-lock-card > p:not(.eyebrow, .access-lock-error) {
-  margin: 10px 0 22px;
+.premium-lock-card > p:not(.eyebrow) {
+  margin: 12px 0 24px;
   color: #526174;
+  font-size: 1rem;
   line-height: 1.55;
 }
 
-.access-lock-card label {
-  display: block;
-  margin-bottom: 7px;
-  font-size: 0.86rem;
-  font-weight: 800;
-}
-
-.access-lock-card input {
+.premium-lock-action {
   width: 100%;
-  padding: 13px 14px;
-  border: 1px solid #b9c6d4;
-  border-radius: 10px;
-  background: #ffffff;
-  color: #172033;
-  font: inherit;
-  box-sizing: border-box;
-}
-
-.access-lock-card input:focus {
-  border-color: #0f7898;
-  outline: 3px solid rgba(15, 120, 152, 0.18);
-}
-
-.access-lock-card input[aria-invalid='true'] {
-  border-color: #c93636;
-}
-
-.access-lock-error {
-  margin: 8px 0 0;
-  color: #b42318;
-  font-size: 0.84rem;
-  font-weight: 700;
-}
-
-.access-lock-card button {
-  width: 100%;
-  margin-top: 18px;
-  padding: 13px 18px;
+  padding: 12px 18px;
   border: 0;
   border-radius: 10px;
-  background: linear-gradient(135deg, #0f7898, #07536c);
-  color: #ffffff;
+  background: linear-gradient(135deg, #d6a927, #9b7100);
+  color: #171307;
   font: inherit;
   font-weight: 850;
   cursor: pointer;
-  box-shadow: 0 10px 22px rgba(15, 120, 152, 0.24);
+}
+
+.page.dark-mode .premium-lock-card {
+  border-color: rgba(243, 207, 98, 0.5);
+  background: #151821;
+  color: #fff3c9;
+}
+
+.page.dark-mode .premium-lock-card h2 {
+  color: #ffe08a;
+}
+
+.page.dark-mode .premium-lock-card > p:not(.eyebrow) {
+  color: #efe3bd;
+}
+
+.page.dark-mode .premium-lock-close {
+  background: #252a35;
+  color: #fff3c9;
 }
 
 @media (max-width: 520px) {
-  .access-lock-card {
-    padding: 28px 22px;
+  .premium-lock-card {
+    padding: 30px 22px 24px;
     border-radius: 16px;
   }
 }

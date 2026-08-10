@@ -385,6 +385,11 @@ function getTutorialTargetSelector(step) {
 }
 
 function App() {
+  const [isUnlocked, setIsUnlocked] = useState(
+    () => window.sessionStorage.getItem('lyceum-access') === 'granted',
+  )
+  const [accessCode, setAccessCode] = useState('')
+  const [accessError, setAccessError] = useState('')
   const [query, setQuery] = useState('')
   const [activeTab, setActiveTab] = useState('billing')
   const [navCompact, setNavCompact] = useState(false)
@@ -461,6 +466,14 @@ function App() {
       document.body.classList.remove('lyceum-dark')
     }
   }, [darkModeEnabled])
+
+  useEffect(() => {
+    document.body.classList.toggle('access-locked', !isUnlocked)
+
+    return () => {
+      document.body.classList.remove('access-locked')
+    }
+  }, [isUnlocked])
 
   useEffect(() => {
     function updateNavState() {
@@ -562,9 +575,23 @@ function App() {
     showTutorialStep(tutorialStep + 1)
   }
 
+  function submitAccessCode(event) {
+    event.preventDefault()
+
+    if (accessCode.trim() !== 'Melanie') {
+      setAccessError('That access code is incorrect. Please try again.')
+      return
+    }
+
+    window.sessionStorage.setItem('lyceum-access', 'granted')
+    setAccessError('')
+    setIsUnlocked(true)
+  }
+
   return (
+    <>
     <main
-      className={`page theme-${activeNavItem.theme} ${eagleEyeEnabled ? 'eagle-eye-on' : ''} ${
+      className={`page ${!isUnlocked ? 'app-content-locked' : ''} theme-${activeNavItem.theme} ${eagleEyeEnabled ? 'eagle-eye-on' : ''} ${
         darkModeEnabled ? 'dark-mode' : ''
       } ${tutorialOpen ? 'tutorial-running' : ''} ${
         tutorialOpen ? `tutorial-spotlight-${currentTutorial.spotlight}` : ''
@@ -884,6 +911,42 @@ function App() {
         </aside>
       )}
     </main>
+      {!isUnlocked && (
+        <div className="access-lock" role="dialog" aria-modal="true" aria-labelledby="access-lock-title">
+          <form className="access-lock-card" onSubmit={submitAccessCode}>
+            <div className="access-lock-icon" aria-hidden="true">
+              <span />
+            </div>
+            <p className="eyebrow">Protected workspace</p>
+            <h1 id="access-lock-title">Enter access code</h1>
+            <p>
+              This learning workspace is locked. Contact Jordan Wofford to obtain the access code,
+              then enter it below to continue.
+            </p>
+            <label htmlFor="app-access-code">Access code</label>
+            <input
+              id="app-access-code"
+              type="password"
+              value={accessCode}
+              onChange={(event) => {
+                setAccessCode(event.target.value)
+                if (accessError) setAccessError('')
+              }}
+              autoComplete="current-password"
+              autoFocus
+              aria-invalid={Boolean(accessError)}
+              aria-describedby={accessError ? 'access-code-error' : undefined}
+            />
+            {accessError && (
+              <p className="access-lock-error" id="access-code-error" role="alert">
+                {accessError}
+              </p>
+            )}
+            <button type="submit">Unlock Lyceum</button>
+          </form>
+        </div>
+      )}
+    </>
   )
 }
 

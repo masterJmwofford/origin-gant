@@ -41,8 +41,8 @@ export default function Leaderboard({ onOpenAccount }) {
           {leaders.slice(0, 10).map((leader) => (
             <li className={leader.id === user.id ? 'current-member' : ''} key={leader.id}>
               <span className="leader-rank">#{leader.rank}</span>
-              <span className="leader-avatar" aria-hidden="true">{leader.displayName.slice(0, 1).toUpperCase()}</span>
-              <strong>{leader.displayName}</strong>
+              <span className="leader-avatar" aria-hidden="true">{(leader.displayName || 'Member').charAt(0).toUpperCase()}</span>
+              <strong>{leader.displayName || 'Member'}</strong>
               <span>{leader.points} pts</span>
             </li>
           ))}

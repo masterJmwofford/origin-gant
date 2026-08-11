@@ -692,11 +692,11 @@ function App() {
         </button>
         <button className="profile-toggle" type="button" onClick={() => setAccountOpen(true)}>
           <span className="profile-avatar" aria-hidden="true">
-            {user ? user.displayName.slice(0, 1).toUpperCase() : '♙'}
+            {(user.displayName || user.email?.split('@')[0] || 'Member').charAt(0).toUpperCase()}
           </span>
           <span>
-            <strong>{user ? user.displayName : 'Profile'}</strong>
-            <small>{user ? `${user.points} points` : 'Log in or sign up'}</small>
+            <strong>{user.displayName || user.email?.split('@')[0] || 'Member'}</strong>
+            <small>{user.points ?? 0} points</small>
           </span>
         </button>
       </div>

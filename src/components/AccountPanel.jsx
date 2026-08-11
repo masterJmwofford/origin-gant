@@ -7,6 +7,7 @@ export default function AccountPanel({ onClose, required = false }) {
   const [form, setForm] = useState({ displayName: '', email: '', password: '' })
   const [error, setError] = useState('')
   const [submitting, setSubmitting] = useState(false)
+  const memberName = user?.displayName || user?.email?.split('@')[0] || 'Member'
 
   async function submit(event) {
     event.preventDefault()
@@ -49,9 +50,9 @@ export default function AccountPanel({ onClose, required = false }) {
         )}
         {user ? (
           <>
-            <div className="account-avatar" aria-hidden="true">{user.displayName.slice(0, 1).toUpperCase()}</div>
+            <div className="account-avatar" aria-hidden="true">{memberName.charAt(0).toUpperCase()}</div>
             <p className="eyebrow">Member profile</p>
-            <h2 id="account-title">{user.displayName}</h2>
+            <h2 id="account-title">{memberName}</h2>
             <p className="account-email">{user.email}</p>
             <div className="account-stats">
               <article><strong>{user.points}</strong><span>Total points</span></article>

@@ -8,12 +8,13 @@ const router = Router()
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 function publicUser(user) {
+  const displayName = user.displayName || user.name || user.email?.split('@')[0] || 'Member'
   return {
     id: user.id,
-    displayName: user.displayName,
+    displayName,
     email: user.email,
-    points: user.points,
-    progress: user.progress,
+    points: user.points ?? 0,
+    progress: user.progress ?? [],
     createdAt: user.createdAt,
   }
 }
@@ -58,6 +59,11 @@ router.post('/login', async (request, response, next) => {
       return response.status(401).json({ error: 'Email or password is incorrect.' })
     }
 
+    if (!user.displayName) {
+      user.displayName = user.name || user.email.split('@')[0] || 'Member'
+      await user.save()
+    }
+
     setSession(response, user.id)
     return response.json({ user: publicUser(user) })
   } catch (error) {
@@ -70,8 +76,16 @@ router.post('/logout', (_request, response) => {
   return response.json({ success: true })
 })
 
-router.get('/me', requireAuth, (request, response) => {
-  response.json({ user: publicUser(request.user) })
+router.get('/me', requireAuth, async (request, response, next) => {
+  try {
+    if (!request.user.displayName) {
+      request.user.displayName = request.user.name || request.user.email?.split('@')[0] || 'Member'
+      await request.user.save()
+    }
+    response.json({ user: publicUser(request.user) })
+  } catch (error) {
+    next(error)
+  }
 })
 
 export default router

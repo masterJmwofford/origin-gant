@@ -26,7 +26,7 @@ await mongoose.connect(process.env.MONGODB_URI)
 
 const app = express()
 app.disable('x-powered-by')
-app.use(express.json({ limit: '64kb' }))
+app.use(express.json({ limit: '512kb' }))
 app.use(cookieParser())
 
 app.use('/api/auth', authRoutes)

@@ -8748,6 +8748,10 @@ body.lyceum-dark {
 }
 
 /* Member profiles, progress, and leaderboard */
+.exploration-tracker {
+  min-width: 0;
+}
+
 .profile-toggle {
   display: inline-grid;
   grid-template-columns: auto minmax(0, 1fr);
@@ -8808,6 +8812,14 @@ body.lyceum-dark {
 .profile-avatar {
   width: 34px;
   height: 34px;
+  overflow: hidden;
+}
+
+.profile-avatar img,
+.leader-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .leaderboard {
@@ -8893,6 +8905,7 @@ body.lyceum-dark {
 .leader-avatar {
   width: 32px;
   height: 32px;
+  overflow: hidden;
 }
 
 .account-overlay {
@@ -8980,6 +8993,159 @@ body.lyceum-dark {
   background: #ffffff;
   color: #172033;
   box-shadow: 0 30px 80px rgba(4, 11, 24, 0.48);
+}
+
+.account-panel.leaderboard-open {
+  width: min(100%, 780px);
+}
+
+.profile-view-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin: 0 42px 24px 0;
+  padding: 5px;
+  border-radius: 10px;
+  background: #edf3f6;
+}
+
+.profile-view-tabs button {
+  padding: 10px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: #526174;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.profile-view-tabs button.active {
+  background: #ffffff;
+  color: #172033;
+  box-shadow: 0 3px 10px rgba(7, 22, 47, 0.1);
+}
+
+.profile-identity {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 18px;
+  align-items: center;
+}
+
+.profile-identity h2,
+.profile-identity p {
+  margin: 0;
+}
+
+.profile-photo-button {
+  position: relative;
+  width: 92px;
+  height: 92px;
+  overflow: hidden;
+  padding: 0;
+  border: 3px solid #d7a928;
+  border-radius: 50%;
+  background: linear-gradient(145deg, var(--lyceum-gold-2), var(--lyceum-gold));
+  color: #07162f;
+  cursor: pointer;
+}
+
+.profile-photo-button > span {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  font-size: 2rem;
+  font-weight: 950;
+}
+
+.profile-photo-button img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-photo-button small {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 6px 2px;
+  background: rgba(7, 22, 47, 0.82);
+  color: #ffffff;
+  font-size: 0.64rem;
+  font-weight: 800;
+}
+
+.profile-file-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.member-level {
+  margin: 22px 0 10px;
+  padding: 15px;
+  border-radius: 12px;
+  background: var(--lyceum-gold-soft);
+}
+
+.member-level > div:first-child {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.member-level-track {
+  height: 9px;
+  margin: 10px 0 7px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(7, 22, 47, 0.14);
+}
+
+.member-level-track span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #d7a928, #f3cf62);
+}
+
+.account-stats.robust {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.recent-achievements {
+  margin: 18px 0;
+}
+
+.recent-achievements h3 {
+  margin: 0 0 9px;
+  font-size: 0.92rem;
+}
+
+.recent-achievements ul {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.recent-achievements li {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 9px 11px;
+  border: 1px solid rgba(7, 22, 47, 0.1);
+  border-radius: 8px;
+  text-transform: capitalize;
+}
+
+.recent-achievements li strong {
+  color: #277449;
 }
 
 .account-close {
@@ -9142,6 +9308,24 @@ body.lyceum-dark {
   color: #fff3c9;
 }
 
+.page.dark-mode .profile-view-tabs {
+  background: #252a35;
+}
+
+.page.dark-mode .profile-view-tabs button {
+  color: #c7b77c;
+}
+
+.page.dark-mode .profile-view-tabs button.active {
+  background: #3a3016;
+  color: #ffe08a;
+}
+
+.page.dark-mode .member-level,
+.page.dark-mode .account-stats article {
+  background: #241c08;
+}
+
 @media (max-width: 760px) {
   .leaderboard-list {
     grid-template-columns: 1fr;
@@ -9151,6 +9335,12 @@ body.lyceum-dark {
   .leaderboard-signin {
     align-items: stretch;
     flex-direction: column;
+  }
+
+  .profile-identity {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
   }
 }
 

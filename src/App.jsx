@@ -8,10 +8,10 @@ import DashBoard from './components/DashBoard.jsx'
 import DeescalationGame from './components/DeescalationGame'
 import DeviceUpgradeGame from './components/DeviceUpgradeGame'
 import EagleEye from './components/EagleEye'
+import ExplorationTracker from './components/ExplorationTracker'
 import EssentialQuestions from './components/EssentialQuestions'
 import FlashCardGrid from './components/FlashCardGrid'
 import HeatMap from './components/HeatMap'
-import Leaderboard from './components/Leaderboard'
 import MesaBreaker from './components/MesaBreaker'
 import ScriptStudio from './components/ScriptStudio'
 import Plans from './components/Plans'
@@ -388,7 +388,14 @@ function getTutorialTargetSelector(step) {
 }
 
 function App() {
-  const { user, authLoading, awardQuiz, awardSection } = useAuth()
+  const {
+    user,
+    authLoading,
+    awardExploration,
+    awardMesaRound,
+    awardQuiz,
+    awardSection,
+  } = useAuth()
   const [query, setQuery] = useState('')
   const [activeTab, setActiveTab] = useState('billing')
   const [navCompact, setNavCompact] = useState(false)
@@ -603,6 +610,34 @@ function App() {
     }
   }
 
+  const handleExplore = useCallback(
+    async (section, item, kind) => {
+      try {
+        const result = await awardExploration(section, item, kind)
+        if (result.awarded > 0) {
+          setPointsNotice(`+${result.awarded} exploration points`)
+        }
+      } catch {
+        // Exploration remains available while a progress sync is retried later.
+      }
+    },
+    [awardExploration],
+  )
+
+  const handleMesaRound = useCallback(
+    async (round, score) => {
+      try {
+        const result = await awardMesaRound(round, score)
+        if (result.awarded > 0) {
+          setPointsNotice(`+${result.awarded} points from MESA round ${round}`)
+        }
+      } catch {
+        // The game can continue if the score service is temporarily unavailable.
+      }
+    },
+    [awardMesaRound],
+  )
+
   if (authLoading) {
     return (
       <main className="auth-loading" aria-live="polite">
@@ -692,7 +727,11 @@ function App() {
         </button>
         <button className="profile-toggle" type="button" onClick={() => setAccountOpen(true)}>
           <span className="profile-avatar" aria-hidden="true">
-            {(user.displayName || user.email?.split('@')[0] || 'Member').charAt(0).toUpperCase()}
+            {user.profileImage ? (
+              <img src={user.profileImage} alt="" />
+            ) : (
+              (user.displayName || user.email?.split('@')[0] || 'Member').charAt(0).toUpperCase()
+            )}
           </span>
           <span>
             <strong>{user.displayName || user.email?.split('@')[0] || 'Member'}</strong>
@@ -701,8 +740,7 @@ function App() {
         </button>
       </div>
 
-      <Leaderboard onOpenAccount={() => setAccountOpen(true)} />
-
+      <ExplorationTracker section={activeTab} onExplore={handleExplore}>
       <section className="tab-shell">
         {activeTab === 'billing' && (
           <div className="tab-panel">
@@ -842,7 +880,7 @@ function App() {
           <div className="tab-panel">
             {eagleEyeEnabled && <EagleEyeSummary summary={eagleEyeSummaries['mesa-breaker']} />}
             <section className="study-section" id="mesa-breaker">
-              <MesaBreaker />
+              <MesaBreaker onRoundComplete={handleMesaRound} />
             </section>
           </div>
         )}
@@ -875,6 +913,7 @@ function App() {
           </div>
         )}
       </section>
+      </ExplorationTracker>
 
       <section className="study-section source-section" id="sources">
         <div className="section-heading">

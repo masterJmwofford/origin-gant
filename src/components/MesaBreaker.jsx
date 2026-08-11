@@ -92,10 +92,11 @@ function laserHitsBrick(laser, brick, offsetX, offsetY) {
   )
 }
 
-export default function MesaBreaker() {
+export default function MesaBreaker({ onRoundComplete }) {
   const [game, setGame] = useState(() => createInitialGame())
   const [stageScale, setStageScale] = useState(1)
   const stageWrapRef = useRef(null)
+  const reportedRoundsRef = useRef(new Set())
   const progress = useMemo(() => {
     const total = createMesaBricks().length
     return Math.round(((total - game.bricks.length) / total) * 100)
@@ -237,12 +238,17 @@ export default function MesaBreaker() {
   useEffect(() => {
     if (!game.won) return undefined
 
+    if (!reportedRoundsRef.current.has(game.round)) {
+      reportedRoundsRef.current.add(game.round)
+      onRoundComplete?.(game.round, game.score)
+    }
+
     const resetTimer = window.setTimeout(() => {
       resetGame()
     }, 2400)
 
     return () => window.clearTimeout(resetTimer)
-  }, [game.won])
+  }, [game.round, game.score, game.won, onRoundComplete])
 
   return (
     <div className="mesa-breaker">

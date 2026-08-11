@@ -15,6 +15,7 @@ function publicUser(user) {
     email: user.email,
     points: user.points ?? 0,
     progress: user.progress ?? [],
+    profileImage: user.profileImage ?? '',
     createdAt: user.createdAt,
   }
 }
@@ -53,7 +54,7 @@ router.post('/login', async (request, response, next) => {
   try {
     const email = String(request.body.email ?? '').trim().toLowerCase()
     const password = String(request.body.password ?? '')
-    const user = await User.findOne({ email }).select('+passwordHash')
+    const user = await User.findOne({ email }).select('+passwordHash +profileImage')
 
     if (!user || !(await bcrypt.compare(password, user.passwordHash))) {
       return response.status(401).json({ error: 'Email or password is incorrect.' })
@@ -78,13 +79,33 @@ router.post('/logout', (_request, response) => {
 
 router.get('/me', requireAuth, async (request, response, next) => {
   try {
-    if (!request.user.displayName) {
-      request.user.displayName = request.user.name || request.user.email?.split('@')[0] || 'Member'
-      await request.user.save()
+    const user = await User.findById(request.user.id).select('+profileImage')
+    if (!user.displayName) {
+      user.displayName = user.name || user.email?.split('@')[0] || 'Member'
+      await user.save()
     }
-    response.json({ user: publicUser(request.user) })
+    response.json({ user: publicUser(user) })
   } catch (error) {
     next(error)
+  }
+})
+
+router.patch('/profile-image', requireAuth, async (request, response, next) => {
+  try {
+    const profileImage = String(request.body.profileImage ?? '')
+    const isSupportedImage = /^data:image\/(jpeg|png|webp);base64,[a-zA-Z0-9+/=]+$/.test(profileImage)
+    if (!isSupportedImage || profileImage.length > 400_000) {
+      return response.status(400).json({ error: 'Upload a JPG, PNG, or WebP profile image under 5 MB.' })
+    }
+
+    const user = await User.findByIdAndUpdate(
+      request.user.id,
+      { profileImage },
+      { new: true, runValidators: true },
+    ).select('+profileImage')
+    return response.json({ user: publicUser(user) })
+  } catch (error) {
+    return next(error)
   }
 })
 

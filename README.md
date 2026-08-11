@@ -46,6 +46,11 @@ Passwords are hashed with bcrypt. Authentication uses a signed JWT in an HTTP-on
 
 - First visit to each application section: 10 points.
 - First correct answer to each quiz question: 20 points.
-- Reopening a section or repeating an already-earned answer does not add points.
+- Sustained viewing of individual cards, panels, and component sections: 2 points each.
+- First interaction with individual controls and tools: 3 points each.
+- Each completed MESA Breaker round adds that round's full game score to member points.
+- Reopening or repeating an already-earned exploration item does not add points.
 
 Point awards require a logged-in member account.
+
+Member profiles support JPG, PNG, and WebP uploads. Images are cropped and resized in the browser before being stored on the MongoDB user record. The member leaderboard is available from the profile panel.

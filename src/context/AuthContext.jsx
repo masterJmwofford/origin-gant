@@ -79,9 +79,56 @@ export function AuthProvider({ children }) {
     return syncProgress(data)
   }, [syncProgress])
 
+  const awardExploration = useCallback(async (section, item, kind = 'view') => {
+    const data = await apiRequest('/api/progress/explore', {
+      method: 'POST',
+      body: JSON.stringify({ section, item, kind }),
+    })
+    return syncProgress(data)
+  }, [syncProgress])
+
+  const awardMesaRound = useCallback(async (round, score) => {
+    const data = await apiRequest('/api/progress/mesa-round', {
+      method: 'POST',
+      body: JSON.stringify({ round, score }),
+    })
+    return syncProgress(data)
+  }, [syncProgress])
+
+  const uploadProfileImage = useCallback(async (profileImage) => {
+    const data = await apiRequest('/api/auth/profile-image', {
+      method: 'PATCH',
+      body: JSON.stringify({ profileImage }),
+    })
+    setUser(data.user)
+    return data.user
+  }, [])
+
   const value = useMemo(
-    () => ({ user, authLoading, login, signup, logout, awardSection, awardQuiz }),
-    [authLoading, awardQuiz, awardSection, login, logout, signup, user],
+    () => ({
+      user,
+      authLoading,
+      login,
+      signup,
+      logout,
+      awardSection,
+      awardQuiz,
+      awardExploration,
+      awardMesaRound,
+      uploadProfileImage,
+    }),
+    [
+      authLoading,
+      awardExploration,
+      awardMesaRound,
+      awardQuiz,
+      awardSection,
+      login,
+      logout,
+      signup,
+      uploadProfileImage,
+      user,
+    ],
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

@@ -6,7 +6,6 @@ import { existsSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import authRoutes from './routes/auth.js'
-import adminLockRoutes, { requireAdminUnlock } from './routes/adminLock.js'
 import leaderboardRoutes from './routes/leaderboard.js'
 import progressRoutes from './routes/progress.js'
 import viewsRoutes from './routes/views.js'
@@ -30,8 +29,6 @@ app.disable('x-powered-by')
 app.use(express.json({ limit: '512kb' }))
 app.use(cookieParser())
 
-app.use('/api/admin-lock', adminLockRoutes)
-app.use('/api', requireAdminUnlock)
 app.use('/api/auth', authRoutes)
 app.use('/api/progress', progressRoutes)
 app.use('/api/leaderboard', leaderboardRoutes)

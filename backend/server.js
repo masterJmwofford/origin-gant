@@ -15,7 +15,8 @@ const rootDir = resolve(backendDir, '..')
 const distDir = resolve(rootDir, 'dist')
 config({ path: resolve(backendDir, '.env') })
 const port = Number.parseInt(process.env.PORT || '3001', 10)
-const host = process.env.HOST || '127.0.0.1'
+const host = process.env.HOST || '0.0.0.0'
+// const host = process.env.HOST || '127.0.0.1'
 
 if (!process.env.MONGODB_URI) throw new Error('MONGODB_URI is required.')
 if (!process.env.JWT_SECRET || process.env.JWT_SECRET.length < 32) {

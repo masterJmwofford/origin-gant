@@ -40,7 +40,7 @@ function prepareProfileImage(file) {
 }
 
 export default function AccountPanel({ onClose, required = false }) {
-  const { user, login, signup, logout, uploadProfileImage } = useAuth()
+  const { user, login, signup, loginAsGuest, logout, uploadProfileImage } = useAuth()
   const [mode, setMode] = useState('login')
   const [profileView, setProfileView] = useState('profile')
   const [form, setForm] = useState({ displayName: '', email: '', password: '' })
@@ -67,6 +67,7 @@ export default function AccountPanel({ onClose, required = false }) {
     setError('')
     try {
       if (mode === 'signup') await signup(form)
+      else if (mode === 'guest') loginAsGuest(form.displayName)
       else await login({ email: form.email, password: form.password })
     } catch (requestError) {
       setError(requestError.message)
@@ -114,7 +115,15 @@ export default function AccountPanel({ onClose, required = false }) {
         {!required && (
           <button className="account-close" type="button" onClick={onClose} aria-label="Close account panel">×</button>
         )}
-        {user ? (
+        {user?.isGuest ? (
+          <>
+            <p className="eyebrow">Guest session</p>
+            <h2 id="account-title">Welcome, {memberName}</h2>
+            <p>You can use every learning tool. Points, progress, profile photos, and leaderboard access require a member account.</p>
+            {error && <p className="account-error" role="alert">{error}</p>}
+            <button className="account-submit secondary" type="button" onClick={signOut} disabled={submitting}>Exit guest session</button>
+          </>
+        ) : user ? (
           <>
             <div className="profile-view-tabs" role="tablist" aria-label="Profile pages">
               <button className={profileView === 'profile' ? 'active' : ''} type="button" onClick={() => setProfileView('profile')}>My profile</button>
@@ -164,18 +173,20 @@ export default function AccountPanel({ onClose, required = false }) {
         ) : (
           <>
             <p className="eyebrow">Lyceum membership</p>
-            <h2 id="account-title">{mode === 'login' ? 'Welcome back' : 'Create your account'}</h2>
-            <p>{required ? 'Log in or create an account to access the Lyceum learning workspace.' : 'Sign in to save progress, earn points, and join the leaderboard.'}</p>
+            <h2 id="account-title">{mode === 'login' ? 'Welcome back' : mode === 'signup' ? 'Create your account' : 'Continue as a guest'}</h2>
+            <p>{required ? 'Log in, create an account, or continue as a guest to access the Lyceum learning workspace.' : 'Sign in to save progress, or continue as a guest without saving.'}</p>
             <div className="account-mode-tabs">
               <button className={mode === 'login' ? 'active' : ''} type="button" onClick={() => setMode('login')}>Log in</button>
               <button className={mode === 'signup' ? 'active' : ''} type="button" onClick={() => setMode('signup')}>Sign up</button>
+              <button className={mode === 'guest' ? 'active' : ''} type="button" onClick={() => setMode('guest')}>Guest</button>
             </div>
             <form className="account-form" onSubmit={submit}>
-              {mode === 'signup' && <label>Display name<input type="text" value={form.displayName} onChange={(event) => setForm({ ...form, displayName: event.target.value })} autoComplete="name" required minLength={2} /></label>}
-              <label>Email<input type="email" value={form.email} onChange={(event) => setForm({ ...form, email: event.target.value })} autoComplete="email" required /></label>
-              <label>Password<input type="password" value={form.password} onChange={(event) => setForm({ ...form, password: event.target.value })} autoComplete={mode === 'login' ? 'current-password' : 'new-password'} required minLength={8} /></label>
+              {(mode === 'signup' || mode === 'guest') && <label>{mode === 'guest' ? 'Guest name' : 'Display name'}<input type="text" value={form.displayName} onChange={(event) => setForm({ ...form, displayName: event.target.value })} autoComplete="name" required minLength={2} maxLength={50} /></label>}
+              {mode !== 'guest' && <label>Email<input type="email" value={form.email} onChange={(event) => setForm({ ...form, email: event.target.value })} autoComplete="email" required /></label>}
+              {mode !== 'guest' && <label>Password<input type="password" value={form.password} onChange={(event) => setForm({ ...form, password: event.target.value })} autoComplete={mode === 'login' ? 'current-password' : 'new-password'} required minLength={8} /></label>}
+              {mode === 'guest' && <p className="account-form-note">Guest progress is not saved after this browser tab is closed.</p>}
               {error && <p className="account-error" role="alert">{error}</p>}
-              <button className="account-submit" type="submit" disabled={submitting}>{submitting ? 'Please wait…' : mode === 'login' ? 'Log in' : 'Create account'}</button>
+              <button className="account-submit" type="submit" disabled={submitting}>{submitting ? 'Please wait…' : mode === 'login' ? 'Log in' : mode === 'signup' ? 'Create account' : 'Continue as guest'}</button>
             </form>
           </>
         )}

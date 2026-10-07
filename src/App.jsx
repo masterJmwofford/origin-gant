@@ -410,7 +410,7 @@ function App() {
   const [pointsNotice, setPointsNotice] = useState(null)
   const navAnchorRef = useRef(null)
   const viewTrackedRef = useRef(false)
-  const userId = user?.id
+  const userId = user?.isGuest ? null : user?.id
   const activeNavItem = navItems.find((item) => item.id === activeTab)
   const currentTutorial = tutorialSteps[tutorialStep]
 
@@ -601,7 +601,7 @@ function App() {
   }
 
   async function handleCorrectAnswer(quizId, questionId, answer) {
-    if (!user) return
+    if (!user || user.isGuest) return
     try {
       const result = await awardQuiz(quizId, questionId, answer)
       if (result.awarded > 0) setPointsNotice(`+${result.awarded} points for a correct answer`)
@@ -612,6 +612,7 @@ function App() {
 
   const handleExplore = useCallback(
     async (section, item, kind) => {
+      if (user?.isGuest) return
       try {
         const result = await awardExploration(section, item, kind)
         if (result.awarded > 0) {
@@ -621,11 +622,12 @@ function App() {
         // Exploration remains available while a progress sync is retried later.
       }
     },
-    [awardExploration],
+    [awardExploration, user?.isGuest],
   )
 
   const handleMesaRound = useCallback(
     async (round, score) => {
+      if (user?.isGuest) return
       try {
         const result = await awardMesaRound(round, score)
         if (result.awarded > 0) {
@@ -635,7 +637,7 @@ function App() {
         // The game can continue if the score service is temporarily unavailable.
       }
     },
-    [awardMesaRound],
+    [awardMesaRound, user?.isGuest],
   )
 
   if (authLoading) {
@@ -699,7 +701,7 @@ function App() {
             onClick={() => setActiveTab(item.id)}
           >
             <span>{item.label}</span>
-            {user && (
+            {!user.isGuest && (
               <small className="nav-point-badge">
                 {completedSections.has(item.id) ? '✓ 10 pts' : '+10 pts'}
               </small>
@@ -735,7 +737,7 @@ function App() {
           </span>
           <span>
             <strong>{user.displayName || user.email?.split('@')[0] || 'Member'}</strong>
-            <small>{user.points ?? 0} points</small>
+            <small>{user.isGuest ? 'Guest session' : `${user.points ?? 0} points`}</small>
           </span>
         </button>
       </div>
